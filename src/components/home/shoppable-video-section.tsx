@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ShoppingBag } from "lucide-react";
 import { useState, useRef } from "react";
 
 export function ShoppableVideoSection() {
@@ -57,10 +56,8 @@ export function ShoppableVideoSection() {
         muted 
         playsInline 
         className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
-        poster="//wonder-theme-fashion.myshopify.com/cdn/shop/files/preview_images/cb71f93f95a94b7e9d069d767db8ba2a.thumbnail.0000000000_600x.jpg?v=1708382598"
       >
-        {/* Placeholder video from Shopify CDN. Replace with your own video URL. */}
-        <source src="https://cdn.shopify.com/videos/c/vp/cb71f93f95a94b7e9d069d767db8ba2a/cb71f93f95a94b7e9d069d767db8ba2a.HD-1080p-7.2Mbps-24784977.mp4" type="video/mp4" />
+        <source src="/shoppable_video/shoppable_video.mp4" type="video/mp4" />
       </video>
 
       {/* Gradient overlay for readability at the bottom */}
@@ -94,7 +91,7 @@ export function ShoppableVideoSection() {
           transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
           className="w-full flex overflow-x-auto gap-4 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pointer-events-auto pb-4"
         >
-          {products.map((product, index) => (
+          {products.map((product) => (
             <div 
               key={product.id} 
               className="flex-none w-[280px] md:w-[340px] bg-white/95 backdrop-blur-sm snap-start p-3 md:p-4 flex gap-4 items-stretch group/card transition-transform hover:-translate-y-1 shadow-xl border border-white/20"
@@ -114,9 +111,9 @@ export function ShoppableVideoSection() {
                   {product.title}
                 </Link>
                 <div className="flex items-center justify-between mt-auto pt-2 border-t border-gray-100">
-                  <span className="text-sm font-semibold">{product.price}</span>
+                  <span className="text-sm font-semibold text-black">{product.price}</span>
                   <button className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center hover:bg-gray-800 transition-colors" aria-label="Add to cart">
-                    <ShoppingBag className="w-4 h-4" />
+                    <svg className="w-[16px] h-[16px]" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M16.63 17.47l-.6-11a.51.51 0 00-.5-.47h-2v-.43a3.5 3.5 0 00-7 0V6h-2a.51.51 0 00-.5.47l-.62 11a.49.49 0 00.49.53h12.3a.49.49 0 00.43-.53zm-12.31-.42L4.9 7h10.2l.56 10.1-11.34-.05zM7.5 5.57a2.5 2.5 0 115 0V6h-5v-.43z" fill="currentColor"></path></svg>
                   </button>
                 </div>
               </div>

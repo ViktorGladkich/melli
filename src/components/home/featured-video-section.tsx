@@ -14,7 +14,7 @@ export function FeaturedVideoSection() {
           <img 
             src="/products/abaya_beige_front.jpg" 
             alt="Eleganz & Komfort Kollektion" 
-            className="w-full h-full object-cover object-top"
+            className="w-full h-full object-cover object-[50%_28%]"
           />
           {/* Subtle overlay to ensure text readability */}
           <div className="absolute inset-0 bg-black/10 transition-colors duration-500 group-hover:bg-black/20" />
@@ -38,9 +38,9 @@ export function FeaturedVideoSection() {
               
               <Link 
                 href="/collections/abayas" 
-                className="inline-flex items-center justify-center bg-white text-black px-8 py-4 text-sm font-medium hover:bg-black hover:text-white transition-colors duration-300"
+                className="bg-white text-black px-6 sm:px-8 md:px-12 py-3.5 md:py-4 font-normal text-[13px] sm:text-sm tracking-widest hover:bg-white/90 transition-colors uppercase w-full sm:w-auto min-w-[180px] group cursor-pointer inline-flex items-center justify-center"
               >
-                <span>Jetzt entdecken</span>
+                <AnimatedText text="Jetzt entdecken" />
               </Link>
             </motion.div>
           </div>
@@ -53,8 +53,8 @@ export function FeaturedVideoSection() {
             loop 
             muted 
             playsInline 
-            src="/video_collections/left_collection.MP4" 
-            className="w-full h-full object-cover object-center"
+            src="/featured_video/featured_video.mp4" 
+            className="w-full h-full object-cover object-[50%_30%]"
           />
         </div>
 

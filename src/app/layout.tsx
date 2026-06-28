@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
+import { Footer } from "@/components/layout/footer";
 import { CartDrawer } from "@/components/cart/cart-drawer";
 
 import { getLocalization } from "@/lib/shopify";
@@ -26,6 +27,7 @@ export default async function RootLayout({
         <Navbar countries={countries} />
         <CartDrawer />
         <main className="flex-1 flex flex-col">{children}</main>
+        <Footer />
       </body>
     </html>
   );

@@ -74,7 +74,7 @@ export function PromoSliderSection() {
               className="w-[85vw] min-w-[85vw] md:w-auto md:min-w-[350px] lg:min-w-[calc(33.333%-16px)] snap-center md:snap-start flex flex-col group flex-shrink-0"
             >
               <Link href={promo.link} className="block w-full flex flex-col">
-                <div className="relative w-full aspect-[3/4] md:aspect-[4/5] overflow-hidden">
+                <div className="relative w-full aspect-[3/4] md:aspect-[4/5] bg-gray-100 overflow-hidden">
                   <picture>
                     <img 
                       src={promo.image} 
