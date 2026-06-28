@@ -2,10 +2,30 @@
 
 import Link from "next/link";
 import { ArrowDown } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 export function Footer() {
+  const [footerHeight, setFooterHeight] = useState(0);
+  const footerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        setFooterHeight(entry.target.getBoundingClientRect().height);
+      }
+    });
+
+    if (footerRef.current) {
+      resizeObserver.observe(footerRef.current);
+    }
+
+    return () => resizeObserver.disconnect();
+  }, []);
+
   return (
-    <footer className="w-full bg-[#fcfcfc] border-t border-gray-100 pt-16 md:pt-24 overflow-hidden mt-auto">
+    <>
+      <div style={{ height: footerHeight > 0 ? `${footerHeight}px` : 'auto' }} className="w-full bg-transparent" />
+      <footer ref={footerRef} className="fixed bottom-0 left-0 w-full bg-[#fcfcfc] border-t border-gray-100 pt-16 md:pt-24 overflow-hidden z-0">
       <div className="max-w-[1400px] mx-auto px-4 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-8 mb-16">
           
@@ -110,5 +130,6 @@ export function Footer() {
         </h1>
       </div>
     </footer>
+    </>
   );
 }

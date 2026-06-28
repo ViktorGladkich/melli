@@ -23,10 +23,12 @@ export default async function RootLayout({
       lang="de"
       className="h-full antialiased font-sans"
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col bg-white">
+        <div className="flex-1 flex flex-col relative z-10 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)]">
         <Navbar countries={countries} />
         <CartDrawer />
-        <main className="flex-1 flex flex-col">{children}</main>
+          <main className="flex-1 flex flex-col">{children}</main>
+        </div>
         <Footer />
       </body>
     </html>

@@ -128,7 +128,7 @@ export function CartDrawer() {
                               <h3 className="font-bold text-gray-900 leading-tight uppercase tracking-tight text-sm">
                                 {item.title}
                               </h3>
-                              <p className="text-sm text-gray-500 mt-1">{item.variant}</p>
+                              <p className="text-sm text-gray-500 mt-1">{item.variantTitle}</p>
                             </div>
                             <button
                               onClick={() => removeItem(item.id)}
