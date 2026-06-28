@@ -17,6 +17,19 @@ export async function shopifyFetch<T>({
   tags?: string[];
   variables?: Record<string, unknown>;
 }): Promise<{ status: number; body: T } | never> {
+  if (!domain) {
+    console.warn('SHOPIFY_STORE_DOMAIN is not defined. Returning mock data.');
+    return {
+      status: 200,
+      body: {
+        data: {
+          products: { edges: [] },
+          localization: { availableCountries: [{ name: 'Germany', isoCode: 'DE', currency: { isoCode: 'EUR', symbol: '€' } }] }
+        }
+      } as unknown as T
+    };
+  }
+
   try {
     const result = await fetch(endpoint, {
       method: 'POST',
@@ -127,7 +140,7 @@ export async function getProducts(limit = 10): Promise<Product[]> {
   const response = await shopifyFetch<{ data: { products: { edges: { node: Product }[] } } }>({
     query,
     variables: { first: limit },
-    cache: 'no-store' // For development, bypass cache
+    cache: 'force-cache'
   });
 
   return response.body.data.products.edges.map((edge) => edge.node);
@@ -161,7 +174,7 @@ export async function getLocalization(): Promise<Country[]> {
   try {
     const response = await shopifyFetch<{ data: { localization: { availableCountries: Country[] } } }>({
       query,
-      cache: 'no-store'
+      cache: 'force-cache'
     });
     return response.body.data.localization.availableCountries || [];
   } catch (error) {
