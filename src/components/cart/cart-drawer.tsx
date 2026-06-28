@@ -3,6 +3,7 @@
 import { useCartStore } from "@/store/cart-store";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Minus, Plus, ShoppingBag } from "lucide-react";
+import { AnimatedText } from "../ui/animated-text";
 
 // Продвинутые ease функции для ощущения "дороговизны" как на awwwards
 const easing = [0.32, 0.72, 0, 1] as const;
@@ -34,8 +35,12 @@ export function CartDrawer() {
   const { isOpen, closeCart, items, removeItem, updateQuantity } = useCartStore();
 
   const total = items.reduce((acc, item) => {
-    const priceStr = item.price.replace(/\D/g, "");
-    return acc + parseInt(priceStr || "0") * item.quantity;
+    // Извлекаем цифры, точки и запятые из строки цены (например "10.0 EUR" -> "10.0")
+    const match = item.price.match(/[\d.,]+/);
+    if (!match) return acc;
+    // Меняем запятую на точку для парсинга и преобразуем в число
+    const priceNumber = parseFloat(match[0].replace(',', '.'));
+    return acc + (isNaN(priceNumber) ? 0 : priceNumber) * item.quantity;
   }, 0);
 
   return (
@@ -89,9 +94,9 @@ export function CartDrawer() {
                   </div>
                   <button 
                     onClick={closeCart}
-                    className="mt-4 px-8 py-4 bg-black text-white text-sm font-bold uppercase tracking-wider hover:bg-black/80 transition-colors"
+                    className="mt-4 px-8 py-4 bg-black text-white text-sm font-bold uppercase tracking-wider hover:bg-black/80 transition-colors group cursor-pointer"
                   >
-                    Weiter einkaufen
+                    <AnimatedText text="Weiter einkaufen" />
                   </button>
                 </motion.div>
               ) : (
@@ -167,7 +172,7 @@ export function CartDrawer() {
               >
                 <div className="flex items-center justify-between mb-6">
                   <span className="text-sm font-medium text-gray-500 uppercase tracking-wider">Zwischensumme</span>
-                  <span className="text-3xl font-black">{total.toLocaleString('de-DE')} €</span>
+                  <span className="text-3xl font-black">{total.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>
                 </div>
                 
                 {/* Анимированная кнопка Checkout (тоже стеклянная) */}

@@ -1,12 +1,13 @@
 import { create } from 'zustand';
 
 export type CartItem = {
-  id: string;
+  id: string; // This will now store the Shopify variant ID directly, or we add variantId
+  variantId: string;
   title: string;
   price: string;
   quantity: number;
   image: string;
-  variant: string;
+  variantTitle: string;
 };
 
 interface CartState {
@@ -21,33 +22,16 @@ interface CartState {
 
 export const useCartStore = create<CartState>((set) => ({
   isOpen: false,
-  items: [
-    {
-      id: "1",
-      title: "Melli Signature",
-      price: "12,00 €",
-      quantity: 1,
-      image: "https://images.unsplash.com/photo-1584820927508-0138ffbc74b8?auto=format&fit=crop&q=80&w=400",
-      variant: "Premium",
-    },
-    {
-      id: "2",
-      title: "Melli Classic",
-      price: "8,50 €",
-      quantity: 2,
-      image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=2070&auto=format&fit=crop",
-      variant: "Standard",
-    }
-  ],
+  items: [],
   openCart: () => set({ isOpen: true }),
   closeCart: () => set({ isOpen: false }),
   addItem: (item) => 
     set((state) => {
-      const existing = state.items.find((i) => i.id === item.id);
+      const existing = state.items.find((i) => i.variantId === item.variantId);
       if (existing) {
         return {
           items: state.items.map((i) => 
-            i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i
+            i.variantId === item.variantId ? { ...i, quantity: i.quantity + item.quantity } : i
           )
         };
       }

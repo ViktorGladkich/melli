@@ -3,7 +3,8 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { AnimatedText } from "../ui/animated-text";
+
 
 export function HeroSection() {
   const containerRef = useRef<HTMLElement>(null);
@@ -17,65 +18,66 @@ export function HeroSection() {
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
   return (
-    <section ref={containerRef} className="relative h-screen w-full bg-black text-white overflow-hidden">
+    <section ref={containerRef} className="relative h-dvh min-h-[500px] w-full bg-black text-white overflow-hidden">
       {/* Параллакс Фон */}
       <motion.div 
         style={{ y, opacity }}
         className="absolute inset-0 z-0"
       >
-        {/* Жесткий темный градиент-оверлей, чтобы текст всегда читался 100% идеально */}
-        <div className="absolute inset-0 bg-black/60 bg-gradient-to-t from-black/80 via-black/40 to-black/60 z-10" />
-        <img 
-          src="/hero-bg.png" 
-          alt="Premium Cleaning" 
-          className="w-full h-full object-cover"
+        {/* Легкий градиент снизу, чтобы текст читался (убрали общее затемнение) */}
+        <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent z-10" />
+        <video 
+          autoPlay 
+          loop 
+          muted 
+          playsInline 
+          src="/video_hero/hero.mp4" 
+          className="w-full h-full object-cover object-center"
         />
       </motion.div>
 
       {/* Контент */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4 md:px-6 max-w-7xl mx-auto pt-20">
+      <div className="relative z-10 flex flex-col items-center justify-end h-full text-center px-4 md:px-6 pb-20 sm:pb-16 md:pb-24 pt-20 w-full">
         
-        <motion.span 
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1, ease: [0.32, 0.72, 0, 1], delay: 0.1 }}
-          className="block text-sm md:text-base font-bold tracking-[0.3em] uppercase text-white/70 mb-6"
-        >
-          Premium & Nachhaltig
-        </motion.span>
-        {/* Убрали огромный текст Neue Kollektion, так как теперь сверху нависает огромный логотип MELLI. */}
-        <motion.p 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.32, 0.72, 0, 1], delay: 0.4 }}
-          className="text-lg md:text-2xl text-gray-200 mb-10 mt-10 max-w-xl mx-auto font-medium"
-        >
-          Redefine Your Elegance
-          <br />
-          <span className="text-4xl md:text-6xl font-light tracking-widest uppercase mt-4 block text-white">
-            Dresses You'll Adore
-          </span>
-        </motion.p>
+        <div className="w-full max-w-4xl mx-auto flex flex-col items-center">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: [0.32, 0.72, 0, 1], delay: 0.2 }}
+            className="text-white/90 text-xs sm:text-sm md:text-base tracking-widest uppercase mb-3 md:mb-4"
+          >
+            <p>Modest Fashion für dich</p>
+          </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1], delay: 0.6 }}
-          className="flex items-center gap-4 mt-8"
-        >
-          <Link 
-            href="/catalog" 
-            className="bg-white text-black px-10 py-4 font-bold text-sm uppercase tracking-widest transition-transform hover:scale-105 shadow-xl"
+          <motion.h2 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: [0.32, 0.72, 0, 1], delay: 0.4 }}
+            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-light tracking-widest uppercase text-white mb-8 md:mb-10 px-2"
           >
-            Shop Dress
-          </Link>
-          <Link 
-            href="/catalog?category=bags" 
-            className="bg-white text-black px-10 py-4 font-bold text-sm uppercase tracking-widest transition-transform hover:scale-105 shadow-xl"
+            Elegante Abayas & Hijabs
+          </motion.h2>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1], delay: 0.6 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full px-2 sm:px-0"
           >
-            Shop Bags
-          </Link>
-        </motion.div>
+            <Link 
+              href="/collections/abayas" 
+              className="bg-white text-black px-6 sm:px-8 md:px-12 py-3.5 md:py-4 font-normal text-[13px] sm:text-sm tracking-widest hover:bg-white/90 transition-colors uppercase w-full sm:w-auto min-w-[180px] group cursor-pointer flex items-center justify-center"
+            >
+              <AnimatedText text="Abayas shoppen" />
+            </Link>
+            <Link 
+              href="/collections/hijabs" 
+              className="bg-white text-black px-6 sm:px-8 md:px-12 py-3.5 md:py-4 font-normal text-[13px] sm:text-sm tracking-widest hover:bg-white/90 transition-colors uppercase w-full sm:w-auto min-w-[180px] group cursor-pointer flex items-center justify-center"
+            >
+              <AnimatedText text="Hijabs shoppen" />
+            </Link>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

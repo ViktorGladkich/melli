@@ -3,28 +3,32 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Search } from "lucide-react";
 import { useEffect, useState } from "react";
+import type { Country } from "@/lib/shopify";
 
 interface LocalizationDrawerProps {
   isOpen: boolean;
   onClose: () => void;
+  countries?: Country[];
+  selectedCountry?: Country | null;
+  onSelectCountry?: (isoCode: string) => void;
 }
 
-const countries = [
-  { flag: "🇦🇫", name: "Afghanistan", currency: "AFN ؋" },
-  { flag: "🇦🇽", name: "Åland Islands", currency: "EUR €" },
-  { flag: "🇦🇱", name: "Albania", currency: "ALL L" },
-  { flag: "🇩🇿", name: "Algeria", currency: "DZD د.ج" },
-  { flag: "🇦🇩", name: "Andorra", currency: "EUR €" },
-  { flag: "🇦🇴", name: "Angola", currency: "USD $" },
-  { flag: "🇦🇮", name: "Anguilla", currency: "XCD $" },
-  { flag: "🇦🇬", name: "Antigua & Barbuda", currency: "XCD $" },
-  { flag: "🇦🇷", name: "Argentina", currency: "USD $" },
-  { flag: "🇦🇺", name: "Australia", currency: "AUD $" },
-  { flag: "🇦🇹", name: "Austria", currency: "EUR €" },
-  { flag: "🇩🇪", name: "Germany", currency: "EUR €" },
-];
+function getFlagEmoji(countryCode: string) {
+  if (!countryCode) return "🌍";
+  const codePoints = countryCode
+    .toUpperCase()
+    .split('')
+    .map(char => 127397 + char.charCodeAt(0));
+  return String.fromCodePoint(...codePoints);
+}
 
-export function LocalizationDrawer({ isOpen, onClose }: LocalizationDrawerProps) {
+export function LocalizationDrawer({ 
+  isOpen, 
+  onClose, 
+  countries = [],
+  selectedCountry,
+  onSelectCountry
+}: LocalizationDrawerProps) {
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
@@ -70,12 +74,12 @@ export function LocalizationDrawer({ isOpen, onClose }: LocalizationDrawerProps)
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-gray-100">
               <h2 className="text-sm font-semibold tracking-widest uppercase">
-                Localization Options
+                Lokalisierungsoptionen
               </h2>
               <button 
                 onClick={onClose} 
                 className="p-2 border border-black hover:bg-black hover:text-white transition-colors"
-                aria-label="Close"
+                aria-label="Schließen"
               >
                 <X className="w-5 h-5" strokeWidth={1.5} />
               </button>
@@ -84,31 +88,33 @@ export function LocalizationDrawer({ isOpen, onClose }: LocalizationDrawerProps)
             {/* Tabs */}
             <div className="flex px-6 pt-4 border-b border-gray-100">
               <button className="px-4 py-2 text-sm font-medium border-b-2 border-black">
-                Country/region
+                Land/Region
               </button>
               <button className="px-4 py-2 text-sm font-medium text-gray-500 hover:text-black transition-colors">
-                Language
+                Sprache
               </button>
             </div>
 
             <div className="flex-1 overflow-y-auto p-6">
               {/* Current Selection */}
-              <div className="mb-8">
-                <div className="flex items-center gap-2 font-medium mb-2">
-                  <span className="text-xl">🇩🇪</span>
-                  <span>Germany | EUR €</span>
+              {selectedCountry && (
+                <div className="mb-8">
+                  <div className="flex items-center gap-2 font-medium mb-2">
+                    <span className="text-xl">{getFlagEmoji(selectedCountry.isoCode)}</span>
+                    <span>{selectedCountry.name} | {selectedCountry.currency.isoCode} {selectedCountry.currency.symbol}</span>
+                  </div>
+                  <p className="text-xs text-gray-500 leading-relaxed">
+                    Sie versenden derzeit nach {selectedCountry.name} und Ihre Bestellung wird in {selectedCountry.currency.isoCode} {selectedCountry.currency.symbol} abgerechnet.
+                  </p>
                 </div>
-                <p className="text-xs text-gray-500 leading-relaxed">
-                  You are currently shipping to Germany and your order will be billed in EUR €.
-                </p>
-              </div>
+              )}
 
               {/* Search */}
               <div className="relative mb-6">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <input
                   type="text"
-                  placeholder="Search location..."
+                  placeholder="Standort suchen..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 border border-gray-200 text-sm focus:outline-none focus:border-black transition-colors"
@@ -119,16 +125,17 @@ export function LocalizationDrawer({ isOpen, onClose }: LocalizationDrawerProps)
               <ul className="space-y-4">
                 {filteredCountries.map((country) => (
                   <li 
-                    key={country.name}
-                    className="flex items-center justify-between group cursor-pointer"
+                    key={country.isoCode}
+                    onClick={() => onSelectCountry?.(country.isoCode)}
+                    className={`flex items-center justify-between group cursor-pointer p-2 -mx-2 rounded-md transition-colors ${selectedCountry?.isoCode === country.isoCode ? 'bg-gray-50' : 'hover:bg-gray-50'}`}
                   >
                     <div className="flex items-center gap-3">
-                      <span className="text-xl">{country.flag}</span>
+                      <span className="text-xl">{getFlagEmoji(country.isoCode)}</span>
                       <span className="text-sm font-medium group-hover:text-gray-600 transition-colors">
                         {country.name}
                       </span>
                     </div>
-                    <span className="text-xs text-gray-500">{country.currency}</span>
+                    <span className="text-xs text-gray-500">{country.currency.isoCode} {country.currency.symbol}</span>
                   </li>
                 ))}
               </ul>

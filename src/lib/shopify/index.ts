@@ -1,40 +1,8 @@
-const rawDomain = process.env.SHOPIFY_STORE_DOMAIN || '';
-// Убираем https:// если пользователь случайно его добавил
-const domain = rawDomain.replace(/^https?:\/\//, '').replace(/\/$/, '');
-const endpoint = `https://${domain}/admin/api/2024-01/graphql.json`;
-const clientId = process.env.SHOPIFY_CLIENT_ID;
-const clientSecret = process.env.SHOPIFY_CLIENT_SECRET;
-
-// Локальный кэш токена в памяти сервера
-let cachedToken: string | null = null;
-let tokenExpiresAt = 0;
-
-async function getAdminToken() {
-  // Если токен есть и до истечения срока больше минуты - используем его
-  if (cachedToken && Date.now() < tokenExpiresAt - 60_000) {
-    return cachedToken;
-  }
-
-  const response = await fetch(`https://${domain}/admin/oauth/access_token`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({
-      grant_type: 'client_credentials',
-      client_id: clientId!,
-      client_secret: clientSecret!,
-    }),
-    cache: 'no-store' // Токены нельзя кэшировать в Next.js fetch кэше
-  });
-
-  if (!response.ok) {
-    throw new Error(`Token request failed: ${response.status}`);
-  }
-
-  const data = await response.json();
-  cachedToken = data.access_token;
-  tokenExpiresAt = Date.now() + data.expires_in * 1000;
-  return cachedToken;
-}
+const domain = process.env.SHOPIFY_STORE_DOMAIN 
+  ? process.env.SHOPIFY_STORE_DOMAIN.replace(/^https?:\/\//, '').replace(/\/$/, '')
+  : '';
+const endpoint = `https://${domain}/api/2024-01/graphql.json`;
+const storefrontToken = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 
 export async function shopifyFetch<T>({
   cache = 'force-cache',
@@ -50,14 +18,11 @@ export async function shopifyFetch<T>({
   variables?: Record<string, unknown>;
 }): Promise<{ status: number; body: T } | never> {
   try {
-    // Получаем или обновляем токен перед каждым запросом
-    const token = await getAdminToken();
-
     const result = await fetch(endpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Shopify-Access-Token': token!,
+        'X-Shopify-Storefront-Access-Token': storefrontToken!,
         ...headers
       },
       body: JSON.stringify({
@@ -85,3 +50,123 @@ export async function shopifyFetch<T>({
     };
   }
 }
+
+export type Product = {
+  id: string;
+  title: string;
+  handle: string;
+  priceRange: {
+    minVariantPrice: {
+      amount: string;
+      currencyCode: string;
+    };
+  };
+  variants: {
+    edges: {
+      node: {
+        id: string;
+        title: string;
+      };
+    }[];
+  };
+  images: {
+    edges: {
+      node: {
+        url: string;
+        altText: string;
+      };
+    }[];
+  };
+  options: {
+    name: string;
+    values: string[];
+  }[];
+};
+
+export async function getProducts(limit = 10): Promise<Product[]> {
+  const query = `
+    query getProducts($first: Int!) {
+      products(first: $first) {
+        edges {
+          node {
+            id
+            title
+            handle
+            priceRange {
+              minVariantPrice {
+                amount
+                currencyCode
+              }
+            }
+            variants(first: 10) {
+              edges {
+                node {
+                  id
+                  title
+                }
+              }
+            }
+            options {
+              name
+              values
+            }
+            images(first: 2) {
+              edges {
+                node {
+                  url
+                  altText
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  const response = await shopifyFetch<{ data: { products: { edges: { node: Product }[] } } }>({
+    query,
+    variables: { first: limit },
+    cache: 'no-store' // For development, bypass cache
+  });
+
+  return response.body.data.products.edges.map((edge) => edge.node);
+}
+
+export type Country = {
+  name: string;
+  isoCode: string;
+  currency: {
+    isoCode: string;
+    symbol: string;
+  };
+};
+
+export async function getLocalization(): Promise<Country[]> {
+  const query = `
+    query getLocalization {
+      localization {
+        availableCountries {
+          name
+          isoCode
+          currency {
+            isoCode
+            symbol
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await shopifyFetch<{ data: { localization: { availableCountries: Country[] } } }>({
+      query,
+      cache: 'no-store'
+    });
+    return response.body.data.localization.availableCountries || [];
+  } catch (error) {
+    console.error("Error fetching localization:", error);
+    return [];
+  }
+}
+
