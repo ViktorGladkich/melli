@@ -73,10 +73,10 @@ export function Footer() {
 
   return (
     <>
-      <div style={{ height: `${footerHeight}px` }} className="w-full bg-transparent" />
+      <div style={{ height: `${footerHeight}px` }} className="w-full bg-transparent hidden lg:block" />
       <footer 
         ref={footerRef} 
-        className="fixed bottom-0 left-0 w-full z-0 bg-white border-t border-gray-200 pt-8 lg:pt-10 overflow-hidden h-[100dvh] flex flex-col justify-between"
+        className="relative lg:fixed bottom-0 left-0 w-full z-0 bg-white border-t border-gray-200 pt-8 lg:pt-10 overflow-hidden h-[100dvh] flex flex-col justify-between"
       >
       <div className="max-w-[1400px] w-full mx-auto px-6 md:px-10 shrink-0">
         {/* 4 Column Grid / Accordion on mobile */}
@@ -113,7 +113,7 @@ export function Footer() {
           </AccordionSection>
 
           {/* Column 4: About - always open */}
-          <div className="border-b border-gray-200 lg:border-none py-5 lg:py-0">
+          <div className="py-5 lg:py-0">
             <h3 className="font-medium text-[13px] tracking-[0.15em] uppercase mb-5 lg:mb-7 text-black">Über Milly</h3>
             <p className="text-[14px] text-gray-600 leading-relaxed pb-2 lg:pb-0">
               Entdecke die Welt von Milly Fashion. Besuche unsere <Link href="/uber-uns" className="text-black underline underline-offset-4 decoration-black/40 hover:decoration-black transition-all duration-500">Über uns Seite</Link>, um mehr über unsere Geschichte und unsere liebevoll ausgewählten Produkte zu erfahren.

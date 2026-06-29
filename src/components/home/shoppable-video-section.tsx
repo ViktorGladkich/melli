@@ -4,7 +4,11 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useState, useRef } from "react";
 
-export function ShoppableVideoSection() {
+interface ShoppableVideoSectionProps {
+  variant?: "shoppable" | "text";
+}
+
+export function ShoppableVideoSection({ variant = "shoppable" }: ShoppableVideoSectionProps) {
   const [isPlaying, setIsPlaying] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -83,6 +87,7 @@ export function ShoppableVideoSection() {
       </div>
 
       {/* Products Content */}
+      {variant === "shoppable" && (
       <div className="absolute inset-0 flex flex-col justify-end pointer-events-none pb-4 md:pb-8 lg:pb-12">
         <motion.div 
           initial="hidden"
@@ -143,6 +148,31 @@ export function ShoppableVideoSection() {
           <div className="flex-none w-4 md:w-12" />
         </motion.div>
       </div>
+      )}
+
+      {/* Text Overlay Variant */}
+      {variant === "text" && (
+        <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-8 pointer-events-none z-10">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-white text-sm md:text-base font-medium tracking-widest mb-4"
+          >
+            Nachhaltigkeit & Qualität
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="text-white text-2xl md:text-4xl lg:text-5xl font-light uppercase tracking-wide leading-tight max-w-4xl"
+          >
+            Unsere Stoffe werden exklusiv für uns entwickelt. Wir fertigen nur hochwertige Mode, die bleibt.
+          </motion.h2>
+        </div>
+      )}
     </section>
   );
 }

@@ -10,16 +10,20 @@ import { AnimatedText } from "@/components/ui/animated-text";
 import { LocalizationDrawer } from "./localization-drawer";
 import { AnnouncementBar } from "./announcement-bar";
 import { SearchDrawer } from "./search-drawer";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import type { Country } from "@/lib/shopify";
 
 export function Navbar({ countries = [] }: { countries?: Country[] }) {
   const { scrollY } = useScroll();
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [isLocOpen, setIsLocOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [selectedCountryCode, setSelectedCountryCode] = useState("DE");
+
+  const isSolidMode = isScrolled || pathname !== "/";
 
   useEffect(() => {
     const saved = localStorage.getItem("user_country");
@@ -46,9 +50,10 @@ export function Navbar({ countries = [] }: { countries?: Country[] }) {
       setIsScrolled(false);
     }
 
-    // Прячем шапку при скролле вниз, показываем при скролле вверх
-    if (latest > 150 && latest > previous) {
-      setIsHidden(true);
+    // Прячем шапку, когда доходим до самого низа страницы (футера)
+    if (typeof window !== "undefined" && typeof document !== "undefined") {
+      const isAtBottom = window.innerHeight + latest >= document.body.offsetHeight - 100;
+      setIsHidden(isAtBottom);
     } else {
       setIsHidden(false);
     }
@@ -73,12 +78,12 @@ export function Navbar({ countries = [] }: { countries?: Country[] }) {
       transition={{ type: "spring", bounce: 0, duration: 0.4 }}
       className={cn(
         "fixed inset-x-0 top-0 z-40 transition-all duration-500",
-        isScrolled 
+        isSolidMode 
           ? "bg-white/65 backdrop-blur-[35px] border-b border-gray-100 shadow-sm text-black py-0" 
           : "bg-transparent text-white py-0"
       )}
     >
-      <div className={cn("transition-all duration-500 overflow-hidden", isScrolled ? "h-0 opacity-0" : "h-8 opacity-100")}>
+      <div className={cn("transition-all duration-500 overflow-hidden", isSolidMode ? "h-0 opacity-0" : "h-8 opacity-100")}>
         <AnnouncementBar />
       </div>
       <div className="w-full px-4 md:px-8 py-2">
@@ -97,8 +102,8 @@ export function Navbar({ countries = [] }: { countries?: Country[] }) {
             {/* Mobile Logo */}
             <motion.div
               animate={{ 
-                scale: isScrolled ? 1 : 2.2,
-                y: isScrolled ? 0 : 40
+                scale: isSolidMode ? 1 : 2.2,
+                y: isSolidMode ? 0 : 40
               }}
               transition={{ type: "spring", bounce: 0, duration: 0.6 }}
               className="origin-top pointer-events-auto md:hidden"
@@ -109,7 +114,7 @@ export function Navbar({ countries = [] }: { countries?: Country[] }) {
                   alt="MILLY" 
                   className={cn(
                     "h-6 w-auto transition-all duration-500",
-                    isScrolled ? "invert" : ""
+                    isSolidMode ? "invert" : ""
                   )}
                 />
               </Link>
@@ -117,8 +122,8 @@ export function Navbar({ countries = [] }: { countries?: Country[] }) {
             {/* Desktop Logo */}
             <motion.div
               animate={{ 
-                scale: isScrolled ? 1 : 3,
-                y: isScrolled ? 0 : 40
+                scale: isSolidMode ? 1 : 3,
+                y: isSolidMode ? 0 : 40
               }}
               transition={{ type: "spring", bounce: 0, duration: 0.6 }}
               className="origin-top pointer-events-auto hidden md:block"
@@ -129,7 +134,7 @@ export function Navbar({ countries = [] }: { countries?: Country[] }) {
                   alt="MILLY" 
                   className={cn(
                     "h-10 w-auto transition-all duration-500",
-                    isScrolled ? "invert" : ""
+                    isSolidMode ? "invert" : ""
                   )}
                 />
               </Link>

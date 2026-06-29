@@ -6,8 +6,17 @@ import { MOCK_PRODUCTS, type Product } from "@/lib/mock-products";
 
 import { ProductCard } from "@/components/product/product-card";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function BestsellersSection({ products: _products }: { products?: Product[] }) {
+interface BestsellersSectionProps {
+  title?: string;
+  showTabs?: boolean;
+  products?: Product[];
+}
+
+export function BestsellersSection({ 
+  title = "Unsere Bestseller", 
+  showTabs = true,
+  products: propProducts 
+}: BestsellersSectionProps) {
   const [activeTab, setActiveTab] = useState("Abayas");
   const scrollRef = useRef<HTMLDivElement>(null);
   const tabs = ["Abayas", "Tuniken", "Hijabs"];
@@ -66,7 +75,7 @@ export function BestsellersSection({ products: _products }: { products?: Product
     }
   };
 
-  const products = MOCK_PRODUCTS.filter(p => p.category === activeTab);
+  const displayProducts = propProducts || (showTabs ? MOCK_PRODUCTS.filter(p => p.category === activeTab) : MOCK_PRODUCTS.slice(0, 8));
 
   return (
     <section className="py-16 md:py-24 bg-white overflow-hidden text-black">
@@ -75,11 +84,12 @@ export function BestsellersSection({ products: _products }: { products?: Product
         {/* Title exactly like HTML Example */}
         <div className="headline scroll-trigger animate--slide-in mb-8 text-center md:text-left w-full md:w-auto">
           <h2 className="headline__title text-3xl md:text-4xl font-normal tracking-wide uppercase text-center">
-            Unsere Bestseller
+            {title}
           </h2>
         </div>
         
         {/* Tabs */}
+        {showTabs && (
         <div className="wt-tabs class=wt-tabs flex gap-6 md:gap-10 overflow-x-auto max-w-full no-scrollbar px-4">
           <div className="wt-tabs__header">
             <div className="wt-tabs__tablist flex gap-6 md:gap-10" role="tablist">
@@ -109,6 +119,7 @@ export function BestsellersSection({ products: _products }: { products?: Product
             </div>
           </div>
         </div>
+        )}
       </div>
 
       <div className="w-full relative max-w-[1340px] mx-auto px-4 md:px-12 group/slider">
@@ -146,8 +157,8 @@ export function BestsellersSection({ products: _products }: { products?: Product
               aria-live="polite"
             >
             {/* Slides */}
-            {products.map((product, index) => (
-              <ProductCard key={product.id} product={product} index={index} total={products.length} />
+            {displayProducts.map((product, index) => (
+              <ProductCard key={product.id} product={product} index={index} total={displayProducts.length} />
             ))}
             </motion.div>
           </AnimatePresence>
