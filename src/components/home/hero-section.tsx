@@ -35,7 +35,7 @@ export function HeroSection() {
       </motion.div>
 
       {/* Контент */}
-      <div className="relative z-10 flex flex-col items-center justify-end h-full text-center px-4 md:px-6 pb-[12vh] sm:pb-[10vh] md:pb-[15vh] lg:pb-[25vh] pt-32 w-full">
+      <div className="relative z-10 flex flex-col items-center justify-end h-full text-center px-4 md:px-6 pb-[20vh] sm:pb-[15vh] md:pb-[15vh] lg:pb-[25vh] pt-32 w-full">
         
         <div className="w-full max-w-4xl mx-auto flex flex-col items-center">
           <motion.div 

@@ -3,6 +3,7 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { CartDrawer } from "@/components/cart/cart-drawer";
+import { QuickAddDrawer } from "@/components/product/quick-add-drawer";
 
 import { getLocalization } from "@/lib/shopify";
 
@@ -27,6 +28,7 @@ export default async function RootLayout({
         <div className="flex-1 flex flex-col relative z-10 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)]">
         <Navbar countries={countries} />
         <CartDrawer />
+        <QuickAddDrawer />
           <main className="flex-1 flex flex-col">{children}</main>
         </div>
         <Footer />

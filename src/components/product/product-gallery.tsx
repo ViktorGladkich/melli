@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { ChevronRight, ChevronLeft, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Product } from "@/lib/mock-products";
+import { cn } from "@/lib/utils";
 
 interface ProductGalleryProps {
   product: Product;
@@ -11,6 +12,9 @@ interface ProductGalleryProps {
 
 export function ProductGallery({ product }: ProductGalleryProps) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [activeMobileImageIndex, setActiveMobileImageIndex] = useState(0);
+  const [activeDesktopImageIndex, setActiveDesktopImageIndex] = useState(0);
+  const [isGalleryHovered, setIsGalleryHovered] = useState(false);
 
   const openLightbox = (index: number) => {
     setLightboxIndex(index);
@@ -31,6 +35,34 @@ export function ProductGallery({ product }: ProductGalleryProps) {
     };
   }, [lightboxIndex]);
 
+  useEffect(() => {
+    // Setup intersection observer for desktop images
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = Number(entry.target.getAttribute("data-index"));
+            setActiveDesktopImageIndex(index);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    document.querySelectorAll(".desktop-gallery-img").forEach((el) => {
+      observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [product.images]);
+
+  const scrollToImage = (index: number) => {
+    const el = document.getElementById(`desktop-img-${index}`);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
   const nextImage = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (lightboxIndex !== null && product) {
@@ -45,15 +77,56 @@ export function ProductGallery({ product }: ProductGalleryProps) {
     }
   };
 
+  const handleMobileScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const el = e.currentTarget;
+    const index = Math.round(el.scrollLeft / el.clientWidth);
+    if (index !== activeMobileImageIndex) {
+      setActiveMobileImageIndex(index);
+    }
+  };
+
   return (
     <>
-      <div className="w-full md:w-1/2 lg:w-[60%] flex flex-col gap-4">
+      <div 
+        className="w-full md:w-1/2 lg:w-[60%] flex flex-col gap-4 relative"
+        onMouseEnter={() => setIsGalleryHovered(true)}
+        onMouseLeave={() => setIsGalleryHovered(false)}
+      >
         {/* Mobile Horizontal Scroll */}
-        <div className="flex md:hidden overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 scrollbar-hide">
+        <div className="relative md:hidden -mx-4 mb-4">
+          <div 
+            className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide"
+            onScroll={handleMobileScroll}
+          >
+            {product.images.map((img, idx) => (
+              <div
+                key={idx}
+                className="min-w-full w-full snap-center shrink-0 bg-gray-50 aspect-[3/4] cursor-zoom-in"
+                onClick={() => openLightbox(idx)}
+              >
+                <img
+                  src={img.url}
+                  alt={img.altText}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
+          
+          {/* Mobile Image Counter */}
+          <div className="absolute bottom-4 right-4 bg-white/80 backdrop-blur-sm px-3 py-1 text-[11px] tracking-widest font-medium rounded-full z-10 pointer-events-none">
+            {activeMobileImageIndex + 1} / {product.images.length}
+          </div>
+        </div>
+
+        {/* Desktop Vertical Stack */}
+        <div className="hidden md:flex flex-col gap-4">
           {product.images.map((img, idx) => (
-            <div
-              key={idx}
-              className="min-w-full w-full snap-center shrink-0 bg-gray-50 aspect-[3/4] cursor-zoom-in"
+            <div 
+              key={idx} 
+              id={`desktop-img-${idx}`}
+              data-index={idx}
+              className="w-full bg-gray-50 aspect-[3/4] cursor-zoom-in desktop-gallery-img"
               onClick={() => openLightbox(idx)}
             >
               <img
@@ -65,21 +138,41 @@ export function ProductGallery({ product }: ProductGalleryProps) {
           ))}
         </div>
 
-        {/* Desktop Vertical Stack */}
-        <div className="hidden md:flex flex-col gap-4">
-          {product.images.map((img, idx) => (
-            <div 
-              key={idx} 
-              className="w-full bg-gray-50 aspect-[3/4] cursor-zoom-in"
-              onClick={() => openLightbox(idx)}
-            >
-              <img
-                src={img.url}
-                alt={img.altText}
-                className="w-full h-full object-cover"
+        {/* Desktop Hover Floating Thumbnails */}
+        <div 
+          className={cn(
+            "hidden md:flex fixed left-4 top-1/2 -translate-y-1/2 z-40 transition-all duration-300",
+            isGalleryHovered ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4 pointer-events-none"
+          )}
+        >
+          <div className="flex gap-4 h-[300px]">
+            {/* Thumbnails List */}
+            <div className="flex flex-col gap-2 overflow-hidden w-[50px] py-2 h-full justify-center">
+              {product.images.map((img, idx) => (
+                <div 
+                  key={idx}
+                  onClick={() => scrollToImage(idx)}
+                  className={cn(
+                    "w-full aspect-[3/4] shrink-0 cursor-pointer transition-all duration-300 overflow-hidden",
+                    activeDesktopImageIndex === idx ? "border border-black" : "opacity-50 hover:opacity-100"
+                  )}
+                >
+                  <img src={img.url} alt="thumbnail" className="w-full h-full object-cover" />
+                </div>
+              ))}
+            </div>
+
+            {/* Custom Scrollbar / Indicator */}
+            <div className="w-0.5 bg-gray-200 h-full relative rounded-full overflow-hidden">
+              <div 
+                className="absolute w-full bg-black transition-all duration-300 rounded-full"
+                style={{
+                  height: `${100 / product.images.length}%`,
+                  top: `${(activeDesktopImageIndex / product.images.length) * 100}%`
+                }}
               />
             </div>
-          ))}
+          </div>
         </div>
       </div>
 

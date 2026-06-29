@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useState, useRef } from "react";
+import { useQuickAddStore } from "@/store/quick-add-store";
 
 interface ShoppableVideoSectionProps {
   variant?: "shoppable" | "text";
@@ -11,6 +12,7 @@ interface ShoppableVideoSectionProps {
 export function ShoppableVideoSection({ variant = "shoppable" }: ShoppableVideoSectionProps) {
   const [isPlaying, setIsPlaying] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const { openQuickAdd } = useQuickAddStore();
 
   const products = [
     {
@@ -20,6 +22,7 @@ export function ShoppableVideoSection({ variant = "shoppable" }: ShoppableVideoS
       price: "€129.00",
       image: "/products/abaya_beige_front.jpg",
       link: "/products/abaya-beige",
+      handle: "abaya-beige",
     },
     {
       id: "abaya-black",
@@ -28,6 +31,7 @@ export function ShoppableVideoSection({ variant = "shoppable" }: ShoppableVideoS
       price: "€129.00",
       image: "/products/abaya_black_front.jpg",
       link: "/products/abaya-black",
+      handle: "abaya-black",
     },
     {
       id: "abaya-green",
@@ -36,6 +40,7 @@ export function ShoppableVideoSection({ variant = "shoppable" }: ShoppableVideoS
       price: "€139.00",
       image: "/products/abaya_green_front.jpg",
       link: "/products/abaya-green",
+      handle: "abaya-green",
     }
   ];
 
@@ -48,6 +53,22 @@ export function ShoppableVideoSection({ variant = "shoppable" }: ShoppableVideoS
       }
       setIsPlaying(!isPlaying);
     }
+  };
+
+  const handleQuickAdd = (
+    product: { id: string; handle: string; brand: string; title: string; price: string; image: string; link: string }, 
+    e: React.MouseEvent
+  ) => {
+    e.preventDefault();
+    e.stopPropagation();
+    openQuickAdd({
+      id: product.id,
+      handle: product.handle,
+      brand: product.brand,
+      title: product.title,
+      price: product.price,
+      image: product.image,
+    });
   };
 
   return (
@@ -137,7 +158,11 @@ export function ShoppableVideoSection({ variant = "shoppable" }: ShoppableVideoS
                 </Link>
                 <div className="flex items-center justify-between mt-auto pt-2 border-t border-gray-100">
                   <span className="text-sm font-semibold text-black">{product.price}</span>
-                  <button className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center hover:bg-gray-800 transition-colors" aria-label="Add to cart">
+                  <button 
+                    onClick={(e) => handleQuickAdd(product, e)}
+                    className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center hover:bg-gray-800 transition-colors cursor-pointer shrink-0" 
+                    aria-label="Add to cart"
+                  >
                     <svg className="w-[16px] h-[16px]" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M16.63 17.47l-.6-11a.51.51 0 00-.5-.47h-2v-.43a3.5 3.5 0 00-7 0V6h-2a.51.51 0 00-.5.47l-.62 11a.49.49 0 00.49.53h12.3a.49.49 0 00.43-.53zm-12.31-.42L4.9 7h10.2l.56 10.1-11.34-.05zM7.5 5.57a2.5 2.5 0 115 0V6h-5v-.43z" fill="currentColor"></path></svg>
                   </button>
                 </div>

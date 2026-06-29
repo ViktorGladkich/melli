@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import { useCartStore } from "@/store/cart-store";
+import { useQuickAddStore } from "@/store/quick-add-store";
 
 const CROSS_SELL_PRODUCTS = [
   {
@@ -11,7 +12,7 @@ const CROSS_SELL_PRODUCTS = [
     name: "Classic Black Abaya",
     price: "89,95 €",
     image: "/products/abaya_black_front.jpg",
-    handle: "classic-black-abaya"
+    handle: "abaya-black"
   },
   {
     id: 2,
@@ -19,7 +20,7 @@ const CROSS_SELL_PRODUCTS = [
     name: "Premium Beige Abaya",
     price: "112,00 €",
     image: "/products/abaya_beige_front.jpg",
-    handle: "premium-beige-abaya"
+    handle: "abaya-beige"
   },
   {
     id: 3,
@@ -27,7 +28,7 @@ const CROSS_SELL_PRODUCTS = [
     name: "Midnight Blue Abaya",
     price: "145,50 €",
     image: "/products/abaya_blue_front.jpg",
-    handle: "midnight-blue-abaya"
+    handle: "abaya-blue"
   },
   {
     id: 4,
@@ -35,13 +36,30 @@ const CROSS_SELL_PRODUCTS = [
     name: "Champagne Silk Hijab",
     price: "39,90 €",
     image: "/products/hijab_champagne_front.png",
-    handle: "champagne-silk-hijab"
+    handle: "hijab-champagne"
   }
 ];
 
 export function CartCrossSell() {
   const [isOpen, setIsOpen] = useState(false);
   const { closeCart } = useCartStore();
+  const { openQuickAdd } = useQuickAddStore();
+
+  const handleQuickAdd = (
+    product: { id: number; handle: string; brand: string; name: string; price: string; image: string }, 
+    e: React.MouseEvent
+  ) => {
+    e.preventDefault();
+    e.stopPropagation();
+    openQuickAdd({
+      id: String(product.id),
+      handle: product.handle,
+      brand: product.brand,
+      title: product.name,
+      price: product.price,
+      image: product.image,
+    });
+  };
 
   return (
     <div className="bg-[#f7f7f7] mt-auto shrink-0 border-t border-gray-200">
@@ -74,7 +92,10 @@ export function CartCrossSell() {
                     </Link>
                     <span className="text-[13px] font-medium">{product.price}</span>
                   </div>
-                  <button className="w-8 h-8 flex items-center justify-center border border-gray-200 shrink-0 hover:bg-black hover:border-black transition-colors cursor-pointer text-gray-600 hover:text-white">
+                  <button 
+                    onClick={(e) => handleQuickAdd(product, e)}
+                    className="w-8 h-8 flex items-center justify-center border border-gray-200 shrink-0 hover:bg-black hover:border-black transition-colors cursor-pointer text-gray-600 hover:text-white"
+                  >
                     <ShoppingBag className="w-3.5 h-3.5" strokeWidth={1.5} />
                   </button>
                 </div>
