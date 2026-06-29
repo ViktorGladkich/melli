@@ -35,6 +35,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
       quantity: 1,
       image: product.images[0]?.url || "",
       variantTitle: variantTitle || "Default",
+      handle: product.handle,
     });
 
     openCart();

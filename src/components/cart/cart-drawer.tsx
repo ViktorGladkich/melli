@@ -131,7 +131,7 @@ export function CartDrawer() {
                     {items.map((item) => (
                       <li key={item.id} className="flex gap-4">
                         {/* Image */}
-                        <Link href={`/product/${item.title.toLowerCase().replace(/\\s+/g, '-')}`} onClick={() => closeCart()} className="w-[100px] h-[130px] shrink-0 bg-gray-50 cursor-pointer block">
+                        <Link href={`/product/${item.handle || item.title.toLowerCase().replace(/\\s+/g, '-')}`} onClick={() => closeCart()} className="w-[100px] h-[130px] shrink-0 bg-gray-50 cursor-pointer block">
                           <img
                             src={item.image}
                             alt={item.title}
@@ -141,12 +141,25 @@ export function CartDrawer() {
 
                         {/* Details */}
                         <div className="flex flex-col flex-1 py-1">
-                          <Link href={`/product/${item.title.toLowerCase().replace(/\\s+/g, '-')}`} onClick={() => closeCart()} className="text-[14px] font-medium text-black hover:underline cursor-pointer block">
+                          <Link href={`/product/${item.handle || item.title.toLowerCase().replace(/\\s+/g, '-')}`} onClick={() => closeCart()} className="text-[14px] font-medium text-black hover:underline cursor-pointer block">
                             {item.title}
                           </Link>
                           <div className="text-[13px] text-gray-500 mt-1 space-y-0.5">
-                            <p>Farbe: Schwarz</p>
-                            <p>Größe: {item.variantTitle || '38'}</p>
+                            {item.variantTitle ? (
+                              item.variantTitle.includes(' / ') ? (
+                                <>
+                                  <p>Farbe: {item.variantTitle.split(' / ')[0]}</p>
+                                  <p>Größe: {item.variantTitle.split(' / ')[1]}</p>
+                                </>
+                              ) : (
+                                <p>Variante: {item.variantTitle}</p>
+                              )
+                            ) : (
+                              <>
+                                <p>Farbe: Schwarz</p>
+                                <p>Größe: 38</p>
+                              </>
+                            )}
                           </div>
 
                           <div className="mt-auto pt-4 flex items-center justify-between">
