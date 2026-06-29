@@ -2,27 +2,28 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { AnimatedText } from "@/components/ui/animated-text";
 
 const blogPosts = [
   {
     id: 1,
-    title: "How to Dress for the Office?",
-    excerpt: "Choosing the right outfit for the office can sometimes be a challenge...",
-    image: "https://images.unsplash.com/photo-1485230895905-ef08ba37e509?q=80&w=800&auto=format&fit=crop",
+    title: "Wie kleidet man sich fürs Büro?",
+    excerpt: "Das richtige Outfit für das Büro zu finden, kann manchmal eine Herausforderung sein...",
+    image: "/blog/blog_office_style.png",
     link: "/blogs/news/dress-for-work",
   },
   {
     id: 2,
-    title: "How to Choose the Right Skirt Length?",
-    excerpt: "The right skirt length can enhance your figure...",
-    image: "https://images.unsplash.com/photo-1583391733958-d25e07fac661?q=80&w=800&auto=format&fit=crop",
+    title: "Wie wählt man die richtige Rocklänge?",
+    excerpt: "Die richtige Rocklänge kann Ihre Figur optimal betonen...",
+    image: "/blog/blog_skirt_length.png",
     link: "/blogs/news/skirt-length",
   },
   {
     id: 3,
-    title: "Blazer and Office Style",
-    excerpt: "The blazer is a staple piece in office fashion...",
-    image: "https://images.unsplash.com/photo-1590162562479-58edbb817342?q=80&w=800&auto=format&fit=crop",
+    title: "Blazer und Büro-Style",
+    excerpt: "Der Blazer ist ein wesentliches Kleidungsstück in der Büromode...",
+    image: "/blog/blog_blazer_style.png",
     link: "/blogs/news/blazer-style",
   }
 ];
@@ -66,11 +67,11 @@ export function BlogPostsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="flex overflow-x-auto gap-4 md:gap-6 lg:gap-8 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pb-8 -mx-4 px-4 md:mx-0 md:px-0"
+          className="flex overflow-x-auto gap-4 md:gap-6 lg:gap-8 lg:grid lg:grid-cols-3 lg:overflow-visible snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pb-8 -mx-4 px-4 md:mx-0 md:px-0"
         >
           {blogPosts.map((post) => (
-            <div key={post.id} className="flex-none w-[85vw] sm:w-[350px] md:w-[400px] lg:flex-1 snap-center group">
-              <Link href={post.link} className="block relative aspect-square overflow-hidden mb-6 bg-gray-100">
+            <div key={post.id} className="flex flex-col flex-none w-[85vw] sm:w-[350px] md:w-[400px] lg:w-auto snap-center">
+              <Link href={post.link} className="block relative aspect-square overflow-hidden mb-6 bg-gray-100 shrink-0 group">
                 <div className="absolute top-4 left-4 z-10 bg-white text-black text-[10px] sm:text-xs font-semibold px-3 py-1 uppercase tracking-widest">
                   Blog
                 </div>
@@ -81,25 +82,25 @@ export function BlogPostsSection() {
                 />
               </Link>
               <div className="flex flex-col items-center text-center px-2">
-                <h3 className="text-xl md:text-2xl font-light mb-3">
-                  <Link href={post.link} className="hover:text-gray-600 transition-colors">
+                <h3 className="text-xl md:text-2xl font-light mb-3 lg:h-[68px] flex items-start justify-center w-full">
+                  <Link href={post.link} className="hover:text-gray-600 transition-colors line-clamp-2">
                     {post.title}
                   </Link>
                 </h3>
-                <p className="text-gray-600 text-sm md:text-base mb-6 line-clamp-2">
+                <p className="text-gray-600 text-sm md:text-base mb-6 line-clamp-2 lg:h-[52px]">
                   {post.excerpt}
                 </p>
                 <Link 
                   href={post.link}
-                  className="text-xs sm:text-sm font-medium uppercase tracking-widest border-b border-black pb-1 hover:text-gray-600 hover:border-gray-600 transition-colors"
+                  className="text-xs sm:text-sm font-medium uppercase tracking-widest border-b border-black pb-1 hover:text-gray-600 hover:border-gray-600 transition-colors group inline-block"
                 >
-                  Read more
+                  <AnimatedText text="Weiterlesen" />
                 </Link>
               </div>
             </div>
           ))}
           {/* Empty space at the end to allow scrolling past the last item on mobile */}
-          <div className="flex-none w-4 md:hidden" />
+          <div className="flex-none w-4 lg:hidden" />
         </motion.div>
       </div>
     </section>

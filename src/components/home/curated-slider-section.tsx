@@ -21,15 +21,15 @@ export function CuratedSliderSection() {
     },
     {
       id: 3,
-      title: "Smaragd Traum",
-      image: "/products/abaya_green_front.jpg",
-      link: "/products/abaya-green"
+      title: "Elegant Black",
+      image: "/products/abaya_black.png",
+      link: "/products/abaya-black"
     },
     {
       id: 4,
-      title: "Dusty Pink",
-      image: "/products/abaya_pink_front.jpg",
-      link: "/products/abaya-pink"
+      title: "Beige Tunic",
+      image: "/products/tunic_beige_front.png",
+      link: "/products/tunic-beige"
     }
   ];
 
@@ -67,20 +67,23 @@ export function CuratedSliderSection() {
         </motion.h2>
 
         {/* Slider */}
-        <div 
-          ref={scrollContainerRef}
-          onScroll={handleScroll}
-          className="flex overflow-x-auto snap-x snap-mandatory md:gap-6 pb-4 md:pb-8 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden cursor-grab active:cursor-grabbing"
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 1.0, ease: [0.25, 0.1, 0.25, 1] }}
+          className="w-full"
         >
-          {items.map((item, index) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 1.2, delay: index * 0.15, ease: [0.25, 0.1, 0.25, 1] }}
-              className="relative flex-shrink-0 snap-center md:snap-start group w-full md:w-auto md:min-w-[320px] lg:min-w-[calc(25%-18px)]"
-            >
+          <div 
+            ref={scrollContainerRef}
+            onScroll={handleScroll}
+            className="flex overflow-x-auto snap-x snap-mandatory md:gap-6 pb-4 md:pb-8 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden cursor-grab active:cursor-grabbing"
+          >
+            {items.map((item) => (
+              <div
+                key={item.id}
+                className="relative flex-shrink-0 snap-center md:snap-start group w-full md:w-auto md:min-w-[320px] lg:min-w-[calc(25%-18px)]"
+              >
               {/* === MOBILE CARD === */}
               <div className="md:hidden flex flex-col items-center px-8 w-full">
                 <Link href={item.link} className="w-full flex flex-col items-center">
@@ -120,9 +123,10 @@ export function CuratedSliderSection() {
                   </span>
                 </div>
               </Link>
-            </motion.div>
-          ))}
-        </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
 
         {/* Mobile Pagination Dots */}
         <div className="flex md:hidden relative z-10 justify-center items-center gap-3 mt-8 pb-4">

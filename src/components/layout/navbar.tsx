@@ -100,8 +100,15 @@ export function Navbar({ countries = [] }: { countries?: Country[] }) {
               style={{ scale: logoScaleMobile, y: logoY }}
               className="origin-top pointer-events-auto md:hidden"
             >
-              <Link href="/" className="text-xl font-light tracking-[0.2em] uppercase">
-                MELLI.
+              <Link href="/" className="block">
+                <img 
+                  src="/logo1_cropped.png" 
+                  alt="MELLI" 
+                  className={cn(
+                    "h-6 w-auto transition-all duration-500",
+                    isScrolled ? "invert" : ""
+                  )}
+                />
               </Link>
             </motion.div>
             {/* Desktop Logo */}
@@ -109,8 +116,15 @@ export function Navbar({ countries = [] }: { countries?: Country[] }) {
               style={{ scale: logoScaleDesktop, y: logoY }}
               className="origin-top pointer-events-auto hidden md:block"
             >
-              <Link href="/" className="text-3xl font-light tracking-[0.2em] uppercase">
-                MELLI.
+              <Link href="/" className="block">
+                <img 
+                  src="/logo1_cropped.png" 
+                  alt="MELLI" 
+                  className={cn(
+                    "h-10 w-auto transition-all duration-500",
+                    isScrolled ? "invert" : ""
+                  )}
+                />
               </Link>
             </motion.div>
           </div>

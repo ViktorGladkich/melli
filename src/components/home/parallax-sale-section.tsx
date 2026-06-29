@@ -33,7 +33,7 @@ export function ParallaxSaleSection() {
           >
             <picture>
               <img 
-                src="/products/abaya_beige_front.jpg" 
+                src="/products/abaya_blue_front.jpg" 
                 alt="Best Sellers"
                 loading="lazy"
                 className="w-full h-full object-cover"
@@ -48,7 +48,7 @@ export function ParallaxSaleSection() {
           >
             <picture>
               <img 
-                src="/products/tunic_olive_front.png" 
+                src="/products/tunic_blush_front.png" 
                 alt="Sale Collection"
                 loading="lazy"
                 className="w-full h-full object-cover"

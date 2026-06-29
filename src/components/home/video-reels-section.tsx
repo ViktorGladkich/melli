@@ -174,13 +174,13 @@ export function VideoReelsSection() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="flex overflow-x-auto gap-4 md:gap-6 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pb-8 -mx-4 px-4 md:mx-0 md:px-0"
+          className="flex overflow-x-auto gap-4 md:gap-6 md:justify-center snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pb-8 -mx-4 px-4 md:mx-0 md:px-0"
         >
           {reels.map((reel) => (
             <ReelCard key={reel.id} reel={reel} />
           ))}
           {/* Empty space at the end to allow scrolling past the last item */}
-          <div className="flex-none w-4 md:w-12" />
+          <div className="flex-none w-4 md:hidden" />
         </motion.div>
       </div>
     </section>

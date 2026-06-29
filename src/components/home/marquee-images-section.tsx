@@ -5,13 +5,13 @@ import { motion } from "framer-motion";
 import { AnimatedText } from "../ui/animated-text";
 
 const marqueeImages = [
-  { id: 1, src: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=600&auto=format&fit=crop", link: "/collections/dress" },
-  { id: 2, src: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=600&auto=format&fit=crop", link: "/collections/blazer" },
-  { id: 3, src: "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=600&auto=format&fit=crop", link: "/collections/dress" },
-  { id: 4, src: "https://images.unsplash.com/photo-1509631179647-0c50006423ac?q=80&w=600&auto=format&fit=crop", link: "/collections/trousers" },
-  { id: 5, src: "https://images.unsplash.com/photo-1550639525-c97d455acf70?q=80&w=600&auto=format&fit=crop", link: "/collections/bags" },
-  { id: 6, src: "https://images.unsplash.com/photo-1550639524-a6f58345a278?q=80&w=600&auto=format&fit=crop", link: "/collections/trousers" },
-  { id: 7, src: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=600&auto=format&fit=crop", link: "/collections/blazer" },
+  { id: 1, src: "/marquee/marquee_1.png", link: "/collections/dress" },
+  { id: 2, src: "/marquee/marquee_2.png", link: "/collections/blazer" },
+  { id: 3, src: "/marquee/marquee_3.png", link: "/collections/accessories" },
+  { id: 4, src: "/marquee/marquee_4.png", link: "/collections/trousers" },
+  { id: 5, src: "/blog/blog_office_style.png", link: "/collections/bags" },
+  { id: 6, src: "/blog/blog_skirt_length.png", link: "/collections/trousers" },
+  { id: 7, src: "/blog/blog_blazer_style.png", link: "/collections/blazer" },
 ];
 
 // Duplicate the array multiple times to ensure it's wide enough for ultra-wide screens

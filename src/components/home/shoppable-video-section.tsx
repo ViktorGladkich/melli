@@ -12,7 +12,7 @@ export function ShoppableVideoSection() {
     {
       id: "abaya-beige",
       brand: "MELLI",
-      title: "Desert Sand Abaya",
+      title: "Wüstensand Abaya",
       price: "€129.00",
       image: "/products/abaya_beige_front.jpg",
       link: "/products/abaya-beige",
@@ -20,7 +20,7 @@ export function ShoppableVideoSection() {
     {
       id: "abaya-black",
       brand: "MELLI",
-      title: "Classic Black Abaya",
+      title: "Klassische Schwarze Abaya",
       price: "€129.00",
       image: "/products/abaya_black_front.jpg",
       link: "/products/abaya-black",
@@ -83,18 +83,38 @@ export function ShoppableVideoSection() {
       </div>
 
       {/* Products Content */}
-      <div className="absolute inset-0 flex flex-col justify-end p-4 md:p-8 lg:p-12 pointer-events-none">
+      <div className="absolute inset-0 flex flex-col justify-end pointer-events-none pb-4 md:pb-8 lg:pb-12">
         <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
-          transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
-          className="w-full flex overflow-x-auto gap-4 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pointer-events-auto pb-4"
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.15,
+                delayChildren: 0.2,
+              }
+            }
+          }}
+          className="w-full flex overflow-x-auto gap-4 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pointer-events-auto px-4 md:px-8 lg:px-12"
         >
+          {/* Empty space at the beginning to push the first card to the right side */}
+          <div className="flex-none w-[10%] md:w-[calc(100%-360px)] snap-start" />
+
           {products.map((product) => (
-            <div 
+            <motion.div 
               key={product.id} 
-              className="flex-none w-[280px] md:w-[340px] bg-white/95 backdrop-blur-sm snap-start p-3 md:p-4 flex gap-4 items-stretch group/card transition-transform hover:-translate-y-1 shadow-xl border border-white/20"
+              variants={{
+                hidden: { opacity: 0, x: 100 },
+                visible: { 
+                  opacity: 1, 
+                  x: 0,
+                  transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }
+                }
+              }}
+              whileHover={{ y: -4 }}
+              className="flex-none w-[280px] md:w-[340px] bg-white/95 backdrop-blur-sm snap-start p-3 md:p-4 flex gap-4 items-stretch group/card shadow-xl border border-white/20"
             >
               <Link href={product.link} className="flex-none w-[80px] md:w-[100px] relative overflow-hidden bg-gray-100 block shrink-0">
                 <picture>
@@ -117,7 +137,7 @@ export function ShoppableVideoSection() {
                   </button>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
           {/* Empty space at the end to allow scrolling past the last item */}
           <div className="flex-none w-4 md:w-12" />
