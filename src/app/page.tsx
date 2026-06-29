@@ -12,15 +12,12 @@ import { BlogPostsSection } from "@/components/home/blog-posts-section";
 import { MarqueeImagesSection } from "@/components/home/marquee-images-section";
 import { FeaturesBannerSection } from "@/components/home/features-banner-section";
 import { NewsletterSection } from "@/components/home/newsletter-section";
-import { getProducts } from "@/lib/shopify";
 
 export default async function Home() {
-  const products = await getProducts();
-
   return (
     <main id="root" role="main" tabIndex={-1}>
       <HeroSection />
-      <BestsellersSection products={products} />
+      <BestsellersSection />
       <CollectionsGridSection />
       <CuratedSliderSection />
       <ShoppableVideoSection />

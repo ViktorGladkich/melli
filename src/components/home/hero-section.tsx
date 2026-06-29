@@ -14,14 +14,12 @@ export function HeroSection() {
   });
 
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  // Фон постепенно уходит в полную темноту
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
   return (
-    <section ref={containerRef} className="relative h-dvh min-h-[500px] w-full bg-black text-white overflow-hidden">
+    <section ref={containerRef} className="relative h-[100vh] md:h-[110vh] lg:h-[120vh] min-h-[600px] w-full bg-black text-white overflow-hidden">
       {/* Параллакс Фон */}
       <motion.div 
-        style={{ y, opacity }}
+        style={{ y }}
         className="absolute inset-0 z-0"
       >
         {/* Легкий градиент снизу, чтобы текст читался (убрали общее затемнение) */}
@@ -37,7 +35,7 @@ export function HeroSection() {
       </motion.div>
 
       {/* Контент */}
-      <div className="relative z-10 flex flex-col items-center justify-end h-full text-center px-4 md:px-6 pb-20 sm:pb-16 md:pb-24 pt-20 w-full">
+      <div className="relative z-10 flex flex-col items-center justify-end h-full text-center px-4 md:px-6 pb-[12vh] sm:pb-[10vh] md:pb-[15vh] lg:pb-[25vh] pt-32 w-full">
         
         <div className="w-full max-w-4xl mx-auto flex flex-col items-center">
           <motion.div 

@@ -50,7 +50,7 @@ export function MarqueeImagesSection() {
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
           className="text-3xl md:text-4xl lg:text-5xl font-light text-black tracking-tight"
         >
-          @mellifashion
+          @millyfashion
         </motion.h2>
       </div>
       <div className="relative flex w-full flex-nowrap overflow-hidden">

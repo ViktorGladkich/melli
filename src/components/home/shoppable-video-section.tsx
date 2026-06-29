@@ -11,7 +11,7 @@ export function ShoppableVideoSection() {
   const products = [
     {
       id: "abaya-beige",
-      brand: "MELLI",
+      brand: "MILLY",
       title: "Wüstensand Abaya",
       price: "€129.00",
       image: "/products/abaya_beige_front.jpg",
@@ -19,7 +19,7 @@ export function ShoppableVideoSection() {
     },
     {
       id: "abaya-black",
-      brand: "MELLI",
+      brand: "MILLY",
       title: "Klassische Schwarze Abaya",
       price: "€129.00",
       image: "/products/abaya_black_front.jpg",
@@ -27,7 +27,7 @@ export function ShoppableVideoSection() {
     },
     {
       id: "abaya-green",
-      brand: "MELLI",
+      brand: "MILLY",
       title: "Smaragd Traum",
       price: "€139.00",
       image: "/products/abaya_green_front.jpg",
@@ -57,7 +57,7 @@ export function ShoppableVideoSection() {
         playsInline 
         className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
       >
-        <source src="/shoppable_video/shoppable_video.mp4" type="video/mp4" />
+        <source src="/video_hero/hero2.mp4" type="video/mp4" />
       </video>
 
       {/* Gradient overlay for readability at the bottom */}

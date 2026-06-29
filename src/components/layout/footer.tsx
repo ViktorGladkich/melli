@@ -33,7 +33,7 @@ function AccordionSection({ title, children }: AccordionSectionProps) {
       <h3 className="hidden lg:block font-medium text-[13px] tracking-[0.15em] uppercase mb-7 text-black">{title}</h3>
       {/* Content */}
       <div
-        className={`overflow-hidden transition-all duration-500 ease-in-out lg:!max-h-none lg:!opacity-100 lg:!pb-0 ${
+        className={`overflow-hidden transition-all duration-500 ease-in-out lg:max-h-none! lg:opacity-100! lg:pb-0! ${
           isOpen ? "max-h-[500px] opacity-100 pb-5" : "max-h-0 opacity-0"
         }`}
       >
@@ -44,11 +44,43 @@ function AccordionSection({ title, children }: AccordionSectionProps) {
 }
 
 export function Footer() {
+  const [footerHeight, setFooterHeight] = useState(0);
+  const [windowHeight, setWindowHeight] = useState(() => 
+    typeof window !== 'undefined' ? window.innerHeight : 0
+  );
+  const footerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const handleResize = () => setWindowHeight(window.innerHeight);
+    window.addEventListener('resize', handleResize);
+
+    // Следим за высотой футера
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        setFooterHeight(entry.target.getBoundingClientRect().height);
+      }
+    });
+
+    if (footerRef.current) {
+      resizeObserver.observe(footerRef.current);
+    }
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      resizeObserver.disconnect();
+    };
+  }, []);
+
   return (
-    <footer className="relative w-full bg-white border-t border-gray-200 pt-8 lg:pt-20 overflow-hidden z-10">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+    <>
+      <div style={{ height: `${footerHeight}px` }} className="w-full bg-transparent" />
+      <footer 
+        ref={footerRef} 
+        className="fixed bottom-0 left-0 w-full z-0 bg-white border-t border-gray-200 pt-8 lg:pt-10 overflow-hidden h-[100dvh] flex flex-col justify-between"
+      >
+      <div className="max-w-[1400px] w-full mx-auto px-6 md:px-10 shrink-0">
         {/* 4 Column Grid / Accordion on mobile */}
-        <div className="flex flex-col lg:grid lg:grid-cols-4 lg:gap-8 lg:mb-14">
+        <div className="flex flex-col lg:grid lg:grid-cols-4 lg:gap-8 lg:mb-8">
           
           {/* Column 1: Products */}
           <AccordionSection title="Produkte">
@@ -82,16 +114,16 @@ export function Footer() {
 
           {/* Column 4: About - always open */}
           <div className="border-b border-gray-200 lg:border-none py-5 lg:py-0">
-            <h3 className="font-medium text-[13px] tracking-[0.15em] uppercase mb-5 lg:mb-7 text-black">Über Melli</h3>
+            <h3 className="font-medium text-[13px] tracking-[0.15em] uppercase mb-5 lg:mb-7 text-black">Über Milly</h3>
             <p className="text-[14px] text-gray-600 leading-relaxed pb-2 lg:pb-0">
-              Entdecke die Welt von Melli Fashion. Besuche unsere <Link href="/uber-uns" className="text-black underline underline-offset-4 decoration-black/40 hover:decoration-black transition-all duration-500">Über uns Seite</Link>, um mehr über unsere Geschichte und unsere liebevoll ausgewählten Produkte zu erfahren.
+              Entdecke die Welt von Milly Fashion. Besuche unsere <Link href="/uber-uns" className="text-black underline underline-offset-4 decoration-black/40 hover:decoration-black transition-all duration-500">Über uns Seite</Link>, um mehr über unsere Geschichte und unsere liebevoll ausgewählten Produkte zu erfahren.
             </p>
           </div>
 
         </div>
 
         {/* Bottom Bar */}
-        <div className="flex flex-col items-center py-8 lg:py-6 lg:flex-row lg:justify-between border-t border-gray-200 gap-6 mt-4 lg:mt-0">
+        <div className="flex flex-col items-center py-6 lg:py-4 lg:flex-row lg:justify-between border-t border-gray-200 gap-6 mt-4 lg:mt-0">
           {/* Language Selector - centered on mobile */}
           <div className="flex flex-col items-center gap-6 lg:flex-row lg:gap-8">
             <button className="flex items-center gap-1.5 text-sm text-black hover:opacity-70 transition-opacity cursor-pointer">
@@ -114,7 +146,7 @@ export function Footer() {
                 </svg>
               </Link>
               {/* Instagram */}
-              <Link href="https://www.instagram.com/mellifashion" className="text-black hover:opacity-60 transition-opacity" aria-label="Instagram">
+              <Link href="https://www.instagram.com/millyfashion" className="text-black hover:opacity-60 transition-opacity" aria-label="Instagram">
                 <svg className="w-[20px] h-[20px] lg:w-[18px] lg:h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
@@ -171,14 +203,15 @@ export function Footer() {
       </div>
 
       {/* Giant Brand Name */}
-      <div className="w-full flex justify-center items-end overflow-hidden pt-6 pb-4 bg-white">
+      <div className="w-full flex justify-center items-end overflow-hidden pt-2 pb-4 bg-white flex-1 min-h-0">
         <img 
-          src="/logo1_cropped.png" 
-          alt="MELLI" 
-          className="w-[80vw] md:w-[70vw] h-auto invert select-none pointer-events-none"
+          src="/logo_v2.png" 
+          alt="MILLY" 
+          className="w-[90vw] md:w-[80vw] lg:w-[70vw] h-full object-contain object-bottom invert select-none pointer-events-none"
           aria-hidden="true"
         />
       </div>
     </footer>
+    </>
   );
 }

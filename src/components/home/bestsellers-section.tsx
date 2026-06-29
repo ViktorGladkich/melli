@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { Product } from "@/lib/shopify";
+import { MOCK_PRODUCTS, type Product } from "@/lib/mock-products";
 
 import { ProductCard } from "@/components/product/product-card";
 
@@ -66,31 +66,7 @@ export function BestsellersSection({ products: _products }: { products?: Product
     }
   };
 
-  const categorizedProducts: Record<string, Product[]> = {
-    "Abayas": [
-      { id: "abaya-black", handle: "abaya-black", title: "Classic Black Abaya", priceRange: { minVariantPrice: { amount: "129.00", currencyCode: "EUR" } }, variants: { edges: [{ node: { id: "v1", title: "Default" } }] }, images: { edges: [{ node: { url: "/products/abaya_black_front.jpg", altText: "Abaya Black Front" } }, { node: { url: "/products/abaya_black_back.jpg", altText: "Abaya Black Back" } }] }, options: [{ name: "Color", values: ["Black", "Beige", "Green", "Pink", "Blue"] }] },
-      { id: "abaya-pink", handle: "abaya-pink", title: "Dusty Pink Abaya", priceRange: { minVariantPrice: { amount: "149.00", currencyCode: "EUR" } }, variants: { edges: [{ node: { id: "v4", title: "Default" } }] }, images: { edges: [{ node: { url: "/products/abaya_pink_front.jpg", altText: "Abaya Pink Front" } }, { node: { url: "/products/abaya_pink_back.jpg", altText: "Abaya Pink Back" } }] }, options: [{ name: "Color", values: ["Pink", "Beige", "Blue"] }] },
-      { id: "abaya-green", handle: "abaya-green", title: "Olive Green Modest Dress", priceRange: { minVariantPrice: { amount: "139.00", currencyCode: "EUR" } }, variants: { edges: [{ node: { id: "v3", title: "Default" } }] }, images: { edges: [{ node: { url: "/products/abaya_green_front.jpg", altText: "Abaya Green Front" } }, { node: { url: "/products/abaya_green_back.jpg", altText: "Abaya Green Back" } }] }, options: [{ name: "Color", values: ["Green", "Blue", "Black"] }] },
-      { id: "abaya-beige", handle: "abaya-beige", title: "Desert Sand Abaya", priceRange: { minVariantPrice: { amount: "129.00", currencyCode: "EUR" } }, variants: { edges: [{ node: { id: "v2", title: "Default" } }] }, images: { edges: [{ node: { url: "/products/abaya_beige_front.jpg", altText: "Abaya Beige Front" } }, { node: { url: "/products/abaya_beige_back.jpg", altText: "Abaya Beige Back" } }] }, options: [{ name: "Color", values: ["Beige", "Black", "Pink"] }] },
-      { id: "abaya-blue", handle: "abaya-blue", title: "Pastel Blue Maxi", priceRange: { minVariantPrice: { amount: "145.00", currencyCode: "EUR" } }, variants: { edges: [{ node: { id: "v5", title: "Default" } }] }, images: { edges: [{ node: { url: "/products/abaya_blue_front.jpg", altText: "Abaya Blue Front" } }, { node: { url: "/products/abaya_blue_back.jpg", altText: "Abaya Blue Back" } }] }, options: [{ name: "Color", values: ["Blue", "Green", "Pink"] }] }
-    ],
-    "Tuniken": [
-      { id: "tunic-1", handle: "tunic-modest", title: "Modest Everyday Tunic", priceRange: { minVariantPrice: { amount: "89.00", currencyCode: "EUR" } }, variants: { edges: [{ node: { id: "v1", title: "Default" } }] }, images: { edges: [{ node: { url: "/products/tunic_modest.png", altText: "Tunic Modest" } }] }, options: [{ name: "Color", values: ["Beige", "Black"] }] },
-      { id: "tunic-2", handle: "tunic-hijab", title: "Tunic & Hijab Set", priceRange: { minVariantPrice: { amount: "119.00", currencyCode: "EUR" } }, variants: { edges: [{ node: { id: "v1", title: "Default" } }] }, images: { edges: [{ node: { url: "/products/tunic_modest_hijab.png", altText: "Tunic with Hijab" } }] }, options: [{ name: "Color", values: ["Beige", "Pink"] }] },
-      { id: "tunic-3", handle: "maxi-dress", title: "Casual Maxi Dress", priceRange: { minVariantPrice: { amount: "129.00", currencyCode: "EUR" } }, variants: { edges: [{ node: { id: "v1", title: "Default" } }] }, images: { edges: [{ node: { url: "/products/maxi_dress.png", altText: "Maxi Dress" } }] }, options: [{ name: "Color", values: ["Black", "Green"] }] },
-      { id: "tunic-4", handle: "maxi-dress-hijab", title: "Maxi Dress & Hijab Set", priceRange: { minVariantPrice: { amount: "149.00", currencyCode: "EUR" } }, variants: { edges: [{ node: { id: "v1", title: "Default" } }] }, images: { edges: [{ node: { url: "/products/maxi_dress_hijab.png", altText: "Maxi Dress Hijab" } }] }, options: [{ name: "Color", values: ["Beige", "Blue"] }] },
-      { id: "tunic-5", handle: "tunic-black-modest", title: "Classic Tunic Black", priceRange: { minVariantPrice: { amount: "119.00", currencyCode: "EUR" } }, variants: { edges: [{ node: { id: "v5", title: "Default" } }] }, images: { edges: [{ node: { url: "/products/tunic_black_front.png", altText: "Black Tunic Front" } }, { node: { url: "/products/tunic_black_back.png", altText: "Black Tunic Back" } }] }, options: [{ name: "Color", values: ["Black", "Beige"] }] }
-    ],
-    "Hijabs": [
-      { id: "hijab-champagne", handle: "hijab-champagne", title: "Champagne Silk Hijab", priceRange: { minVariantPrice: { amount: "49.00", currencyCode: "EUR" } }, variants: { edges: [{ node: { id: "v1", title: "Default" } }] }, images: { edges: [{ node: { url: "/products/hijab_champagne_front.png", altText: "Champagne Hijab" } }, { node: { url: "/products/hijab_champagne_back.png", altText: "Champagne Hijab Back" } }] }, options: [{ name: "Color", values: ["Beige", "Pink"] }] },
-      { id: "hijab-2", handle: "hijab-chiffon-pink", title: "Chiffon Hijab Pink", priceRange: { minVariantPrice: { amount: "29.00", currencyCode: "EUR" } }, variants: { edges: [{ node: { id: "v2", title: "Default" } }] }, images: { edges: [{ node: { url: "/products/hijab_chiffon_pink_front.png", altText: "Pink Hijab Front" } }, { node: { url: "/products/hijab_chiffon_pink_back.png", altText: "Pink Hijab Back" } }] }, options: [{ name: "Color", values: ["Pink", "Beige"] }] },
-      { id: "hijab-3", handle: "hijab-jersey-green", title: "Jersey Hijab Olive", priceRange: { minVariantPrice: { amount: "25.00", currencyCode: "EUR" } }, variants: { edges: [{ node: { id: "v3", title: "Default" } }] }, images: { edges: [{ node: { url: "/products/hijab_jersey_olive_front.png", altText: "Olive Hijab Front" } }, { node: { url: "/products/hijab_jersey_olive_back.png", altText: "Olive Hijab Back" } }] }, options: [{ name: "Color", values: ["Green", "Black"] }] },
-      { id: "hijab-4", handle: "hijab-jersey-beige", title: "Jersey Hijab Sand", priceRange: { minVariantPrice: { amount: "25.00", currencyCode: "EUR" } }, variants: { edges: [{ node: { id: "v4", title: "Default" } }] }, images: { edges: [{ node: { url: "/products/hijab_jersey_sand_front.png", altText: "Sand Hijab Front" } }, { node: { url: "/products/hijab_jersey_sand_back.png", altText: "Sand Hijab Back" } }] }, options: [{ name: "Color", values: ["Beige", "White"] }] },
-      { id: "hijab-5", handle: "hijab-silk-black", title: "Premium Silk Black", priceRange: { minVariantPrice: { amount: "49.00", currencyCode: "EUR" } }, variants: { edges: [{ node: { id: "v5", title: "Default" } }] }, images: { edges: [{ node: { url: "/products/hijab_silk_black_front.png", altText: "Black Silk Hijab Front" } }, { node: { url: "/products/hijab_silk_black_back.png", altText: "Black Silk Hijab Back" } }] }, options: [{ name: "Color", values: ["Black", "Green"] }] }
-    ]
-  };
-
-  const products = categorizedProducts[activeTab] || categorizedProducts["Abayas"];
+  const products = MOCK_PRODUCTS.filter(p => p.category === activeTab);
 
   return (
     <section className="py-16 md:py-24 bg-white overflow-hidden text-black">

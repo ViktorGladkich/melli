@@ -16,7 +16,7 @@ const features = [
   },
   {
     icon: <Gift strokeWidth={1} className="w-8 h-8 md:w-10 md:h-10 mb-4 text-black" />,
-    title: "Melli Card",
+    title: "Milly Card",
     text: "Exklusive Club-Rabatte",
   },
   {

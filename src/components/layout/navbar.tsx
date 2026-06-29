@@ -9,6 +9,7 @@ import { CartButton } from "@/components/cart/cart-button";
 import { AnimatedText } from "@/components/ui/animated-text";
 import { LocalizationDrawer } from "./localization-drawer";
 import { AnnouncementBar } from "./announcement-bar";
+import { SearchDrawer } from "./search-drawer";
 import { cn } from "@/lib/utils";
 import type { Country } from "@/lib/shopify";
 
@@ -17,6 +18,7 @@ export function Navbar({ countries = [] }: { countries?: Country[] }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [isLocOpen, setIsLocOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [selectedCountryCode, setSelectedCountryCode] = useState("DE");
 
   useEffect(() => {
@@ -52,10 +54,7 @@ export function Navbar({ countries = [] }: { countries?: Country[] }) {
     }
   });
 
-  const logoScaleMobile = useTransform(scrollY, [0, 30], [2.5, 1]);
-  const logoScaleDesktop = useTransform(scrollY, [0, 30], [4, 1]);
-  const logoY = useTransform(scrollY, [0, 30], [60, 0]);
-
+  // Logo animation is now handled via animate props based on isScrolled
   return (
     <>
       <LocalizationDrawer 
@@ -97,13 +96,17 @@ export function Navbar({ countries = [] }: { countries?: Country[] }) {
           <div className="flex flex-1 justify-center pointer-events-none">
             {/* Mobile Logo */}
             <motion.div
-              style={{ scale: logoScaleMobile, y: logoY }}
+              animate={{ 
+                scale: isScrolled ? 1 : 2.2,
+                y: isScrolled ? 0 : 40
+              }}
+              transition={{ type: "spring", bounce: 0, duration: 0.6 }}
               className="origin-top pointer-events-auto md:hidden"
             >
               <Link href="/" className="block">
                 <img 
-                  src="/logo1_cropped.png" 
-                  alt="MELLI" 
+                  src="/logo_v2.png" 
+                  alt="MILLY" 
                   className={cn(
                     "h-6 w-auto transition-all duration-500",
                     isScrolled ? "invert" : ""
@@ -113,13 +116,17 @@ export function Navbar({ countries = [] }: { countries?: Country[] }) {
             </motion.div>
             {/* Desktop Logo */}
             <motion.div
-              style={{ scale: logoScaleDesktop, y: logoY }}
+              animate={{ 
+                scale: isScrolled ? 1 : 3,
+                y: isScrolled ? 0 : 40
+              }}
+              transition={{ type: "spring", bounce: 0, duration: 0.6 }}
               className="origin-top pointer-events-auto hidden md:block"
             >
               <Link href="/" className="block">
                 <img 
-                  src="/logo1_cropped.png" 
-                  alt="MELLI" 
+                  src="/logo_v2.png" 
+                  alt="MILLY" 
                   className={cn(
                     "h-10 w-auto transition-all duration-500",
                     isScrolled ? "invert" : ""
@@ -138,7 +145,10 @@ export function Navbar({ countries = [] }: { countries?: Country[] }) {
               <AnimatedText text={selectedCountry ? selectedCountry.currency.isoCode : "EUR"} />
               <svg className="w-4 h-4 ml-1.5" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72"><g transform="rotate(-90 -0.00000157361 72)"><g><rect x="0" y="72" fill="none" height="72" width="72"></rect><path d="m48.688,81.162l0.876,0.876a1.487,1.487 0 0 1 0,2.1l-24.222,24.225l24.223,24.223a1.487,1.487 0 0 1 0,2.1l-0.876,0.876a1.487,1.487 0 0 1 -2.1,0l-26.154,-26.148a1.487,1.487 0 0 1 0,-2.1l26.151,-26.153a1.487,1.487 0 0 1 2.1,0l0.002,0.001z" fill="currentColor"></path></g></g></svg>
             </button>
-            <button className="p-1 hidden md:block hover:opacity-70 transition-opacity cursor-pointer">
+            <button 
+              onClick={() => setIsSearchOpen(true)}
+              className="p-1 hidden md:block hover:opacity-70 transition-opacity cursor-pointer"
+            >
               <svg className="w-[20px] h-[20px]" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M17.17 16.48L12 11.36a5.5 5.5 0 10-4.22 2 5.41 5.41 0 003.51-1.27l5.14 5.13a.51.51 0 00.7 0 .5.5 0 00.04-.74zm-9.35-4.15a4.5 4.5 0 110-9 4.5 4.5 0 010 9z" fill="currentColor"></path></svg>
             </button>
             <button className="p-1 hidden sm:block hover:opacity-70 transition-opacity cursor-pointer">
@@ -152,6 +162,7 @@ export function Navbar({ countries = [] }: { countries?: Country[] }) {
         </div>
       </div>
     </motion.header>
+    <SearchDrawer isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </>
   );
 }

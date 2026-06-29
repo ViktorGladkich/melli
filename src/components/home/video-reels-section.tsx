@@ -11,7 +11,7 @@ const reels = [
     id: 1,
     video: "/shoppable_video/shoppable_video.mp4",
     product: {
-      brand: "MELLI",
+      brand: "MILLY",
       title: "Desert Sand Abaya",
       price: "€129.00",
       image: "/products/abaya_beige_front.jpg",
@@ -20,9 +20,9 @@ const reels = [
   },
   {
     id: 2,
-    video: "/video_hero/hero.mp4",
+    video: "/video_hero/hero3.mp4",
     product: {
-      brand: "MELLI",
+      brand: "MILLY",
       title: "Classic Black Abaya",
       price: "€129.00",
       image: "/products/tunic_olive_front.png", // Reusing image
@@ -33,7 +33,7 @@ const reels = [
     id: 3,
     video: "/reels_video/reels_video3.mp4",
     product: {
-      brand: "MELLI",
+      brand: "MILLY",
       title: "Smaragd Traum",
       price: "€139.00",
       image: "/products/abaya_beige_back.jpg",
@@ -42,9 +42,9 @@ const reels = [
   },
   {
     id: 4,
-    video: "/video_hero/hero.mp4",
+    video: "/video_hero/hero2.mp4",
     product: {
-      brand: "MELLI",
+      brand: "MILLY",
       title: "Olive Elegance",
       price: "€149.00",
       image: "/products/tunic_olive_back.png",

@@ -43,7 +43,7 @@ export function NewsletterSection() {
             />
             <button
               type="submit"
-              className="bg-black text-white px-8 py-4 font-normal text-sm tracking-widest hover:bg-gray-900 transition-colors uppercase min-w-[180px] flex items-center justify-center group"
+              className="bg-black text-white px-8 py-4 font-normal text-sm tracking-widest hover:bg-gray-900 transition-colors uppercase min-w-[180px] flex items-center justify-center group cursor-pointer"
             >
               <AnimatedText text="Abonnieren" />
             </button>

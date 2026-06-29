@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import type { Product } from "@/lib/shopify";
+import type { Product } from "@/lib/mock-products";
 
 const getColorStyle = (color: string) => {
   const c = color.toLowerCase();
@@ -58,13 +58,16 @@ export function ProductImage({ imageUrl, hoverImageUrl, alt }: { imageUrl: strin
 }
 
 export function ProductCard({ product, index, total }: { product: Product, index: number, total: number }) {
-  const imageUrl = product.images?.edges[0]?.node.url || "";
-  const hoverImageUrl = product.images?.edges[1]?.node.url || imageUrl; 
+  const imageUrl = product.images?.[0]?.url || "";
+  const hoverImageUrl = product.images?.[1]?.url || imageUrl; 
 
   const colorOption = product.options?.find(
     (opt) => opt.name.toLowerCase() === "color" || opt.name.toLowerCase() === "farbe" || opt.name.toLowerCase() === "couleur"
   );
   const colors = colorOption ? colorOption.values : [];
+
+  // Parse price number
+  const priceValue = parseFloat(product.price.replace(/[^\d.-]/g, ''));
 
   return (
     <div
@@ -74,7 +77,7 @@ export function ProductCard({ product, index, total }: { product: Product, index
       aria-label={`${index + 1} / ${total}`}
     >
       {/* Картинка */}
-      <a href={`/products/${product.handle}`} className="relative block aspect-2/3 overflow-hidden bg-gray-100 mb-4">
+      <a href={`/product/${product.handle}`} className="relative block aspect-2/3 overflow-hidden bg-gray-100 mb-4">
         {imageUrl ? (
           <ProductImage imageUrl={imageUrl} hoverImageUrl={hoverImageUrl} alt={product.title} />
         ) : (
@@ -96,19 +99,19 @@ export function ProductCard({ product, index, total }: { product: Product, index
 
       {/* Инфо */}
       <div className="flex flex-col text-center px-2">
-        <a href={`/products/${product.handle}`} className="vendor-link text-[11px] text-gray-500 uppercase tracking-widest mb-1 hover:underline">
-          MELLI
+        <a href={`/product/${product.handle}`} className="vendor-link text-[11px] text-gray-500 uppercase tracking-widest mb-1 hover:underline">
+          {product.brand || "MILLY"}
         </a>
         
         <h3 className="text-sm font-normal text-black mb-2 line-clamp-1">
-          <a href={`/products/${product.handle}`} className="hover:underline underline-offset-4">
+          <a href={`/product/${product.handle}`} className="hover:underline underline-offset-4">
             {product.title}
           </a>
         </h3>
         
         <div className={cn("text-sm font-normal price", index === 0 && "price--on-sale")}>
-          <span className={cn("mr-2", index === 0 ? "text-red-600 price__sale" : "text-black")}>€{product.priceRange.minVariantPrice.amount}</span>
-          {index === 0 && <s className="price__regular text-gray-400">€199.00</s>}
+          <span className={cn("mr-2", index === 0 ? "text-red-600 price__sale" : "text-black")}>€{priceValue.toFixed(2)}</span>
+          {index === 0 && <s className="price__regular text-gray-400">€{(priceValue + 70).toFixed(2)}</s>}
         </div>
 
         {/* Swatches */}
