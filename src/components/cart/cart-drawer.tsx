@@ -2,191 +2,203 @@
 
 import { useCartStore } from "@/store/cart-store";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Minus, Plus, ShoppingBag } from "lucide-react";
-import { AnimatedText } from "../ui/animated-text";
-
-// Продвинутые ease функции для ощущения "дороговизны" как на awwwards
-const easing = [0.32, 0.72, 0, 1] as const;
+import { X, Minus, Plus, Trash2, ChevronUp, FileText, Tag, Truck } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 
 const overlayVariants = {
-  hidden: { opacity: 0, transition: { duration: 0.4, ease: easing } },
-  visible: { opacity: 1, transition: { duration: 0.4, ease: easing } },
+  hidden: { opacity: 0, transition: { duration: 0.3 } },
+  visible: { opacity: 1, transition: { duration: 0.3 } },
 };
 
 const drawerVariants = {
-  hidden: { x: "100%", transition: { duration: 0.6, ease: easing } },
+  hidden: { x: "100%", transition: { duration: 0.4, ease: [0.36, 0, 0.66, -0.56] } },
   visible: { 
     x: "0%", 
     transition: { 
-      duration: 0.6, 
-      ease: easing,
-      staggerChildren: 0.08, // Каскадное появление элементов
-      delayChildren: 0.2
+      duration: 0.5, 
+      ease: [0.34, 1.56, 0.64, 1], // bouncy ease out
     } 
   },
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easing } },
-};
-
 export function CartDrawer() {
   const { isOpen, closeCart, items, removeItem, updateQuantity } = useCartStore();
+  const [isGiftWrapping, setIsGiftWrapping] = useState(false);
 
   const total = items.reduce((acc, item) => {
-    // Извлекаем цифры, точки и запятые из строки цены (например "10.0 EUR" -> "10.0")
     const match = item.price.match(/[\d.,]+/);
     if (!match) return acc;
-    // Меняем запятую на точку для парсинга и преобразуем в число
     const priceNumber = parseFloat(match[0].replace(',', '.'));
     return acc + (isNaN(priceNumber) ? 0 : priceNumber) * item.quantity;
   }, 0);
+
+  const totalItems = items.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Стеклянный Фон */}
+          {/* Overlay */}
           <motion.div
             variants={overlayVariants}
             initial="hidden"
             animate="visible"
             exit="hidden"
             onClick={closeCart}
-            className="fixed inset-0 z-50 bg-black/20 backdrop-blur-md"
+            className="fixed inset-0 z-50 bg-black/50"
           />
 
-          {/* Сама Панель Корзины */}
+          {/* Drawer */}
           <motion.div
             variants={drawerVariants}
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-y-0 right-0 z-60 w-full md:w-[480px] bg-white/70 backdrop-blur-3xl shadow-2xl border-l border-white/50 flex flex-col text-black"
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            className="fixed inset-y-0 right-0 z-50 w-full md:w-[420px] bg-white flex flex-col text-black font-sans"
           >
-            {/* Шапка Корзины */}
-            <div className="flex items-center justify-between p-6 md:p-8">
-              <h2 className="text-2xl font-black tracking-tight uppercase">Warenkorb</h2>
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 py-5 border-b border-gray-200 shrink-0">
+              <h2 className="text-[13px] font-medium tracking-[0.1em] uppercase">
+                Your cart ({totalItems})
+              </h2>
               <button
                 onClick={closeCart}
-                className="p-2 -m-2 text-gray-400 transition-colors hover:text-black hover:rotate-90 duration-300"
+                className="p-2 -m-2 text-gray-500 hover:text-black transition-colors"
+                aria-label="Close cart"
               >
-                <X className="w-6 h-6" strokeWidth={1.5} />
+                <X className="w-5 h-5" strokeWidth={1} />
               </button>
             </div>
 
-            {/* Контент */}
-            <div className="flex-1 overflow-y-auto px-6 md:px-8 pb-8 scrollbar-hide">
-              {items.length === 0 ? (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1, transition: { delay: 0.3 } }}
-                  className="flex flex-col items-center justify-center h-full text-center space-y-6 text-gray-400"
-                >
-                  <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center">
-                    <ShoppingBag className="w-10 h-10 stroke-1" />
+            {/* Scrollable Content */}
+            <div className="flex-1 overflow-y-auto overflow-x-hidden flex flex-col">
+              
+              {/* Free Shipping Bar */}
+              <div className="px-6 py-5 shrink-0">
+                <p className="text-[13px] font-medium mb-3">
+                  You have unlocked free shipping!
+                </p>
+                <div className="w-full h-1 bg-gray-200">
+                  <div className="h-full bg-[#222] w-full"></div>
+                </div>
+              </div>
+
+              {/* Cart Items */}
+              <div className="px-6 flex-1">
+                {items.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center h-full text-center py-10">
+                    <p className="text-gray-500 text-sm">Your cart is currently empty.</p>
                   </div>
-                  <div>
-                    <p className="text-xl font-medium text-gray-900 mb-2">Dein Warenkorb ist leer</p>
-                    <p className="text-sm">Es sieht so aus, als hättest du noch nichts hinzugefügt.</p>
-                  </div>
-                  <button 
-                    onClick={closeCart}
-                    className="mt-4 px-8 py-4 bg-black text-white text-sm font-bold uppercase tracking-wider hover:bg-black/80 transition-colors group cursor-pointer"
-                  >
-                    <AnimatedText text="Weiter einkaufen" />
-                  </button>
-                </motion.div>
-              ) : (
-                <ul className="flex flex-col gap-8">
-                  <AnimatePresence initial={false}>
+                ) : (
+                  <ul className="flex flex-col gap-6 pb-6">
                     {items.map((item) => (
-                      <motion.li
-                        layout // Магия Framer Motion для плавного схлопывания при удалении
-                        variants={itemVariants}
-                        key={item.id}
-                        initial="hidden"
-                        animate="visible"
-                        exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
-                        className="flex gap-6 group"
-                      >
-                        {/* Изображение Товара с зумом при ховере */}
-                        <div className="relative w-28 h-32 bg-gray-100 overflow-hidden shrink-0">
+                      <li key={item.id} className="flex gap-4">
+                        {/* Image */}
+                        <div className="w-[100px] h-[130px] shrink-0 bg-gray-50">
                           <img
                             src={item.image}
                             alt={item.title}
-                            className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
+                            className="object-cover w-full h-full"
                           />
                         </div>
 
-                        {/* Информация */}
+                        {/* Details */}
                         <div className="flex flex-col flex-1 py-1">
-                          <div className="flex justify-between items-start gap-4">
-                            <div>
-                              <h3 className="font-bold text-gray-900 leading-tight uppercase tracking-tight text-sm">
-                                {item.title}
-                              </h3>
-                              <p className="text-sm text-gray-500 mt-1">{item.variantTitle}</p>
-                            </div>
-                            <button
-                              onClick={() => removeItem(item.id)}
-                              className="text-gray-300 hover:text-black transition-colors"
-                            >
-                              <X className="w-5 h-5" strokeWidth={1.5} />
-                            </button>
+                          <h3 className="text-[14px] font-medium text-black">
+                            {item.title}
+                          </h3>
+                          <div className="text-[13px] text-gray-500 mt-1 space-y-0.5">
+                            <p>Color: Black</p>
+                            <p>Size: {item.variantTitle || '38'}</p>
                           </div>
 
-                          <div className="mt-auto flex items-end justify-between">
-                            <div className="flex items-center border border-gray-200">
+                          <div className="mt-auto pt-4 flex items-center justify-between">
+                            <div className="flex items-center gap-4">
+                              {/* Quantity Counter */}
+                              <div className="flex items-center border border-gray-200 h-9">
+                                <button
+                                  onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
+                                  className="w-9 h-full flex items-center justify-center text-gray-500 hover:text-black"
+                                >
+                                  <Minus className="w-3 h-3" strokeWidth={1.5} />
+                                </button>
+                                <span className="w-8 text-center text-[13px]">{item.quantity}</span>
+                                <button
+                                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                  className="w-9 h-full flex items-center justify-center text-gray-500 hover:text-black"
+                                >
+                                  <Plus className="w-3 h-3" strokeWidth={1.5} />
+                                </button>
+                              </div>
+                              
+                              {/* Delete Button */}
                               <button
-                                onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                className="p-3 text-gray-400 hover:text-black transition-colors"
+                                onClick={() => removeItem(item.id)}
+                                className="text-gray-400 hover:text-black transition-colors"
                               >
-                                <Minus className="w-3 h-3" />
-                              </button>
-                              <span className="w-8 text-center text-sm font-medium">{item.quantity}</span>
-                              <button
-                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                className="p-3 text-gray-400 hover:text-black transition-colors"
-                              >
-                                <Plus className="w-3 h-3" />
+                                <Trash2 className="w-4 h-4" strokeWidth={1.5} />
                               </button>
                             </div>
-                            <span className="font-bold text-lg">{item.price}</span>
+                            
+                            <span className="text-[14px] font-medium">{item.price}</span>
                           </div>
                         </div>
-                      </motion.li>
+                      </li>
                     ))}
-                  </AnimatePresence>
-                </ul>
-              )}
-            </div>
+                  </ul>
+                )}
+              </div>
 
-            {/* Подвал с кнопкой Чекаута (Стиль Awwwards) */}
-            {items.length > 0 && (
-              <motion.div 
-                layout
-                className="p-6 md:p-8 bg-white/40 backdrop-blur-md border-t border-white/60"
-              >
-                <div className="flex items-center justify-between mb-6">
-                  <span className="text-sm font-medium text-gray-500 uppercase tracking-wider">Zwischensumme</span>
-                  <span className="text-3xl font-black">{total.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</span>
-                </div>
-                
-                {/* Анимированная кнопка Checkout (тоже стеклянная) */}
-                <button className="w-full h-16 bg-black/80 backdrop-blur-md border border-white/20 text-white font-bold text-sm uppercase tracking-widest hover:bg-black transition-colors duration-700 relative overflow-hidden group rounded-2xl shadow-xl">
-                  <span className="absolute inset-0 flex items-center justify-center transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-y-full">
-                    Zur Kasse
-                  </span>
-                  <span className="absolute inset-0 flex items-center justify-center transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] translate-y-full group-hover:translate-y-0">
-                    Zur Kasse
-                  </span>
+              {/* Cross Sell Section */}
+              <div className="bg-[#f7f7f7] mt-auto shrink-0 border-t border-gray-200">
+                <button className="w-full flex items-center justify-between px-6 py-4 text-[13px] font-medium">
+                  You might also like
+                  <ChevronUp className="w-4 h-4 text-gray-500" strokeWidth={1.5} />
                 </button>
-                <p className="text-center text-xs text-gray-500 mt-4 font-medium">Steuern und Versandkosten werden beim Checkout berechnet</p>
-              </motion.div>
-            )}
+              </div>
+              
+              {/* Footer Area inside scroll to stick to bottom naturally */}
+              <div className="shrink-0 bg-white border-t border-gray-200">
+                {/* Gift Wrapping */}
+                <div className="px-6 py-4 border-b border-gray-100 flex items-center gap-3 cursor-pointer" onClick={() => setIsGiftWrapping(!isGiftWrapping)}>
+                  <div className={`w-5 h-5 border flex items-center justify-center rounded-sm transition-colors ${isGiftWrapping ? 'border-black bg-black' : 'border-gray-300'}`}>
+                    {isGiftWrapping && <X className="w-3 h-3 text-white" strokeWidth={3} />} {/* Checkmark ideally, using X as placeholder or implement custom check */}
+                    {isGiftWrapping && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
+                  </div>
+                  <span className="text-[13px]">Gift wrapping</span>
+                </div>
+
+                {/* Features Row */}
+                <div className="flex border-b border-gray-100">
+                  <button className="flex-1 flex flex-col items-center justify-center py-4 gap-2 text-[11px] font-medium border-r border-gray-100 hover:bg-gray-50">
+                    <FileText className="w-4 h-4 text-gray-600" strokeWidth={1.5} />
+                    Order Note
+                  </button>
+                  <button className="flex-1 flex flex-col items-center justify-center py-4 gap-2 text-[11px] font-medium border-r border-gray-100 hover:bg-gray-50">
+                    <Tag className="w-4 h-4 text-gray-600" strokeWidth={1.5} />
+                    Discount Code
+                  </button>
+                  <button className="flex-1 flex flex-col items-center justify-center py-4 gap-2 text-[11px] font-medium hover:bg-gray-50">
+                    <Truck className="w-4 h-4 text-gray-600" strokeWidth={1.5} />
+                    Shipping
+                  </button>
+                </div>
+
+                {/* Subtotal */}
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-[15px] font-medium">Subtotal</span>
+                    <span className="text-[15px] font-medium">{total.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} EUR</span>
+                  </div>
+                  <p className="text-[12px] text-gray-500 mb-5">Shipping & taxes calculated at checkout</p>
+                  
+                  <button className="w-full bg-[#222] text-white h-[50px] text-[14px] font-medium transition-colors hover:bg-black flex items-center justify-center">
+                    Check out
+                  </button>
+                </div>
+              </div>
+            </div>
           </motion.div>
         </>
       )}

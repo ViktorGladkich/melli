@@ -7,7 +7,7 @@ export function AnimatedText({ text, className }: { text: string; className?: st
       <span className="transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:-translate-y-full">
         {text}
       </span>
-      <span className="absolute inset-0 flex items-center justify-center transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] translate-y-full group-hover:translate-y-0">
+      <span aria-hidden="true" className="absolute inset-0 flex items-center justify-center transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] translate-y-full group-hover:translate-y-0 select-none">
         {text}
       </span>
     </span>
