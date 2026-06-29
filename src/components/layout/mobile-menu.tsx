@@ -167,7 +167,7 @@ export function MobileMenu() {
 
               <div className="wt-drawer__content" style={{ paddingTop: 0 }}>
                 <div className="wt-drawer__title">
-                  <div className="wt-drawer__title__text">Menu</div>
+                  <div className="wt-drawer__title__text">Menü</div>
                   <div className="wt-drawer__close" tabIndex={0} role="button" aria-label="Toggle menu" onClick={() => setIsOpen(false)}>
                     <svg className="svg-icon svg-icon--close w-6 h-6" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">
                       <g transform="rotate(-90 -0.00000157361 72)"><rect x="0" y="72" fill="none" height="72" width="72"></rect><path d="m58.76152,133.58844l-22.762,-22.577l-22.762,22.577a1.413,1.413 0 0 1 -1.994,0l-0.828,-0.824a1.381,1.381 0 0 1 0,-1.976l22.973,-22.787l-22.973,-22.788a1.387,1.387 0 0 1 0,-1.98l0.828,-0.824a1.422,1.422 0 0 1 1.994,0l22.764,22.579l22.76,-22.579a1.425,1.425 0 0 1 2,0l0.828,0.824a1.39,1.39 0 0 1 0,1.98l-22.969,22.788l22.969,22.787a1.389,1.389 0 0 1 0,1.979l-0.828,0.82a1.415,1.415 0 0 1 -2,0l0,0.001z" fill="currentColor"></path></g>
@@ -206,7 +206,7 @@ export function MobileMenu() {
                           className="wt-page-nav-mega__link wt-page-nav-mega__link--parent cursor-pointer"
                           onClick={(e) => toggleExpand("bestsellers", e)}
                         >
-                          <span className="wt-page-nav-mega__link__text wt-page-nav-mega__link__text--underline">Bestsellers</span>
+                          <span className="wt-page-nav-mega__link__text wt-page-nav-mega__link__text--underline">Bestseller</span>
                           {expanded === "bestsellers" ? (
                             <svg className="svg-icon svg-icon--minus w-5 h-5" viewBox="0 0 72 72"><rect width="54" height="4" rx="2" y="34" x="9" fill="currentColor"></rect></svg>
                           ) : (
@@ -216,7 +216,7 @@ export function MobileMenu() {
                         <div className={cn("wt-page-nav-mega__sublist__wrapper wt-page-nav-mega__sublist__wrapper--mega", expanded === "bestsellers" && "is-open")}>
                           <ul className="wt-page-nav-mega__sublist">
                             <li className="wt-page-nav-mega__sublist__item">
-                              <Link href="/collections/bestseller" onClick={() => setIsOpen(false)} className="wt-page-nav-mega__sublist__link">View all Bestsellers</Link>
+                              <Link href="/collections/bestseller" onClick={() => setIsOpen(false)} className="wt-page-nav-mega__sublist__link">Alle Bestseller ansehen</Link>
                             </li>
                             <li className="wt-page-nav-mega__sublist__item wt-page-nav-mega__sublist__item--gallery">
                               <ul className="mega-menu__gallery mega-menu__gallery--stack">
@@ -224,7 +224,7 @@ export function MobileMenu() {
                                   <Link href="/products/abaya-black" onClick={() => setIsOpen(false)}>
                                     <picture className="mega-menu__gallery__picture">
                                       <img src="/products/abaya_black_front.jpg" alt="Black Abaya" />
-                                      <p className="mega-menu__gallery__caption">Classic Black Abaya</p>
+                                      <p className="mega-menu__gallery__caption">Klassische Schwarze Abaya</p>
                                     </picture>
                                   </Link>
                                 </li>
@@ -232,7 +232,7 @@ export function MobileMenu() {
                                   <Link href="/products/abaya-beige" onClick={() => setIsOpen(false)}>
                                     <picture className="mega-menu__gallery__picture">
                                       <img src="/products/abaya_beige_front.jpg" alt="Beige Abaya" />
-                                      <p className="mega-menu__gallery__caption">Desert Sand Abaya</p>
+                                      <p className="mega-menu__gallery__caption">Wüstensand Abaya</p>
                                     </picture>
                                   </Link>
                                 </li>
@@ -260,7 +260,7 @@ export function MobileMenu() {
                       {/* ABOUT US */}
                       <li className="wt-page-nav-mega__item">
                         <Link href="/pages/about-us" onClick={() => setIsOpen(false)} className="wt-page-nav-mega__link">
-                          <span className="wt-page-nav-mega__link__text wt-page-nav-mega__link__text--underline">About Us</span>
+                          <span className="wt-page-nav-mega__link__text wt-page-nav-mega__link__text--underline">Über uns</span>
                         </Link>
                       </li>
 
@@ -274,11 +274,11 @@ export function MobileMenu() {
                         <Link href="/pages/faq" onClick={() => setIsOpen(false)} className="wt-page-nav-mega__aside-list__link">FAQ</Link>
                       </li>
                       <li className="wt-page-nav-mega__aside-list__item">
-                        <Link href="/pages/contact" onClick={() => setIsOpen(false)} className="wt-page-nav-mega__aside-list__link">Contact</Link>
+                        <Link href="/pages/contact" onClick={() => setIsOpen(false)} className="wt-page-nav-mega__aside-list__link">Kontakt</Link>
                       </li>
                       <li className="wt-page-nav-mega__aside-list__item flex items-center gap-2 mt-4 text-sm cursor-pointer">
                         <svg className="w-5 h-5" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none"><path d="M10 10a4 4 0 100-8 4 4 0 000 8zm0-7a3 3 0 110 6 3 3 0 010-6zM10 11c-5 0-7 2-7 7h14c0-5-2-7-7-7zm0 1c4.08 0 5.73 1.33 6 5H4c.27-3.67 1.92-5 6-5z" fill="currentColor"></path></svg>
-                        Log in
+                        Anmelden
                       </li>
                     </ul>
                   </aside>
@@ -293,7 +293,7 @@ export function MobileMenu() {
 
   return (
     <div className="flex items-center">
-      <button onClick={() => setIsOpen(true)} className="flex items-center justify-center p-2 -m-2 text-inherit hover:opacity-70 transition-opacity">
+      <button onClick={() => setIsOpen(true)} className="flex items-center justify-center p-2 -m-2 text-inherit hover:opacity-70 transition-opacity cursor-pointer">
         <svg className="w-[24px] h-[24px]" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><g id="Navi"><rect id="ico_bar_1" height="1.5" width="22.3555" y="11.69497" x="4.82225" fill="currentColor"></rect><rect id="ico_bar_3" height="1.5" width="22.3555" y="19.65072" x="4.82225" fill="currentColor"></rect></g></svg>
       </button>
 

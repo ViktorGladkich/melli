@@ -158,7 +158,7 @@ export function BestsellersSection({
             >
             {/* Slides */}
             {displayProducts.map((product, index) => (
-              <ProductCard key={product.id} product={product} index={index} total={displayProducts.length} />
+              <ProductCard key={product.id} product={product} index={index} total={displayProducts.length} isGrid={false} />
             ))}
             </motion.div>
           </AnimatePresence>

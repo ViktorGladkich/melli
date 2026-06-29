@@ -57,7 +57,17 @@ export function ProductImage({ imageUrl, hoverImageUrl, alt }: { imageUrl: strin
   );
 }
 
-export function ProductCard({ product, index, total }: { product: Product, index: number, total: number }) {
+export function ProductCard({ 
+  product, 
+  index, 
+  total,
+  isGrid = true
+}: { 
+  product: Product, 
+  index: number, 
+  total: number,
+  isGrid?: boolean
+}) {
   const imageUrl = product.images?.[0]?.url || "";
   const hoverImageUrl = product.images?.[1]?.url || imageUrl; 
 
@@ -71,9 +81,12 @@ export function ProductCard({ product, index, total }: { product: Product, index
 
   return (
     <div
-      data-swiper-slide=""
+      data-swiper-slide={!isGrid ? "" : undefined}
       role="group"
-      className="swiper-slide wt-slider__slide swiper-slide-visible w-[280px] md:w-[298px] shrink-0 group flex flex-col snap-start mr-2"
+      className={cn(
+        "group flex flex-col snap-start",
+        isGrid ? "w-full" : "swiper-slide wt-slider__slide swiper-slide-visible w-[280px] md:w-[298px] shrink-0 mr-2"
+      )}
       aria-label={`${index + 1} / ${total}`}
     >
       {/* Картинка */}
