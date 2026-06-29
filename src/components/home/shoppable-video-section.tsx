@@ -21,7 +21,7 @@ export function ShoppableVideoSection({ variant = "shoppable" }: ShoppableVideoS
       title: "Wüstensand Abaya",
       price: "€129.00",
       image: "/products/abaya_beige_front.jpg",
-      link: "/products/abaya-beige",
+      link: "/product/abaya-beige",
       handle: "abaya-beige",
     },
     {
@@ -30,7 +30,7 @@ export function ShoppableVideoSection({ variant = "shoppable" }: ShoppableVideoS
       title: "Klassische Schwarze Abaya",
       price: "€129.00",
       image: "/products/abaya_black_front.jpg",
-      link: "/products/abaya-black",
+      link: "/product/abaya-black",
       handle: "abaya-black",
     },
     {
@@ -39,7 +39,7 @@ export function ShoppableVideoSection({ variant = "shoppable" }: ShoppableVideoS
       title: "Smaragd Traum",
       price: "€139.00",
       image: "/products/abaya_green_front.jpg",
-      link: "/products/abaya-green",
+      link: "/product/abaya-green",
       handle: "abaya-green",
     }
   ];

@@ -7,24 +7,24 @@ import { AnimatedText } from "@/components/ui/animated-text";
 const blogPosts = [
   {
     id: 1,
-    title: "Wie kleidet man sich fürs Büro?",
-    excerpt: "Das richtige Outfit für das Büro zu finden, kann manchmal eine Herausforderung sein...",
+    title: "Wie man Abayas für jeden Anlass stylt",
+    excerpt: "Entdecken Sie die Vielseitigkeit der Abaya und erfahren Sie, wie Sie sie sowohl im Alltag als auch bei festlichen Anlässen perfekt in Szene setzen können...",
     image: "/blog/blog_office_style.png",
-    link: "/blogs/news/dress-for-work",
+    link: "/blogs/news/abaya-styling",
   },
   {
     id: 2,
-    title: "Wie wählt man die richtige Rocklänge?",
-    excerpt: "Die richtige Rocklänge kann Ihre Figur optimal betonen...",
+    title: "Modest Fashion: Trends für die kommende Saison",
+    excerpt: "Von fließenden Stoffen bis hin zu eleganten Schnitten – werfen Sie einen Blick auf die wichtigsten Trends, die Ihre Garderobe bereichern werden...",
     image: "/blog/blog_skirt_length.png",
-    link: "/blogs/news/skirt-length",
+    link: "/blogs/news/modest-fashion-trends",
   },
   {
     id: 3,
-    title: "Blazer und Büro-Style",
-    excerpt: "Der Blazer ist ein wesentliches Kleidungsstück in der Büromode...",
+    title: "Der perfekte Hijab für Ihren Hauttyp",
+    excerpt: "Die richtige Farbe kann Ihren Teint zum Strahlen bringen. Wir zeigen Ihnen, welche Nuancen am besten zu Ihnen passen...",
     image: "/blog/blog_blazer_style.png",
-    link: "/blogs/news/blazer-style",
+    link: "/blogs/news/perfect-hijab-color",
   }
 ];
 
@@ -47,7 +47,7 @@ export function BlogPostsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
-            className="text-3xl md:text-4xl lg:text-5xl font-light tracking-tight mb-4"
+            className="text-black text-3xl md:text-4xl lg:text-5xl font-light tracking-tight mb-4"
           >
             News & Inspiration
           </motion.h2>
@@ -82,7 +82,7 @@ export function BlogPostsSection() {
                 />
               </Link>
               <div className="flex flex-col items-center text-center px-2">
-                <h3 className="text-xl md:text-2xl font-light mb-3 lg:h-[68px] flex items-start justify-center w-full">
+                <h3 className="text-black text-xl md:text-2xl font-light mb-3 lg:h-[68px] flex items-start justify-center w-full">
                   <Link href={post.link} className="hover:text-gray-600 transition-colors line-clamp-2">
                     {post.title}
                   </Link>
@@ -92,7 +92,7 @@ export function BlogPostsSection() {
                 </p>
                 <Link 
                   href={post.link}
-                  className="text-xs sm:text-sm font-medium uppercase tracking-widest border-b border-black pb-1 hover:text-gray-600 hover:border-gray-600 transition-colors group inline-block"
+                  className="text-black text-xs sm:text-sm font-medium uppercase tracking-widest border-b border-black pb-1 hover:text-gray-600 hover:border-gray-600 transition-colors group inline-block"
                 >
                   <AnimatedText text="Weiterlesen" />
                 </Link>

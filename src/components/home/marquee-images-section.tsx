@@ -78,12 +78,14 @@ export function MarqueeImagesSection() {
         transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
         className="mt-8 md:mt-12 flex justify-center px-4"
       >
-        <Link 
-          href="/uber-uns" 
+        <a 
+          href="https://www.instagram.com/invertadigital/" 
+          target="_blank"
+          rel="noopener noreferrer"
           className="bg-black text-white px-8 sm:px-12 py-3.5 md:py-4 font-normal text-[13px] sm:text-sm tracking-widest hover:bg-black/90 transition-colors uppercase min-w-[200px] flex items-center justify-center group cursor-pointer"
         >
           <AnimatedText text="Folge uns" />
-        </Link>
+        </a>
       </motion.div>
     </section>
   );

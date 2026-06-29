@@ -5,6 +5,7 @@ import { Plus, Minus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCartStore } from "@/store/cart-store";
 import { Product } from "@/lib/mock-products";
+import { SizeGuideModal } from "./size-guide-modal";
 
 interface ProductInfoProps {
   product: Product;
@@ -18,6 +19,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
     product?.options.find((o) => o.name === "Size")?.values[0] || null,
   );
   const [openAccordion, setOpenAccordion] = useState<string | null>("description");
+  const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
 
   const addItem = useCartStore((state) => state.addItem);
   const openCart = useCartStore((state) => state.openCart);
@@ -100,7 +102,10 @@ export function ProductInfo({ product }: ProductInfoProps) {
               <span className="text-[13px] tracking-widest uppercase">
                 Größe
               </span>
-              <button className="text-[12px] text-gray-500 underline hover:text-black cursor-pointer">
+              <button 
+                onClick={() => setIsSizeGuideOpen(true)}
+                className="text-[12px] text-gray-500 underline hover:text-black cursor-pointer"
+              >
                 Größentabelle
               </button>
             </div>
@@ -193,6 +198,36 @@ export function ProductInfo({ product }: ProductInfoProps) {
                   <div className="pb-6 text-[14px] text-gray-600 leading-relaxed">
                     {product.material ||
                       "Hochwertige Stoffmischung. Wir empfehlen sanfte Handwäsche oder Maschinenwäsche bei 30 Grad. Nicht im Trockner trocknen."}
+                    
+                    <div className="flex items-center gap-4 mt-6 pt-4 border-t border-gray-100 text-black">
+                      {/* Iron (Low Heat) */}
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" aria-label="Bügeln bei niedriger Temperatur">
+                        <path d="M4 17h16.5c1 0 1.5-.9 1-1.7l-3.5-5.3C17.4 9 16.5 8 15 8H8c-2.2 0-4 1.8-4 4v5z"/>
+                        <path d="M4 12h14.5"/>
+                        <circle cx="12" cy="14.5" r="1" fill="currentColor" stroke="none"/>
+                      </svg>
+                      
+                      {/* Do Not Tumble Dry */}
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" aria-label="Nicht im Trockner trocknen">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="12" cy="12" r="6"/>
+                        <line x1="2" y1="2" x2="22" y2="22"/>
+                        <line x1="22" y1="2" x2="2" y2="22"/>
+                      </svg>
+
+                      {/* Dry Clean P */}
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" aria-label="Professionelle Textilreinigung">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M10 16V8h3a3 3 0 0 1 0 6h-3"/>
+                      </svg>
+
+                      {/* Do Not Bleach */}
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" aria-label="Nicht bleichen">
+                        <polygon points="12 3 21 19 3 19"/>
+                        <line x1="3" y1="3" x2="21" y2="21"/>
+                        <line x1="21" y1="3" x2="3" y2="21"/>
+                      </svg>
+                    </div>
                   </div>
                 </motion.div>
               )}
@@ -233,6 +268,11 @@ export function ProductInfo({ product }: ProductInfoProps) {
           </div>
         </div>
       </div>
+
+      <SizeGuideModal 
+        isOpen={isSizeGuideOpen} 
+        onClose={() => setIsSizeGuideOpen(false)} 
+      />
     </div>
   );
 }

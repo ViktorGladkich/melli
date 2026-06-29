@@ -7,28 +7,42 @@ import { useState, useEffect } from "react";
 import { useQuickAddStore } from "@/store/quick-add-store";
 import { useCartStore } from "@/store/cart-store";
 import { AnimatedText } from "@/components/ui/animated-text";
+import { getProductByHandle, Product } from "@/lib/mock-products";
+import { SizeGuideModal } from "./size-guide-modal";
 
 export function QuickAddDrawer() {
   const { isOpen, product, closeQuickAdd } = useQuickAddStore();
   const { addItem, openCart } = useCartStore();
   const [selectedSize, setSelectedSize] = useState<string>("36");
+  const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
   
   const SIZES = ["36", "38", "40", "42"];
 
   // Note: We don't reset the selectedSize in a useEffect to avoid cascading renders
   // and because it's fine for the size to persist between openings.
 
+  const fullProduct = product ? getProductByHandle(product.handle) : undefined;
+  
+  const productColors = fullProduct?.options.find((o) => o.name === "Color")?.values || ["Black"];
+  const productSizes = fullProduct?.options.find((o) => o.name === "Size")?.values || [];
+  
+  const selectedColor = productColors[0];
+  const currentSize = productSizes.includes(selectedSize) ? selectedSize : (productSizes[0] || "");
+
   const handleAddToCart = () => {
     if (!product) return;
     
+    const variantIdStr = currentSize ? `${product.id}-${selectedColor}-${currentSize}` : `${product.id}-${selectedColor}`;
+    const variantTitleStr = currentSize ? `${selectedColor} / ${currentSize}` : selectedColor;
+
     addItem({
-      id: `${product.id}-${selectedSize}`,
-      variantId: `${product.id}-${selectedSize}`,
+      id: variantIdStr,
+      variantId: variantIdStr,
       title: product.title,
       price: product.price,
       quantity: 1,
       image: product.image,
-      variantTitle: `Black / ${selectedSize}`,
+      variantTitle: variantTitleStr,
       handle: product.handle,
     });
     
@@ -37,6 +51,7 @@ export function QuickAddDrawer() {
   };
 
   return (
+    <>
     <AnimatePresence>
       {isOpen && product && (
         <>
@@ -72,7 +87,7 @@ export function QuickAddDrawer() {
               {/* Product Image */}
               <div className="w-full bg-gray-50 aspect-[3/4]">
                 <img 
-                  src={product.image} 
+                  src={product.image || (fullProduct?.images && fullProduct.images[0]?.url) || ""} 
                   alt={product.title} 
                   className="w-full h-full object-cover"
                 />
@@ -93,39 +108,47 @@ export function QuickAddDrawer() {
                 {/* Color Selector */}
                 <div className="mb-6">
                   <span className="text-[12px] text-gray-600 block mb-3">
-                    Farbe: <span className="text-black font-medium">Black</span>
+                    Farbe: <span className="text-black font-medium">{selectedColor}</span>
                   </span>
                   <div className="flex gap-2">
                     <button className="w-8 h-8 rounded-full border border-black p-[2px] cursor-pointer">
-                      <span className="w-full h-full rounded-full bg-black block" />
+                      <span 
+                        className="w-full h-full rounded-full block" 
+                        style={{ backgroundColor: selectedColor.toLowerCase() === 'beige' ? '#f5f5dc' : selectedColor.toLowerCase() === 'pink' ? '#ffc0cb' : selectedColor.toLowerCase() === 'green' ? '#556b2f' : selectedColor.toLowerCase() === 'blue' ? '#4682b4' : selectedColor.toLowerCase() === 'white' ? '#ffffff' : '#000000', border: selectedColor.toLowerCase() === 'white' ? '1px solid #e5e7eb' : 'none' }}
+                      />
                     </button>
                   </div>
                 </div>
 
                 {/* Size Selector */}
-                <div className="mb-8">
-                  <div className="flex justify-between items-center mb-3">
-                    <span className="text-[12px] text-gray-600">
-                      Größe: <span className="text-black font-medium">{selectedSize}</span>
-                    </span>
-                    <button className="text-[12px] underline text-gray-600 hover:text-black transition-colors cursor-pointer">
-                      Größentabelle
-                    </button>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {SIZES.map((size) => (
-                      <button
-                        key={size}
-                        onClick={() => setSelectedSize(size)}
-                        className={`min-w-[48px] h-10 border text-[12px] transition-colors cursor-pointer
-                          ${selectedSize === size ? 'border-black bg-black text-white' : 'border-gray-200 text-gray-600 hover:border-black'}
-                        `}
+                {productSizes.length > 0 && (
+                  <div className="mb-8">
+                    <div className="flex justify-between items-center mb-3">
+                      <span className="text-[12px] text-gray-600">
+                        Größe: <span className="text-black font-medium">{currentSize}</span>
+                      </span>
+                      <button 
+                        onClick={() => setIsSizeGuideOpen(true)}
+                        className="text-[12px] underline text-gray-600 hover:text-black transition-colors cursor-pointer"
                       >
-                        {size}
+                        Größentabelle
                       </button>
-                    ))}
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {productSizes.map((size) => (
+                        <button
+                          key={size}
+                          onClick={() => setSelectedSize(size)}
+                          className={`min-w-[48px] h-10 border text-[12px] transition-colors cursor-pointer
+                            ${currentSize === size ? 'border-black bg-black text-white' : 'border-gray-200 text-gray-600 hover:border-black'}
+                          `}
+                        >
+                          {size}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* Add to Cart Button */}
                 <button
@@ -150,5 +173,10 @@ export function QuickAddDrawer() {
         </>
       )}
     </AnimatePresence>
+    <SizeGuideModal 
+      isOpen={isSizeGuideOpen} 
+      onClose={() => setIsSizeGuideOpen(false)} 
+    />
+    </>
   );
 }

@@ -4,32 +4,40 @@ import React, { useRef, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { AnimatedText } from "@/components/ui/animated-text";
+import { useQuickAddStore } from "@/store/quick-add-store";
+import { getProductByHandle } from "@/lib/mock-products";
 
 export function CuratedSliderSection() {
+  const openQuickAdd = useQuickAddStore((state) => state.openQuickAdd);
+
   const items = [
     {
       id: 1,
       title: "Desert Sand",
       image: "/products/abaya_beige_front.jpg",
-      link: "/products/abaya-beige"
+      link: "/product/abaya-beige",
+      handle: "abaya-beige"
     },
     {
       id: 2,
       title: "Classic Black",
       image: "/products/abaya_black_front.jpg",
-      link: "/products/abaya-black"
+      link: "/product/abaya-black",
+      handle: "abaya-black"
     },
     {
       id: 3,
       title: "Elegant Black",
       image: "/products/abaya_black.png",
-      link: "/products/abaya-black"
+      link: "/product/abaya-black",
+      handle: "abaya-black"
     },
     {
       id: 4,
-      title: "Beige Tunic",
+      title: "Tunic Modest",
       image: "/products/tunic_beige_front.png",
-      link: "/products/tunic-beige"
+      link: "/product/tunic-modest",
+      handle: "tunic-modest"
     }
   ];
 
@@ -86,7 +94,7 @@ export function CuratedSliderSection() {
               >
               {/* === MOBILE CARD === */}
               <div className="md:hidden flex flex-col items-center px-8 w-full">
-                <Link href={item.link} className="w-full flex flex-col items-center">
+                <Link href={item.link} className="w-full flex flex-col items-center cursor-pointer">
                   <div className="w-full aspect-[4/5] overflow-hidden mb-6 relative">
                     <picture>
                       <img 
@@ -104,7 +112,7 @@ export function CuratedSliderSection() {
               </div>
 
               {/* === DESKTOP CARD === */}
-              <Link href={item.link} className="hidden md:block w-full h-full aspect-[4/5] relative overflow-hidden">
+              <Link href={item.link} className="hidden md:block w-full h-full aspect-[4/5] relative overflow-hidden cursor-pointer">
                 <picture>
                   <img 
                     src={item.image} 

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
+import { useQuickAddStore, QuickAddProduct } from "@/store/quick-add-store";
 
 // Mock data representing the video reels and their associated products
 const reels = [
@@ -11,44 +12,52 @@ const reels = [
     id: 1,
     video: "/shoppable_video/shoppable_video.mp4",
     product: {
+      id: "abaya-beige",
+      handle: "abaya-beige",
       brand: "MILLY",
       title: "Desert Sand Abaya",
       price: "€129.00",
       image: "/products/abaya_beige_front.jpg",
-      link: "/products/desert-sand-abaya",
+      link: "/product/abaya-beige",
     }
   },
   {
     id: 2,
     video: "/video_hero/hero3.mp4",
     product: {
+      id: "abaya-black",
+      handle: "abaya-black",
       brand: "MILLY",
       title: "Classic Black Abaya",
       price: "€129.00",
-      image: "/products/tunic_olive_front.png", // Reusing image
-      link: "/products/classic-black-abaya",
+      image: "/products/abaya_black_front.jpg", 
+      link: "/product/abaya-black",
     }
   },
   {
     id: 3,
     video: "/reels_video/reels_video3.mp4",
     product: {
+      id: "abaya-green",
+      handle: "abaya-green",
       brand: "MILLY",
       title: "Smaragd Traum",
       price: "€139.00",
-      image: "/products/abaya_beige_back.jpg",
-      link: "/products/smaragd-traum",
+      image: "/products/abaya_green_front.jpg",
+      link: "/product/abaya-green",
     }
   },
   {
     id: 4,
-    video: "/video_hero/hero2.mp4",
+    video: "/video_hero/hero1.mp4",
     product: {
+      id: "tunic-modest",
+      handle: "tunic-modest",
       brand: "MILLY",
-      title: "Olive Elegance",
+      title: "Tunic Modest",
       price: "€149.00",
-      image: "/products/tunic_olive_back.png",
-      link: "/products/olive-elegance",
+      image: "/products/tunic_beige_front.png",
+      link: "/product/tunic-modest",
     }
   }
 ];
@@ -132,10 +141,18 @@ function ReelCard({ reel }: { reel: typeof reels[0] }) {
             <h4 className="text-sm font-medium text-gray-900 truncate mb-1">{reel.product.title}</h4>
             <div className="flex items-center justify-between mt-auto">
               <span className="text-sm font-semibold text-gray-900">{reel.product.price}</span>
-              <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center hover:bg-gray-800 transition-colors">
+              <button 
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  useQuickAddStore.getState().openQuickAdd(reel.product as QuickAddProduct);
+                }}
+                className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center hover:bg-gray-800 transition-colors cursor-pointer"
+                aria-label="Add to cart"
+              >
                 {/* Standardized Cart Icon */}
                 <svg className="w-[16px] h-[16px]" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M16.63 17.47l-.6-11a.51.51 0 00-.5-.47h-2v-.43a3.5 3.5 0 00-7 0V6h-2a.51.51 0 00-.5.47l-.62 11a.49.49 0 00.49.53h12.3a.49.49 0 00.43-.53zm-12.31-.42L4.9 7h10.2l.56 10.1-11.34-.05zM7.5 5.57a2.5 2.5 0 115 0V6h-5v-.43z" fill="currentColor"></path></svg>
-              </div>
+              </button>
             </div>
           </div>
         </div>
