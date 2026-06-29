@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useScroll, useMotionValueEvent, useTransform } from "framer-motion";
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { useState, useEffect } from "react";
 import { NavLinks } from "./nav-links";
 import { MobileMenu } from "./mobile-menu";
@@ -41,8 +41,7 @@ export function Navbar({ countries = [] }: { countries?: Country[] }) {
   const selectedCountry = countries?.find(c => c.isoCode === selectedCountryCode) || countries?.[0] || null;
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious() || 0;
-    
+    // previous scroll value was unused
     // Эффект стекла при скролле вниз (согласно HTML: --header-bg-opacity: 0.65; blur 35px)
     if (latest > 50) {
       setIsScrolled(true);
@@ -110,7 +109,7 @@ export function Navbar({ countries = [] }: { countries?: Country[] }) {
             >
               <Link href="/" className="block">
                 <img 
-                  src="/logo_v2.png" 
+                  src="/logo.png" 
                   alt="MILLY" 
                   className={cn(
                     "h-6 w-auto transition-all duration-500",
@@ -130,7 +129,7 @@ export function Navbar({ countries = [] }: { countries?: Country[] }) {
             >
               <Link href="/" className="block">
                 <img 
-                  src="/logo_v2.png" 
+                  src="/logo.png" 
                   alt="MILLY" 
                   className={cn(
                     "h-10 w-auto transition-all duration-500",

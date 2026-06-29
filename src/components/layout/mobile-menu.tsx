@@ -259,7 +259,7 @@ export function MobileMenu() {
 
                       {/* ABOUT US */}
                       <li className="wt-page-nav-mega__item">
-                        <Link href="/pages/about-us" onClick={() => setIsOpen(false)} className="wt-page-nav-mega__link">
+                        <Link href="/uber-uns" onClick={() => setIsOpen(false)} className="wt-page-nav-mega__link">
                           <span className="wt-page-nav-mega__link__text wt-page-nav-mega__link__text--underline">Über uns</span>
                         </Link>
                       </li>
@@ -274,7 +274,7 @@ export function MobileMenu() {
                         <Link href="/pages/faq" onClick={() => setIsOpen(false)} className="wt-page-nav-mega__aside-list__link">FAQ</Link>
                       </li>
                       <li className="wt-page-nav-mega__aside-list__item">
-                        <Link href="/pages/contact" onClick={() => setIsOpen(false)} className="wt-page-nav-mega__aside-list__link">Kontakt</Link>
+                        <Link href="/kontakt" onClick={() => setIsOpen(false)} className="wt-page-nav-mega__aside-list__link">Kontakt</Link>
                       </li>
                       <li className="wt-page-nav-mega__aside-list__item flex items-center gap-2 mt-4 text-sm cursor-pointer">
                         <svg className="w-5 h-5" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none"><path d="M10 10a4 4 0 100-8 4 4 0 000 8zm0-7a3 3 0 110 6 3 3 0 010-6zM10 11c-5 0-7 2-7 7h14c0-5-2-7-7-7zm0 1c4.08 0 5.73 1.33 6 5H4c.27-3.67 1.92-5 6-5z" fill="currentColor"></path></svg>

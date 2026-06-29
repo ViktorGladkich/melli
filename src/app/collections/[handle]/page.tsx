@@ -21,25 +21,28 @@ export default function CollectionPage({
   const handle = resolvedParams.handle.toLowerCase();
 
   // --- 1. Get Base Products ---
-  let baseProducts: Product[] = [];
-  let title = "";
+  const { title, baseProducts } = useMemo(() => {
+    let bp: Product[] = [];
+    let t = "";
 
-  if (handle === "sale") {
-    title = "Sale";
-    baseProducts = MOCK_PRODUCTS.slice(0, 8);
-  } else if (handle === "abayas") {
-    title = "Abayas";
-    baseProducts = MOCK_PRODUCTS.filter(p => p.category.toLowerCase() === "abayas");
-  } else if (handle === "hijabs") {
-    title = "Hijabs";
-    baseProducts = MOCK_PRODUCTS.filter(p => p.category.toLowerCase() === "hijabs");
-  } else if (handle === "tunics" || handle === "tuniken") {
-    title = "Tuniken";
-    baseProducts = MOCK_PRODUCTS.filter(p => p.category.toLowerCase() === "tuniken" || p.category.toLowerCase() === "tunics");
-  } else {
-    title = "Kollektion";
-    baseProducts = MOCK_PRODUCTS;
-  }
+    if (handle === "sale") {
+      t = "Sale";
+      bp = MOCK_PRODUCTS.slice(0, 8);
+    } else if (handle === "abayas") {
+      t = "Abayas";
+      bp = MOCK_PRODUCTS.filter(p => p.category.toLowerCase() === "abayas");
+    } else if (handle === "hijabs") {
+      t = "Hijabs";
+      bp = MOCK_PRODUCTS.filter(p => p.category.toLowerCase() === "hijabs");
+    } else if (handle === "tunics" || handle === "tuniken") {
+      t = "Tuniken";
+      bp = MOCK_PRODUCTS.filter(p => p.category.toLowerCase() === "tuniken" || p.category.toLowerCase() === "tunics");
+    } else {
+      t = "Kollektion";
+      bp = MOCK_PRODUCTS;
+    }
+    return { title: t, baseProducts: bp };
+  }, [handle]);
 
   // --- 2. Filter State & Drawer ---
   const [isFilterOpen, setIsFilterOpen] = useState(false);

@@ -86,7 +86,7 @@ export function ShoppableVideoSection({ variant = "shoppable" }: ShoppableVideoS
       </video>
 
       {/* Gradient overlay for readability at the bottom */}
-      <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none" />
+      <div className="absolute inset-x-0 bottom-0 h-2/3 bg-linear-to-t from-black/80 via-black/40 to-transparent pointer-events-none" />
 
       {/* Play/Pause Button */}
       <div className="absolute top-6 right-6 md:top-10 md:right-10 z-10">
@@ -123,7 +123,7 @@ export function ShoppableVideoSection({ variant = "shoppable" }: ShoppableVideoS
               }
             }
           }}
-          className="w-full flex overflow-x-auto gap-4 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pointer-events-auto px-4 md:px-8 lg:px-12"
+          className="w-full flex overflow-x-auto gap-4 snap-x snap-mandatory [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden pointer-events-auto px-4 md:px-8 lg:px-12"
         >
           {/* Empty space at the beginning to push the first card to the right side */}
           <div className="flex-none w-[10%] md:w-[calc(100%-360px)] snap-start" />

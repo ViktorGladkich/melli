@@ -101,7 +101,7 @@ export function ProductGallery({ product }: ProductGalleryProps) {
             {product.images.map((img, idx) => (
               <div
                 key={idx}
-                className="min-w-full w-full snap-center shrink-0 bg-gray-50 aspect-[3/4] cursor-zoom-in"
+                className="min-w-full w-full snap-center shrink-0 bg-gray-50 aspect-3/4 cursor-zoom-in"
                 onClick={() => openLightbox(idx)}
               >
                 <img
@@ -126,7 +126,7 @@ export function ProductGallery({ product }: ProductGalleryProps) {
               key={idx} 
               id={`desktop-img-${idx}`}
               data-index={idx}
-              className="w-full bg-gray-50 aspect-[3/4] cursor-zoom-in desktop-gallery-img"
+              className="w-full bg-gray-50 aspect-3/4 cursor-zoom-in desktop-gallery-img"
               onClick={() => openLightbox(idx)}
             >
               <img
@@ -153,7 +153,7 @@ export function ProductGallery({ product }: ProductGalleryProps) {
                   key={idx}
                   onClick={() => scrollToImage(idx)}
                   className={cn(
-                    "w-full aspect-[3/4] shrink-0 cursor-pointer transition-all duration-300 overflow-hidden",
+                    "w-full aspect-3/4 shrink-0 cursor-pointer transition-all duration-300 overflow-hidden",
                     activeDesktopImageIndex === idx ? "border border-black" : "opacity-50 hover:opacity-100"
                   )}
                 >
@@ -183,19 +183,19 @@ export function ProductGallery({ product }: ProductGalleryProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 md:p-8 backdrop-blur-sm"
+            className="fixed inset-0 z-100 bg-black/95 flex items-center justify-center p-4 md:p-8 backdrop-blur-sm"
             onClick={closeLightbox}
           >
             <button 
               onClick={closeLightbox}
-              className="absolute top-6 right-6 text-white hover:text-gray-300 z-[110] p-2 cursor-pointer"
+              className="absolute top-6 right-6 text-white hover:text-gray-300 z-110 p-2 cursor-pointer"
             >
               <X className="w-8 h-8" />
             </button>
             
             <button 
               onClick={prevImage}
-              className="absolute left-4 md:left-10 text-white hover:text-gray-300 z-[110] p-2 cursor-pointer"
+              className="absolute left-4 md:left-10 text-white hover:text-gray-300 z-110 p-2 cursor-pointer"
             >
               <ChevronLeft className="w-10 h-10 md:w-12 md:h-12" />
             </button>
@@ -209,7 +209,7 @@ export function ProductGallery({ product }: ProductGalleryProps) {
 
             <button 
               onClick={nextImage}
-              className="absolute right-4 md:right-10 text-white hover:text-gray-300 z-[110] p-2 cursor-pointer"
+              className="absolute right-4 md:right-10 text-white hover:text-gray-300 z-110 p-2 cursor-pointer"
             >
               <ChevronRight className="w-10 h-10 md:w-12 md:h-12" />
             </button>

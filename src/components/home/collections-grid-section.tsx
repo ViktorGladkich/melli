@@ -30,7 +30,7 @@ export function CollectionsGridSection() {
                 className="w-full h-full object-cover object-[50%_30%] transition-transform duration-[3s] ease-out group-hover:scale-105"
               />
               {/* Overlay for text readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/0 to-transparent opacity-60 transition-opacity duration-1000 group-hover:opacity-80" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/50 via-black/0 to-transparent opacity-60 transition-opacity duration-1000 group-hover:opacity-80" />
             </div>
 
             {/* Content */}
@@ -40,7 +40,7 @@ export function CollectionsGridSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3, duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
-                className="text-3xl md:text-[40px] text-white uppercase tracking-[0.1em] font-light mb-6 drop-shadow-sm"
+                className="text-3xl md:text-[40px] text-white uppercase tracking-widest font-light mb-6 drop-shadow-sm"
               >
                 Neue Kollektion
               </motion.h2>
@@ -83,7 +83,7 @@ export function CollectionsGridSection() {
                 />
               </picture>
               {/* Overlay for text readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-white/50 via-white/0 to-transparent opacity-60 transition-opacity duration-1000 group-hover:opacity-80" />
+              <div className="absolute inset-0 bg-linear-to-t from-white/50 via-white/0 to-transparent opacity-60 transition-opacity duration-1000 group-hover:opacity-80" />
             </div>
 
             {/* Content */}
@@ -93,7 +93,7 @@ export function CollectionsGridSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.5, duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
-                className="text-3xl md:text-[40px] text-black uppercase tracking-[0.1em] font-light mb-6"
+                className="text-3xl md:text-[40px] text-black uppercase tracking-widest font-light mb-6"
               >
                 Elegante Hijabs
               </motion.h2>

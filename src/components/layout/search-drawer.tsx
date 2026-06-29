@@ -2,9 +2,8 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, X, XCircle } from "lucide-react";
+import { Search, X } from "lucide-react";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 
 interface SearchDrawerProps {
   isOpen: boolean;
@@ -45,11 +44,18 @@ export function SearchDrawer({ isOpen, onClose }: SearchDrawerProps) {
       }, 100);
     } else {
       document.body.style.overflow = 'auto';
-      setQuery("");
     }
     return () => {
       document.body.style.overflow = 'auto';
     };
+  }, [isOpen]);
+
+  // Clear query after drawer closes
+  useEffect(() => {
+    if (!isOpen) {
+      const timer = setTimeout(() => setQuery(""), 500);
+      return () => clearTimeout(timer);
+    }
   }, [isOpen]);
 
   const filteredProducts = MOCK_PRODUCTS.filter(p => 
@@ -78,7 +84,7 @@ export function SearchDrawer({ isOpen, onClose }: SearchDrawerProps) {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: "-100%", opacity: 0 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-0 z-[100] bg-white flex flex-col overflow-y-auto overflow-x-hidden font-sans"
+          className="fixed inset-0 z-100 bg-white flex flex-col overflow-y-auto overflow-x-hidden font-sans"
         >
           {/* Header Area */}
           <div className="w-full flex items-center justify-between px-6 py-6 md:px-12 md:py-8 border-b border-gray-100 shrink-0 sticky top-0 bg-white z-10">
@@ -160,7 +166,7 @@ export function SearchDrawer({ isOpen, onClose }: SearchDrawerProps) {
                         onClick={onClose}
                         className="flex flex-col group items-center text-center h-full"
                       >
-                        <div className="w-full aspect-[3/4] bg-gray-50 mb-4 overflow-hidden">
+                        <div className="w-full aspect-3/4 bg-gray-50 mb-4 overflow-hidden">
                           <img 
                             src={product.images[0]?.url || ""} 
                             alt={product.title}
@@ -216,7 +222,7 @@ export function SearchDrawer({ isOpen, onClose }: SearchDrawerProps) {
                     </div>
                   ) : (
                     <div className="py-10 text-gray-500 text-[14px]">
-                      Keine Ergebnisse für "{query}" gefunden.
+                      Keine Ergebnisse für &quot;{query}&quot; gefunden.
                     </div>
                   )}
                 </div>

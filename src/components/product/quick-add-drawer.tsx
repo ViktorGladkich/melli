@@ -3,11 +3,11 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ShoppingBag } from "lucide-react";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useQuickAddStore } from "@/store/quick-add-store";
 import { useCartStore } from "@/store/cart-store";
 import { AnimatedText } from "@/components/ui/animated-text";
-import { getProductByHandle, Product } from "@/lib/mock-products";
+import { getProductByHandle } from "@/lib/mock-products";
 import { SizeGuideModal } from "./size-guide-modal";
 
 export function QuickAddDrawer() {
@@ -16,7 +16,7 @@ export function QuickAddDrawer() {
   const [selectedSize, setSelectedSize] = useState<string>("36");
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
   
-  const SIZES = ["36", "38", "40", "42"];
+  // SIZES array removed because it's unused (product.sizes is used instead in the real component if it exists)
 
   // Note: We don't reset the selectedSize in a useEffect to avoid cascading renders
   // and because it's fine for the size to persist between openings.
@@ -62,7 +62,7 @@ export function QuickAddDrawer() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             onClick={closeQuickAdd}
-            className="fixed inset-0 z-[60] bg-black/50"
+            className="fixed inset-0 z-60 bg-black/50"
           />
 
           {/* Drawer */}
@@ -71,7 +71,7 @@ export function QuickAddDrawer() {
             animate={{ x: "0%" }}
             exit={{ x: "100%" }}
             transition={{ duration: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
-            className="fixed inset-y-0 right-0 z-[60] w-full md:w-[420px] bg-white flex flex-col text-black font-sans shadow-2xl"
+            className="fixed inset-y-0 right-0 z-60 w-full md:w-[420px] bg-white flex flex-col text-black font-sans shadow-2xl"
           >
             {/* Close Button */}
             <button
@@ -85,7 +85,7 @@ export function QuickAddDrawer() {
             {/* Scrollable Content */}
             <div className="flex-1 overflow-y-auto pb-24">
               {/* Product Image */}
-              <div className="w-full bg-gray-50 aspect-[3/4]">
+              <div className="w-full bg-gray-50 aspect-3/4">
                 <img 
                   src={product.image || (fullProduct?.images && fullProduct.images[0]?.url) || ""} 
                   alt={product.title} 

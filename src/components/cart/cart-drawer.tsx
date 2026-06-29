@@ -2,7 +2,7 @@
 
 import { useCartStore } from "@/store/cart-store";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Minus, Plus, Trash2, ChevronDown, FileText, Tag, Truck, Check, ShoppingBag } from "lucide-react";
+import { X, Minus, Plus, Trash2, FileText, Tag, Truck, Check, ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { AnimatedText } from "@/components/ui/animated-text";
@@ -38,7 +38,7 @@ export function CartDrawer() {
   const [discountApplied, setDiscountApplied] = useState(false);
   const [isNoteOpen, setIsNoteOpen] = useState(false);
   const [orderNote, setOrderNote] = useState("");
-  const [isCrossSellOpen, setIsCrossSellOpen] = useState(false);
+  // We no longer track cross-sell open state locally if unused
 
   const total = items.reduce((acc, item) => {
     const match = item.price.match(/[\d.,]+/);

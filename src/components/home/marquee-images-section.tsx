@@ -39,7 +39,7 @@ export function MarqueeImagesSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-black text-sm md:text-base mb-2 font-medium uppercase tracking-[0.1em]"
+          className="text-black text-sm md:text-base mb-2 font-medium uppercase tracking-widest"
         >
           Folge uns
         </motion.p>

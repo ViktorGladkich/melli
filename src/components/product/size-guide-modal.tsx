@@ -23,7 +23,7 @@ export function SizeGuideModal({ isOpen, onClose }: SizeGuideModalProps) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+        <div className="fixed inset-0 z-100 flex items-center justify-center p-4 sm:p-6">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}

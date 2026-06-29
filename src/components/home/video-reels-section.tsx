@@ -93,7 +93,7 @@ function ReelCard({ reel }: { reel: typeof reels[0] }) {
     <div className="flex-none w-[260px] md:w-[300px] snap-start relative group flex flex-col gap-3">
       {/* Video Container */}
       <div 
-        className="relative aspect-[9/16] bg-gray-100 rounded-2xl overflow-hidden shadow-lg cursor-pointer"
+        className="relative aspect-9/16 bg-gray-100 rounded-2xl overflow-hidden shadow-lg cursor-pointer"
         onClick={togglePlay}
       >
         <video
@@ -129,7 +129,7 @@ function ReelCard({ reel }: { reel: typeof reels[0] }) {
       {/* Shoppable Product Card attached below the video */}
       <Link href={reel.product.link} className="block bg-white p-3 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow group/card">
         <div className="flex gap-4">
-          <div className="w-[60px] h-[80px] md:w-[70px] md:h-[90px] relative rounded-lg overflow-hidden flex-shrink-0 bg-gray-50">
+          <div className="w-[60px] h-[80px] md:w-[70px] md:h-[90px] relative rounded-lg overflow-hidden shrink-0 bg-gray-50">
             <img 
               src={reel.product.image} 
               alt={reel.product.title}
@@ -191,7 +191,7 @@ export function VideoReelsSection() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="flex overflow-x-auto gap-4 md:gap-6 md:justify-center snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pb-8 -mx-4 px-4 md:mx-0 md:px-0"
+          className="flex overflow-x-auto gap-4 md:gap-6 md:justify-center snap-x snap-mandatory [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden pb-8 -mx-4 px-4 md:mx-0 md:px-0"
         >
           {reels.map((reel) => (
             <ReelCard key={reel.id} reel={reel} />

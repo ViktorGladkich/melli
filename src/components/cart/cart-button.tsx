@@ -18,7 +18,7 @@ export function CartButton() {
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          className="absolute -top-[2px] -right-[4px] flex items-center justify-center w-[18px] h-[18px] text-[10px] font-bold text-white bg-black rounded-full"
+          className="absolute top-[-2px] right-[-4px] flex items-center justify-center w-[18px] h-[18px] text-[10px] font-bold text-white bg-black rounded-full"
         >
           {itemCount}
         </motion.div>

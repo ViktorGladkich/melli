@@ -85,17 +85,17 @@ export function CuratedSliderSection() {
           <div 
             ref={scrollContainerRef}
             onScroll={handleScroll}
-            className="flex overflow-x-auto snap-x snap-mandatory md:gap-6 pb-4 md:pb-8 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden cursor-grab active:cursor-grabbing"
+            className="flex overflow-x-auto snap-x snap-mandatory md:gap-6 pb-4 md:pb-8 [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden cursor-grab active:cursor-grabbing"
           >
             {items.map((item) => (
               <div
                 key={item.id}
-                className="relative flex-shrink-0 snap-center md:snap-start group w-full md:w-auto md:min-w-[320px] lg:min-w-[calc(25%-18px)]"
+                className="relative shrink-0 snap-center md:snap-start group w-full md:w-auto md:min-w-[320px] lg:min-w-[calc(25%-18px)]"
               >
               {/* === MOBILE CARD === */}
               <div className="md:hidden flex flex-col items-center px-8 w-full">
                 <Link href={item.link} className="w-full flex flex-col items-center cursor-pointer">
-                  <div className="w-full aspect-[4/5] overflow-hidden mb-6 relative">
+                  <div className="w-full aspect-4/5 overflow-hidden mb-6 relative">
                     <picture>
                       <img 
                         src={item.image} 
@@ -112,7 +112,7 @@ export function CuratedSliderSection() {
               </div>
 
               {/* === DESKTOP CARD === */}
-              <Link href={item.link} className="hidden md:block w-full h-full aspect-[4/5] relative overflow-hidden cursor-pointer">
+              <Link href={item.link} className="hidden md:block w-full h-full aspect-4/5 relative overflow-hidden cursor-pointer">
                 <picture>
                   <img 
                     src={item.image} 
@@ -121,7 +121,7 @@ export function CuratedSliderSection() {
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-[3s] ease-out group-hover:scale-105"
                   />
                 </picture>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/0 to-black/0 opacity-0 transition-opacity duration-1000 group-hover:opacity-100" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/40 via-black/0 to-black/0 opacity-0 transition-opacity duration-1000 group-hover:opacity-100" />
                 <div className="absolute inset-0 flex flex-col items-center justify-end p-6 md:p-8">
                   <span className="relative inline-flex overflow-hidden border border-white px-6 py-3 text-sm font-medium uppercase tracking-wider text-white">
                     <span className="absolute inset-0 bg-white translate-y-full transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:translate-y-0" />

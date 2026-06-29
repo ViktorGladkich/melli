@@ -16,7 +16,7 @@ export function HeroSection() {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
 
   return (
-    <section ref={containerRef} className="relative h-[100vh] md:h-[110vh] lg:h-[120vh] min-h-[600px] w-full bg-black text-white overflow-hidden">
+    <section ref={containerRef} className="relative h-screen md:h-[110vh] lg:h-[120vh] min-h-[600px] w-full bg-black text-white overflow-hidden">
       {/* Параллакс Фон */}
       <motion.div 
         style={{ y }}

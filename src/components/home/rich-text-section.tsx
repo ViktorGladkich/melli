@@ -16,7 +16,7 @@ export function RichTextSection() {
           <p className="text-gray-500 uppercase tracking-[0.2em] text-sm md:text-base font-light mb-4">
             Herbst / Winter
           </p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl text-black uppercase tracking-[0.1em] font-light">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl text-black uppercase tracking-widest font-light">
             Kollektion-Styles
           </h2>
         </motion.div>

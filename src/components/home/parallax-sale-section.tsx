@@ -29,7 +29,7 @@ export function ParallaxSaleSection() {
           {/* Left Image */}
           <motion.div 
             style={{ y: y1, rotate: rotate1 }}
-            className="absolute left-[5%] md:left-[10%] top-[20%] md:top-[15%] w-[50vw] md:w-[25vw] aspect-[4/5] shadow-2xl"
+            className="absolute left-[5%] md:left-[10%] top-[20%] md:top-[15%] w-[50vw] md:w-[25vw] aspect-4/5 shadow-2xl"
           >
             <picture>
               <img 
@@ -44,7 +44,7 @@ export function ParallaxSaleSection() {
           {/* Right Image */}
           <motion.div 
             style={{ y: y2, rotate: rotate2 }}
-            className="absolute right-[5%] md:right-[10%] top-[25%] md:top-[20%] w-[45vw] md:w-[22vw] aspect-[3/4] shadow-2xl"
+            className="absolute right-[5%] md:right-[10%] top-[25%] md:top-[20%] w-[45vw] md:w-[22vw] aspect-3/4 shadow-2xl"
           >
             <picture>
               <img 

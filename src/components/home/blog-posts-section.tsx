@@ -28,7 +28,11 @@ const blogPosts = [
   }
 ];
 
-export function BlogPostsSection() {
+interface BlogPostsSectionProps {
+  title?: string;
+}
+
+export function BlogPostsSection({ title = "News & Inspiration" }: BlogPostsSectionProps = {}) {
   return (
     <section className="py-16 md:py-24 bg-white overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-4 md:px-8">
@@ -49,7 +53,7 @@ export function BlogPostsSection() {
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
             className="text-black text-3xl md:text-4xl lg:text-5xl font-light tracking-tight mb-4"
           >
-            News & Inspiration
+            {title}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -67,7 +71,7 @@ export function BlogPostsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="flex overflow-x-auto gap-4 md:gap-6 lg:gap-8 lg:grid lg:grid-cols-3 lg:overflow-visible snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pb-8 -mx-4 px-4 md:mx-0 md:px-0"
+          className="flex overflow-x-auto gap-4 md:gap-6 lg:gap-8 lg:grid lg:grid-cols-3 lg:overflow-visible snap-x snap-mandatory [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden pb-8 -mx-4 px-4 md:mx-0 md:px-0"
         >
           {blogPosts.map((post) => (
             <div key={post.id} className="flex flex-col flex-none w-[85vw] sm:w-[350px] md:w-[400px] lg:w-auto snap-center">

@@ -68,15 +68,15 @@ export function PromoSliderSection() {
           <div 
             ref={scrollContainerRef}
             onScroll={handleScroll}
-            className="flex overflow-x-auto snap-x snap-mandatory gap-4 md:gap-6 pb-8 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden cursor-grab active:cursor-grabbing"
+            className="flex overflow-x-auto snap-x snap-mandatory gap-4 md:gap-6 pb-8 [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden cursor-grab active:cursor-grabbing"
           >
             {promos.map((promo) => (
               <div
                 key={promo.id}
-                className="w-[85vw] min-w-[85vw] md:w-auto md:min-w-[350px] lg:min-w-[calc(33.333%-16px)] snap-center md:snap-start flex flex-col group flex-shrink-0"
+                className="w-[85vw] min-w-[85vw] md:w-auto md:min-w-[350px] lg:min-w-[calc(33.333%-16px)] snap-center md:snap-start flex flex-col group shrink-0"
               >
               <Link href={promo.link} className="block w-full flex flex-col">
-                <div className="relative w-full aspect-[3/4] md:aspect-[4/5] bg-gray-100 overflow-hidden">
+                <div className="relative w-full aspect-3/4 md:aspect-4/5 bg-gray-100 overflow-hidden">
                   <picture>
                     <img 
                       src={promo.image} 
@@ -88,7 +88,7 @@ export function PromoSliderSection() {
                 </div>
 
                 <div className="flex flex-col items-center pt-6 md:pt-8 text-center">
-                  <h3 className="text-xl md:text-2xl text-black uppercase tracking-[0.1em] font-light mb-2">
+                  <h3 className="text-xl md:text-2xl text-black uppercase tracking-widest font-light mb-2">
                     {promo.title}
                   </h3>
                   <p className="text-sm text-gray-500 mb-6">

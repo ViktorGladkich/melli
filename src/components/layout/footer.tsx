@@ -45,14 +45,9 @@ function AccordionSection({ title, children }: AccordionSectionProps) {
 
 export function Footer() {
   const [footerHeight, setFooterHeight] = useState(0);
-  const [windowHeight, setWindowHeight] = useState(() => 
-    typeof window !== 'undefined' ? window.innerHeight : 0
-  );
   const footerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const handleResize = () => setWindowHeight(window.innerHeight);
-    window.addEventListener('resize', handleResize);
 
     // Следим за высотой футера
     const resizeObserver = new ResizeObserver((entries) => {
@@ -66,7 +61,6 @@ export function Footer() {
     }
 
     return () => {
-      window.removeEventListener('resize', handleResize);
       resizeObserver.disconnect();
     };
   }, []);
@@ -76,7 +70,7 @@ export function Footer() {
       <div style={{ height: `${footerHeight}px` }} className="w-full bg-transparent hidden lg:block" />
       <footer 
         ref={footerRef} 
-        className="relative lg:fixed bottom-0 left-0 w-full z-0 bg-white border-t border-gray-200 pt-8 lg:pt-10 overflow-hidden h-[100dvh] flex flex-col justify-between"
+        className="relative lg:fixed bottom-0 left-0 w-full z-0 bg-white border-t border-gray-200 pt-8 lg:pt-10 overflow-hidden h-dvh flex flex-col justify-between"
       >
       <div className="max-w-[1400px] w-full mx-auto px-6 md:px-10 shrink-0">
         {/* 4 Column Grid / Accordion on mobile */}
@@ -96,7 +90,7 @@ export function Footer() {
           <AccordionSection title="Kundenservice">
             <ul className="space-y-3.5 text-[14px] text-gray-600">
               <li><Link href="/pages/faq" className={linkClass}><AnimatedText text="FAQ" /></Link></li>
-              <li><Link href="/pages/kontakt" className={linkClass}><AnimatedText text="Kontakt" /></Link></li>
+              <li><Link href="/kontakt" className={linkClass}><AnimatedText text="Kontakt" /></Link></li>
               <li><Link href="/pages/versand" className={linkClass}><AnimatedText text="Versand & Lieferung" /></Link></li>
               <li><Link href="/pages/retouren" className={linkClass}><AnimatedText text="Retouren" /></Link></li>
             </ul>
@@ -205,7 +199,7 @@ export function Footer() {
       {/* Giant Brand Name */}
       <div className="w-full flex justify-center items-end overflow-hidden pt-2 pb-4 bg-white flex-1 min-h-0">
         <img 
-          src="/logo_v2.png" 
+          src="/logo.png" 
           alt="MILLY" 
           className="w-[90vw] md:w-[80vw] lg:w-[70vw] h-full object-contain object-bottom invert select-none pointer-events-none"
           aria-hidden="true"
