@@ -83,7 +83,7 @@ export function BestsellersSection({
         
         {/* Title exactly like HTML Example */}
         <div className="headline scroll-trigger animate--slide-in mb-8 text-center md:text-left w-full md:w-auto">
-          <h2 className="headline__title text-3xl md:text-4xl font-normal tracking-wide uppercase text-center">
+          <h2 className="headline__title text-3xl md:text-4xl font-light tracking-widest uppercase text-center">
             {title}
           </h2>
         </div>
@@ -101,7 +101,7 @@ export function BestsellersSection({
                   aria-selected={activeTab === tab}
                   tabIndex={activeTab === tab ? 0 : -1}
                   onClick={() => setActiveTab(tab)}
-                  className={`wt-tabs__tab pb-3 text-[13px] md:text-sm uppercase tracking-widest whitespace-nowrap transition-colors relative ${
+                  className={`wt-tabs__tab pb-3 text-[13px] md:text-sm uppercase tracking-widest whitespace-nowrap transition-colors relative cursor-pointer ${
                     activeTab === tab 
                       ? "text-black" 
                       : "text-gray-400 hover:text-black"
