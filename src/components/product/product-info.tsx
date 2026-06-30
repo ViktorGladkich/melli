@@ -25,22 +25,25 @@ export function ProductInfo({ product }: ProductInfoProps) {
   const openCart = useCartStore((state) => state.openCart);
 
   const handleAddToCart = () => {
-    // Generate a unique ID based on selections
-    const variantId = `${product.id}-${selectedColor || "default"}-${selectedSize || "default"}`;
-    const variantTitle = [selectedColor, selectedSize].filter(Boolean).join(" / ");
+    // Find the correct variant based on selected options
+    let selectedVariant = product.variants[0]; // fallback
+    
+    if (product.variants.length > 1) {
+      selectedVariant = product.variants.find((variant) => {
+        const matchesColor = selectedColor 
+          ? variant.selectedOptions?.find(o => o.name === 'Color' || o.name === 'Farbe')?.value === selectedColor 
+          : true;
+        const matchesSize = selectedSize 
+          ? variant.selectedOptions?.find(o => o.name === 'Size' || o.name === 'Größe')?.value === selectedSize 
+          : true;
+        
+        return matchesColor && matchesSize;
+      }) || product.variants[0];
+    }
 
-    addItem({
-      id: variantId, // Using variantId as the unique cart item id
-      variantId,
-      title: product.title,
-      price: product.price,
-      quantity: 1,
-      image: product.images[0]?.url || "",
-      variantTitle: variantTitle || "Default",
-      handle: product.handle,
-    });
+    const variantId = selectedVariant.id;
 
-    openCart();
+    addItem(variantId, 1);
   };
 
   const toggleAccordion = (id: string) => {

@@ -13,6 +13,7 @@ import { SearchDrawer } from "./search-drawer";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import type { Country } from "@/lib/shopify";
+import { useCartStore } from "@/store/cart-store";
 
 export function Navbar({ countries = [] }: { countries?: Country[] }) {
   const { scrollY } = useScroll();
@@ -30,6 +31,7 @@ export function Navbar({ countries = [] }: { countries?: Country[] }) {
     if (saved) {
       setTimeout(() => setSelectedCountryCode(saved), 0);
     }
+    useCartStore.getState().initCart();
   }, []);
 
   const handleCountryChange = (isoCode: string) => {

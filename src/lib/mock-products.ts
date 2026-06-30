@@ -1,6 +1,9 @@
 export interface ProductVariant {
   id: string;
   title: string;
+  price?: string;
+  availableForSale?: boolean;
+  selectedOptions?: { name: string; value: string }[];
 }
 
 export interface ProductImage {

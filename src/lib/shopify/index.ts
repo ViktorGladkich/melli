@@ -67,6 +67,7 @@ export interface ProductVariant {
   title: string;
   price?: string;
   availableForSale?: boolean;
+  selectedOptions?: { name: string; value: string }[];
 }
 
 export interface ProductOption {
@@ -122,6 +123,10 @@ const productFragment = `
           amount
           currencyCode
         }
+        selectedOptions {
+          name
+          value
+        }
       }
     }
   }
@@ -172,6 +177,10 @@ interface ShopifyProductNode {
           amount: string;
           currencyCode: string;
         };
+        selectedOptions: {
+          name: string;
+          value: string;
+        }[];
       };
     }[];
   };
@@ -202,7 +211,8 @@ function transformProduct(node: ShopifyProductNode): Product {
       id: edge.node.id,
       title: edge.node.title,
       price: edge.node.price ? `${parseFloat(edge.node.price.amount).toFixed(2)} ${edge.node.price.currencyCode === 'EUR' ? '€' : edge.node.price.currencyCode}` : undefined,
-      availableForSale: edge.node.availableForSale
+      availableForSale: edge.node.availableForSale,
+      selectedOptions: edge.node.selectedOptions
     })),
     options: node.options.map((opt) => ({
       name: opt.name,
@@ -329,5 +339,163 @@ export async function getLocalization(): Promise<Country[]> {
   } catch (error) {
     console.error("Error fetching localization:", error);
     return [];
+  }
+}
+
+// --- CART API ---
+
+const cartFragment = `
+  id
+  checkoutUrl
+  totalQuantity
+  cost {
+    totalAmount { amount currencyCode }
+  }
+  lines(first: 100) {
+    edges {
+      node {
+        id
+        quantity
+        merchandise {
+          ... on ProductVariant {
+            id
+            title
+            price { amount currencyCode }
+            image { url altText }
+            product {
+              title
+              handle
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export interface ShopifyCart {
+  id: string;
+  checkoutUrl: string;
+  lines: {
+    edges: Array<{
+      node: {
+        id: string;
+        quantity: number;
+        merchandise: {
+          id: string;
+          title: string;
+          price: {
+            amount: string;
+            currencyCode: string;
+          };
+          image?: {
+            url: string;
+            altText?: string;
+          };
+          product: {
+            title: string;
+            handle: string;
+          };
+        };
+      };
+    }>;
+  };
+}
+
+export async function createCart(lines: { merchandiseId: string, quantity: number }[]) {
+  const query = `
+    mutation cartCreate($input: CartInput) {
+      cartCreate(input: $input) {
+        cart {
+          ${cartFragment}
+        }
+      }
+    }
+  `;
+
+  const response = await shopifyFetch<{ data: { cartCreate: { cart: ShopifyCart } } }>({
+    query,
+    variables: { input: { lines } },
+    cache: 'no-store'
+  });
+  return response.body.data.cartCreate.cart;
+}
+
+export async function addToCart(cartId: string, lines: { merchandiseId: string, quantity: number }[]) {
+  const query = `
+    mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
+      cartLinesAdd(cartId: $cartId, lines: $lines) {
+        cart {
+          ${cartFragment}
+        }
+      }
+    }
+  `;
+
+  const response = await shopifyFetch<{ data: { cartLinesAdd: { cart: ShopifyCart } } }>({
+    query,
+    variables: { cartId, lines },
+    cache: 'no-store'
+  });
+  return response.body.data.cartLinesAdd.cart;
+}
+
+export async function updateCart(cartId: string, lines: { id: string, quantity: number }[]) {
+  const query = `
+    mutation cartLinesUpdate($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
+      cartLinesUpdate(cartId: $cartId, lines: $lines) {
+        cart {
+          ${cartFragment}
+        }
+      }
+    }
+  `;
+
+  const response = await shopifyFetch<{ data: { cartLinesUpdate: { cart: ShopifyCart } } }>({
+    query,
+    variables: { cartId, lines },
+    cache: 'no-store'
+  });
+  return response.body.data.cartLinesUpdate.cart;
+}
+
+export async function removeFromCart(cartId: string, lineIds: string[]) {
+  const query = `
+    mutation cartLinesRemove($cartId: ID!, $lineIds: [ID!]!) {
+      cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+        cart {
+          ${cartFragment}
+        }
+      }
+    }
+  `;
+
+  const response = await shopifyFetch<{ data: { cartLinesRemove: { cart: ShopifyCart } } }>({
+    query,
+    variables: { cartId, lineIds },
+    cache: 'no-store'
+  });
+  return response.body.data.cartLinesRemove.cart;
+}
+
+export async function getCart(cartId: string) {
+  const query = `
+    query getCart($id: ID!) {
+      cart(id: $id) {
+        ${cartFragment}
+      }
+    }
+  `;
+
+  try {
+    const response = await shopifyFetch<{ data: { cart: ShopifyCart } }>({
+      query,
+      variables: { id: cartId },
+      cache: 'no-store'
+    });
+    return response.body.data.cart;
+  } catch (error) {
+    console.error("Error fetching cart:", error);
+    return null;
   }
 }

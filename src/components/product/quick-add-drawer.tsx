@@ -35,16 +35,7 @@ export function QuickAddDrawer() {
     const variantIdStr = currentSize ? `${product.id}-${selectedColor}-${currentSize}` : `${product.id}-${selectedColor}`;
     const variantTitleStr = currentSize ? `${selectedColor} / ${currentSize}` : selectedColor;
 
-    addItem({
-      id: variantIdStr,
-      variantId: variantIdStr,
-      title: product.title,
-      price: product.price,
-      quantity: 1,
-      image: product.image,
-      variantTitle: variantTitleStr,
-      handle: product.handle,
-    });
+    addItem(variantIdStr, 1);
     
     closeQuickAdd();
     openCart();

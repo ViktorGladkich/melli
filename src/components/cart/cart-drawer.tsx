@@ -6,6 +6,7 @@ import { X, Minus, Plus, Trash2, FileText, Tag, Truck, Check, ShoppingBag } from
 import Link from "next/link";
 import { useState } from "react";
 import { AnimatedText } from "@/components/ui/animated-text";
+import { cn } from "@/lib/utils";
 
 import { CartCrossSell } from "./cart-cross-sell";
 import { CartShippingOverlay, CartDiscountOverlay, CartNoteOverlay } from "./cart-overlays";
@@ -26,7 +27,7 @@ const drawerVariants = {
 };
 
 export function CartDrawer() {
-  const { isOpen, closeCart, items, removeItem, updateQuantity } = useCartStore();
+  const { isOpen, closeCart, items, removeItem, updateQuantity, checkoutUrl, isLoading } = useCartStore();
   const [isGiftWrapping, setIsGiftWrapping] = useState(false);
   const [isShippingOpen, setIsShippingOpen] = useState(false);
   const [shippingCountry, setShippingCountry] = useState("Deutschland");
@@ -251,9 +252,19 @@ export function CartDrawer() {
                   </div>
                   <p className="text-[12px] text-gray-500 mb-5">Versand & Steuern werden an der Kasse berechnet</p>
                   
-                  <button className="w-full bg-[#222] text-white h-[50px] text-[14px] font-medium transition-colors hover:bg-black flex items-center justify-center group cursor-pointer">
-                    <AnimatedText text="Zur Kasse" />
-                  </button>
+                  <a 
+                    href={checkoutUrl || "#"}
+                    className={cn(
+                      "w-full bg-[#222] text-white h-[50px] text-[14px] font-medium transition-colors hover:bg-black flex items-center justify-center group cursor-pointer",
+                      (!checkoutUrl || isLoading) && "opacity-50 pointer-events-none"
+                    )}
+                  >
+                    {isLoading ? (
+                      <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                    ) : (
+                      <AnimatedText text="Zur Kasse" />
+                    )}
+                  </a>
                 </div>
               </div>
             </div>
