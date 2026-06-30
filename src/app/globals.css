@@ -11,6 +11,18 @@
   --color-foreground: var(--foreground);
   --font-sans: 'Satoshi', sans-serif;
   --font-display: 'Clash Display', sans-serif;
+
+  --animate-accordion-down: accordion-down 0.4s cubic-bezier(0.87, 0, 0.13, 1) forwards;
+  --animate-accordion-up: accordion-up 0.4s cubic-bezier(0.87, 0, 0.13, 1) forwards;
+
+  @keyframes accordion-down {
+    0% { height: 0px; }
+    100% { height: var(--radix-accordion-content-height); }
+  }
+  @keyframes accordion-up {
+    0% { height: var(--radix-accordion-content-height); }
+    100% { height: 0px; }
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -64,3 +76,4 @@ h1, h2, h3, h4, h5, h6, .font-display {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #333; 
 }
+

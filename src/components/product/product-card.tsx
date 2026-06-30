@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import type { Product } from "@/lib/mock-products";
+import { WishlistButton } from "./wishlist-button";
 
 const getColorStyle = (color: string) => {
   const c = color.toLowerCase();
@@ -90,25 +91,31 @@ export function ProductCard({
       aria-label={`${index + 1} / ${total}`}
     >
       {/* Картинка */}
-      <a href={`/product/${product.handle}`} className="relative block aspect-2/3 overflow-hidden bg-gray-100 mb-4">
-        {imageUrl ? (
-          <ProductImage imageUrl={imageUrl} hoverImageUrl={hoverImageUrl} alt={product.title} />
-        ) : (
-          <div className="absolute inset-0 bg-gray-200 animate-pulse z-0" />
-        )}
-        
-        {/* Badges */}
-        {index === 0 && (
-          <div className="card__badges absolute top-3 left-3 bg-white/90 text-black text-[10px] px-2 py-1 uppercase tracking-widest font-medium">
-            Sale
-          </div>
-        )}
-        {index === 2 && (
-          <div className="card__badges absolute top-3 left-3 bg-white/90 text-black text-[10px] px-2 py-1 uppercase tracking-widest font-medium">
-            Neu
-          </div>
-        )}
-      </a>
+      <div className="relative mb-4">
+        <a href={`/product/${product.handle}`} className="relative block aspect-2/3 overflow-hidden bg-gray-100">
+          {imageUrl ? (
+            <ProductImage imageUrl={imageUrl} hoverImageUrl={hoverImageUrl} alt={product.title} />
+          ) : (
+            <div className="absolute inset-0 bg-gray-200 animate-pulse z-0" />
+          )}
+          
+          {/* Badges */}
+          {index === 0 && (
+            <div className="card__badges absolute top-3 left-3 bg-white/90 text-black text-[10px] px-2 py-1 uppercase tracking-widest font-medium">
+              Sale
+            </div>
+          )}
+          {index === 2 && (
+            <div className="card__badges absolute top-3 left-3 bg-white/90 text-black text-[10px] px-2 py-1 uppercase tracking-widest font-medium">
+              Neu
+            </div>
+          )}
+        </a>
+
+        <div className="absolute top-3 right-3 z-20">
+          <WishlistButton product={product} />
+        </div>
+      </div>
 
       {/* Инфо */}
       <div className="flex flex-col text-center px-2">

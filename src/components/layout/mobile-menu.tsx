@@ -271,7 +271,7 @@ export function MobileMenu() {
                   <aside className="wt-page-nav-mega__aside">
                     <ul className="wt-page-nav-mega__aside-list">
                       <li className="wt-page-nav-mega__aside-list__item">
-                        <Link href="/pages/faq" onClick={() => setIsOpen(false)} className="wt-page-nav-mega__aside-list__link">FAQ</Link>
+                        <Link href="/faq" onClick={() => setIsOpen(false)} className="wt-page-nav-mega__aside-list__link">FAQ</Link>
                       </li>
                       <li className="wt-page-nav-mega__aside-list__item">
                         <Link href="/kontakt" onClick={() => setIsOpen(false)} className="wt-page-nav-mega__aside-list__link">Kontakt</Link>

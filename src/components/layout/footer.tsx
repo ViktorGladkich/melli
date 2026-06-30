@@ -89,10 +89,10 @@ export function Footer() {
           {/* Column 2: Service */}
           <AccordionSection title="Kundenservice">
             <ul className="space-y-3.5 text-[14px] text-gray-600">
-              <li><Link href="/pages/faq" className={linkClass}><AnimatedText text="FAQ" /></Link></li>
+              <li><Link href="/faq" className={linkClass}><AnimatedText text="FAQ" /></Link></li>
               <li><Link href="/kontakt" className={linkClass}><AnimatedText text="Kontakt" /></Link></li>
               <li><Link href="/pages/versand" className={linkClass}><AnimatedText text="Versand & Lieferung" /></Link></li>
-              <li><Link href="/pages/retouren" className={linkClass}><AnimatedText text="Retouren" /></Link></li>
+              <li><Link href="/retouren" className={linkClass}><AnimatedText text="Retouren" /></Link></li>
             </ul>
           </AccordionSection>
 

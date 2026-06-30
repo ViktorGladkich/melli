@@ -24,26 +24,43 @@ export function ProductInfo({ product }: ProductInfoProps) {
   const addItem = useCartStore((state) => state.addItem);
   const openCart = useCartStore((state) => state.openCart);
 
+  // Find currently selected variant
+  let selectedVariant = product.variants[0]; // fallback
+  if (product.variants.length > 1) {
+    selectedVariant = product.variants.find((variant) => {
+      const matchesColor = selectedColor 
+        ? variant.selectedOptions?.find(o => o.name === 'Color' || o.name === 'Farbe')?.value === selectedColor 
+        : true;
+      const matchesSize = selectedSize 
+        ? variant.selectedOptions?.find(o => o.name === 'Size' || o.name === 'Größe')?.value === selectedSize 
+        : true;
+      return matchesColor && matchesSize;
+    }) || product.variants[0];
+  }
+
+  const isCurrentVariantAvailable = selectedVariant?.availableForSale ?? false;
+
   const handleAddToCart = () => {
-    // Find the correct variant based on selected options
-    let selectedVariant = product.variants[0]; // fallback
-    
-    if (product.variants.length > 1) {
-      selectedVariant = product.variants.find((variant) => {
-        const matchesColor = selectedColor 
-          ? variant.selectedOptions?.find(o => o.name === 'Color' || o.name === 'Farbe')?.value === selectedColor 
-          : true;
-        const matchesSize = selectedSize 
-          ? variant.selectedOptions?.find(o => o.name === 'Size' || o.name === 'Größe')?.value === selectedSize 
-          : true;
-        
-        return matchesColor && matchesSize;
-      }) || product.variants[0];
-    }
-
+    if (!isCurrentVariantAvailable) return;
     const variantId = selectedVariant.id;
-
     addItem(variantId, 1);
+  };
+
+  const isColorAvailable = (color: string) => {
+    return product.variants.some((variant) => {
+      const isThisColor = variant.selectedOptions?.find(o => o.name === 'Color' || o.name === 'Farbe')?.value === color;
+      return isThisColor && variant.availableForSale;
+    });
+  };
+
+  const isSizeAvailable = (size: string) => {
+    return product.variants.some((variant) => {
+      const isThisColor = selectedColor 
+        ? variant.selectedOptions?.find(o => o.name === 'Color' || o.name === 'Farbe')?.value === selectedColor 
+        : true;
+      const isThisSize = variant.selectedOptions?.find(o => o.name === 'Size' || o.name === 'Größe')?.value === size;
+      return isThisColor && isThisSize && variant.availableForSale;
+    });
   };
 
   const toggleAccordion = (id: string) => {
@@ -73,27 +90,39 @@ export function ProductInfo({ product }: ProductInfoProps) {
               </span>
             </div>
             <div className="flex flex-wrap gap-3">
-              {colors.map((color) => (
-                <button
-                  key={color}
-                  onClick={() => setSelectedColor(color)}
-                  className={`w-10 h-10 rounded-full border-2 transition-all cursor-pointer ${selectedColor === color ? "border-black p-0.5" : "border-transparent hover:border-gray-200"}`}
-                >
-                  <div
-                    className="w-full h-full rounded-full border border-gray-100"
-                    style={{
-                      backgroundColor:
-                        color.toLowerCase() === "beige"
-                          ? "#f5f5dc"
-                          : color.toLowerCase() === "olive"
-                            ? "#808000"
-                            : color.toLowerCase() === "sand"
-                              ? "#c2b280"
-                              : color.toLowerCase(),
-                    }}
-                  ></div>
-                </button>
-              ))}
+              {colors.map((color) => {
+                const available = isColorAvailable(color);
+                return (
+                  <button
+                    key={color}
+                    onClick={() => available && setSelectedColor(color)}
+                    disabled={!available}
+                    className={`relative w-10 h-10 rounded-full border-2 transition-all cursor-pointer ${
+                      selectedColor === color ? "border-black p-0.5" : "border-transparent hover:border-gray-200"
+                    } ${!available ? "opacity-40 cursor-not-allowed" : ""}`}
+                    aria-label={`Farbe ${color} ${!available ? "(Nicht verfügbar)" : ""}`}
+                  >
+                    <div
+                      className="w-full h-full rounded-full border border-gray-100"
+                      style={{
+                        backgroundColor:
+                          color.toLowerCase() === "beige"
+                            ? "#f5f5dc"
+                            : color.toLowerCase() === "olive"
+                              ? "#808000"
+                              : color.toLowerCase() === "sand"
+                                ? "#c2b280"
+                                : color.toLowerCase(),
+                      }}
+                    />
+                    {!available && (
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div className="w-[120%] h-[1.5px] bg-black/60 rotate-45 transform origin-center" />
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}
@@ -113,15 +142,25 @@ export function ProductInfo({ product }: ProductInfoProps) {
               </button>
             </div>
             <div className="grid grid-cols-4 gap-3">
-              {sizes.map((size) => (
-                <button
-                  key={size}
-                  onClick={() => setSelectedSize(size)}
-                  className={`py-3 text-[13px] tracking-widest uppercase border transition-colors cursor-pointer ${selectedSize === size ? "border-black bg-black text-white" : "border-gray-300 text-black hover:border-black"}`}
-                >
-                  {size}
-                </button>
-              ))}
+              {sizes.map((size) => {
+                const available = isSizeAvailable(size);
+                return (
+                  <button
+                    key={size}
+                    onClick={() => available && setSelectedSize(size)}
+                    disabled={!available}
+                    className={`relative py-3 text-[13px] tracking-widest uppercase border transition-colors ${
+                      !available 
+                        ? "border-gray-200 text-gray-400 bg-gray-50/50 cursor-not-allowed" 
+                        : selectedSize === size 
+                          ? "border-black bg-black text-white cursor-pointer" 
+                          : "border-gray-300 text-black hover:border-black cursor-pointer"
+                    }`}
+                  >
+                    <span className={!available ? "line-through opacity-70" : ""}>{size}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}
@@ -129,16 +168,27 @@ export function ProductInfo({ product }: ProductInfoProps) {
         {/* Add to Cart Button */}
         <button
           onClick={handleAddToCart}
-          className="w-full bg-[#222] text-white py-4 text-[14px] font-medium tracking-widest uppercase hover:bg-black transition-colors mb-12 flex justify-center items-center group cursor-pointer"
+          disabled={!isCurrentVariantAvailable}
+          className={`w-full py-4 text-[14px] font-medium tracking-widest uppercase transition-colors mb-12 flex justify-center items-center group ${
+            isCurrentVariantAvailable 
+              ? "bg-[#222] text-white hover:bg-black cursor-pointer" 
+              : "bg-gray-200 text-gray-500 cursor-not-allowed"
+          }`}
         >
-          <div className="relative overflow-hidden h-5 w-full flex justify-center">
-            <span className="absolute transition-transform duration-500 group-hover:-translate-y-full flex items-center gap-2">
-              In den Warenkorb
-            </span>
-            <span className="absolute translate-y-full transition-transform duration-500 group-hover:translate-y-0 flex items-center gap-2">
-              In den Warenkorb
-            </span>
-          </div>
+          {isCurrentVariantAvailable ? (
+            <div className="relative overflow-hidden h-5 w-full flex justify-center">
+              <span className="absolute transition-transform duration-500 group-hover:-translate-y-full flex items-center gap-2">
+                In den Warenkorb
+              </span>
+              <span className="absolute translate-y-full transition-transform duration-500 group-hover:translate-y-0 flex items-center gap-2">
+                In den Warenkorb
+              </span>
+            </div>
+          ) : (
+            <div className="h-5 flex items-center justify-center">
+              AUSVERKAUFT
+            </div>
+          )}
         </button>
 
         {/* Accordions */}

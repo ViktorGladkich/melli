@@ -43,7 +43,8 @@ export const useCartStore = create<CartState>()(
       setCart: (cart: ShopifyCart | null | undefined) => {
         if (!cart) return;
         
-        const items = cart.lines?.edges?.map(({ node }: { node: ShopifyCart['lines']['edges'][0]['node'] }) => {
+        const items = cart.lines?.edges?.map((edge) => {
+          const node = edge.node;
           const product = node.merchandise.product;
           return {
             id: node.id,
