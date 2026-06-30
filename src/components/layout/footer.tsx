@@ -70,7 +70,7 @@ export function Footer() {
       <div style={{ height: `${footerHeight}px` }} className="w-full bg-transparent hidden lg:block" />
       <footer 
         ref={footerRef} 
-        className="relative lg:fixed bottom-0 left-0 w-full z-0 bg-white border-t border-gray-200 pt-8 lg:pt-10 overflow-hidden h-dvh flex flex-col justify-between"
+        className="relative lg:fixed bottom-0 left-0 w-full z-0 bg-white border-t border-gray-200 pt-8 lg:pt-10 overflow-hidden h-auto lg:h-screen flex flex-col justify-between"
       >
       <div className="max-w-[1400px] w-full mx-auto px-6 md:px-10 shrink-0">
         {/* 4 Column Grid / Accordion on mobile */}
@@ -197,11 +197,11 @@ export function Footer() {
       </div>
 
       {/* Giant Brand Name */}
-      <div className="w-full flex justify-center items-end overflow-hidden pt-2 pb-4 bg-white flex-1 min-h-0">
+      <div className="w-full flex justify-center items-end overflow-hidden pt-6 pb-4 bg-white lg:flex-1 lg:min-h-0 mt-auto">
         <img 
           src="/logo.png" 
           alt="MILLY" 
-          className="w-[90vw] md:w-[80vw] lg:w-[70vw] h-full object-contain object-bottom invert select-none pointer-events-none"
+          className="w-[90vw] md:w-[80vw] lg:w-[70vw] h-auto lg:h-full object-contain object-bottom invert select-none pointer-events-none"
           aria-hidden="true"
         />
       </div>

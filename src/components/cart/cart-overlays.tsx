@@ -77,7 +77,7 @@ export function CartShippingOverlay({
             type="text" 
             value={zip}
             onChange={(e) => setZip(e.target.value)}
-            className="border border-gray-300 rounded-none px-4 py-3 text-sm focus:outline-none focus:border-black"
+            className="border border-gray-300 rounded-none px-4 py-3 text-[16px] md:text-sm focus:outline-none focus:border-black"
           />
         </div>
 
@@ -139,7 +139,7 @@ export function CartDiscountOverlay({
               setCode(e.target.value);
               setError(false);
             }}
-            className="border border-gray-300 rounded-none px-4 py-3 text-sm focus:outline-none focus:border-black"
+            className="border border-gray-300 rounded-none px-4 py-3 text-[16px] md:text-sm focus:outline-none focus:border-black"
           />
           
           {error && (

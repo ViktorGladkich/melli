@@ -39,7 +39,7 @@ export default function AboutUsPage() {
         </motion.div>
 
         {/* Content */}
-        <div className="relative z-10 w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 text-left text-white flex flex-col items-start justify-center">
+        <div className="relative z-10 w-full max-w-[1400px] mx-auto px-4 md:px-8 lg:px-12 text-center md:text-left text-white flex flex-col items-center md:items-start justify-center">
           <motion.h1 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -54,7 +54,7 @@ export default function AboutUsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: [0.32, 0.72, 0, 1], delay: 0.2 }}
-            className="text-base md:text-lg font-light max-w-lg mb-10 leading-relaxed tracking-wide"
+            className="text-base md:text-lg font-light max-w-lg mb-10 leading-relaxed tracking-wide text-center md:text-left"
           >
             Unterstreichen Sie Ihren Stil mit erstklassigen und langlebigen Luxusartikeln.
           </motion.p>

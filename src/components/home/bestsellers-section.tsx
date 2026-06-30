@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MOCK_PRODUCTS, type Product } from "@/lib/mock-products";
+import { type Product } from "@/lib/shopify";
 
 import { ProductCard } from "@/components/product/product-card";
 
@@ -75,7 +75,11 @@ export function BestsellersSection({
     }
   };
 
-  const displayProducts = propProducts || (showTabs ? MOCK_PRODUCTS.filter(p => p.category === activeTab) : MOCK_PRODUCTS.slice(0, 8));
+  const displayProducts = propProducts || [];
+  
+  const filteredProducts = showTabs 
+    ? displayProducts.filter(p => p.category.toLowerCase() === activeTab.toLowerCase())
+    : displayProducts.slice(0, 8);
 
   return (
     <section className="py-16 md:py-24 bg-white overflow-hidden text-black">
@@ -157,8 +161,8 @@ export function BestsellersSection({
               aria-live="polite"
             >
             {/* Slides */}
-            {displayProducts.map((product, index) => (
-              <ProductCard key={product.id} product={product} index={index} total={displayProducts.length} isGrid={false} />
+            {filteredProducts.map((product, index) => (
+              <ProductCard key={product.id} product={product} index={index} total={filteredProducts.length} isGrid={false} />
             ))}
             </motion.div>
           </AnimatePresence>

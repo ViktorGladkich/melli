@@ -1,9 +1,6 @@
-"use client";
-
-import { use } from "react";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import { getProductByHandle, MOCK_PRODUCTS } from "@/lib/mock-products";
+import { getProductByHandle, getProducts } from "@/lib/shopify";
 
 import { FeaturesBannerSection } from "@/components/home/features-banner-section";
 import { ShoppableVideoSection } from "@/components/home/shoppable-video-section";
@@ -15,13 +12,15 @@ import { NewsletterSection } from "@/components/home/newsletter-section";
 import { ProductGallery } from "@/components/product/product-gallery";
 import { ProductInfo } from "@/components/product/product-info";
 
-export default function ProductPage({
+export const revalidate = 0; // Disable cache for development
+
+export default async function ProductPage({
   params,
 }: {
   params: Promise<{ handle: string }>;
 }) {
-  const resolvedParams = use(params);
-  const product = getProductByHandle(resolvedParams.handle);
+  const resolvedParams = await params;
+  const product = await getProductByHandle(resolvedParams.handle);
 
   if (!product) {
     return (
@@ -39,7 +38,8 @@ export default function ProductPage({
     );
   }
 
-  const relatedProducts = MOCK_PRODUCTS.filter((p) => p.id !== product.id).slice(0, 8);
+  const allProducts = await getProducts(10);
+  const relatedProducts = allProducts.filter((p) => p.id !== product.id).slice(0, 8);
 
   return (
     <div className="bg-white min-h-screen pt-24 md:pt-32 pb-24 font-sans text-black">
@@ -50,7 +50,7 @@ export default function ProductPage({
             Startseite
           </Link>
           <ChevronRight className="w-3 h-3" />
-          <Link href="#" className="hover:text-black transition-colors">
+          <Link href={`/collections/${product.category.toLowerCase()}`} className="hover:text-black transition-colors">
             {product.category}
           </Link>
           <ChevronRight className="w-3 h-3" />

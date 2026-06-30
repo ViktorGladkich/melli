@@ -117,7 +117,7 @@ export function LocalizationDrawer({
                   placeholder="Standort suchen..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-200 text-sm focus:outline-none focus:border-black transition-colors"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-200 text-[16px] md:text-sm focus:outline-none focus:border-black transition-colors"
                 />
               </div>
 

@@ -39,7 +39,7 @@ export function NewsletterSection() {
               type="email"
               placeholder="E-Mail Adresse"
               required
-              className="flex-1 bg-white border border-gray-200 px-6 py-4 text-sm text-black focus:outline-hidden focus:border-black transition-colors rounded-none"
+              className="flex-1 bg-white border border-gray-200 px-6 py-4 text-[16px] md:text-sm text-black focus:outline-hidden focus:border-black transition-colors rounded-none"
             />
             <button
               type="submit"

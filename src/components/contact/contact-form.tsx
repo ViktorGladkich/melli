@@ -41,7 +41,7 @@ export function ContactForm() {
           <input
             type="text"
             id="name"
-            className="w-full px-4 py-3 border border-[#E5E5E5] bg-white focus:outline-none focus:border-gray-400 transition-colors text-[15px] text-gray-800 placeholder:text-gray-500"
+            className="w-full px-4 py-3 border border-[#E5E5E5] bg-white focus:outline-none focus:border-gray-400 transition-colors text-[16px] md:text-[15px] text-gray-800 placeholder:text-gray-500"
             placeholder="Name"
           />
         </div>
@@ -49,7 +49,7 @@ export function ContactForm() {
           <input
             type="tel"
             id="phone"
-            className="w-full px-4 py-3 border border-[#E5E5E5] bg-white focus:outline-none focus:border-gray-400 transition-colors text-[15px] text-gray-800 placeholder:text-gray-500"
+            className="w-full px-4 py-3 border border-[#E5E5E5] bg-white focus:outline-none focus:border-gray-400 transition-colors text-[16px] md:text-[15px] text-gray-800 placeholder:text-gray-500"
             placeholder="Telefonnummer"
           />
         </div>
@@ -60,7 +60,7 @@ export function ContactForm() {
           type="email"
           id="email"
           required
-          className="w-full px-4 py-3 border border-[#E5E5E5] bg-white focus:outline-none focus:border-gray-400 transition-colors text-[15px] text-gray-800 placeholder:text-gray-500"
+          className="w-full px-4 py-3 border border-[#E5E5E5] bg-white focus:outline-none focus:border-gray-400 transition-colors text-[16px] md:text-[15px] text-gray-800 placeholder:text-gray-500"
           placeholder="E-Mail*"
         />
       </div>
@@ -70,7 +70,7 @@ export function ContactForm() {
           id="message"
           required
           rows={7}
-          className="w-full px-4 py-3 border border-[#E5E5E5] bg-white focus:outline-none focus:border-gray-400 transition-colors text-[15px] text-gray-800 placeholder:text-gray-500 resize-none"
+          className="w-full px-4 py-3 border border-[#E5E5E5] bg-white focus:outline-none focus:border-gray-400 transition-colors text-[16px] md:text-[15px] text-gray-800 placeholder:text-gray-500 resize-none"
           placeholder="Nachricht"
         />
       </div>

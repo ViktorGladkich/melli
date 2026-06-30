@@ -10,14 +10,12 @@ interface SearchDrawerProps {
   onClose: () => void;
 }
 
-// Mock Data
-import { MOCK_PRODUCTS } from "@/lib/mock-products";
+import { Product } from "@/lib/shopify";
 
-const MOCK_SUGGESTIONS = [
-  "Abaya",
-  "Black Abaya",
-  "Silk Hijab",
-  "Tunic Set",
+const SUGGESTED_SEARCHES = [
+  "Abayas",
+  "Hijabs",
+  "Tuniken",
 ];
 
 const MOCK_ARTICLES = [
@@ -33,6 +31,7 @@ const MOCK_COLLECTIONS = [
 
 export function SearchDrawer({ isOpen, onClose }: SearchDrawerProps) {
   const [query, setQuery] = useState("");
+  const [products, setProducts] = useState<Product[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -42,6 +41,16 @@ export function SearchDrawer({ isOpen, onClose }: SearchDrawerProps) {
       setTimeout(() => {
         inputRef.current?.focus();
       }, 100);
+
+      // Fetch products from our API route
+      fetch('/api/products')
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data)) {
+            setProducts(data);
+          }
+        })
+        .catch(err => console.error("Error fetching products in search:", err));
     } else {
       document.body.style.overflow = 'auto';
     }
@@ -58,7 +67,7 @@ export function SearchDrawer({ isOpen, onClose }: SearchDrawerProps) {
     }
   }, [isOpen]);
 
-  const filteredProducts = MOCK_PRODUCTS.filter(p => 
+  const filteredProducts = products.filter(p => 
     p.title.toLowerCase().includes(query.toLowerCase()) || 
     p.brand.toLowerCase().includes(query.toLowerCase())
   );
@@ -153,7 +162,7 @@ export function SearchDrawer({ isOpen, onClose }: SearchDrawerProps) {
                   Top Sellers
                 </motion.h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 w-full">
-                  {MOCK_PRODUCTS.slice(0, 4).map((product) => (
+                  {products.slice(0, 4).map((product) => (
                     <motion.div 
                       key={product.id}
                       variants={{
@@ -236,7 +245,7 @@ export function SearchDrawer({ isOpen, onClose }: SearchDrawerProps) {
                       Vorschläge
                     </h3>
                     <ul className="flex flex-col gap-3">
-                      {MOCK_SUGGESTIONS.map((suggestion, i) => (
+                      {SUGGESTED_SEARCHES.map((suggestion: string, i: number) => (
                         <li key={i}>
                           <button 
                             onClick={() => setQuery(suggestion)}
