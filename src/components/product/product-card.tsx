@@ -75,7 +75,14 @@ export function ProductCard({
   const colorOption = product.options?.find(
     (opt) => opt.name.toLowerCase() === "color" || opt.name.toLowerCase() === "farbe" || opt.name.toLowerCase() === "couleur"
   );
-  const colors = colorOption ? colorOption.values : [];
+  const allColors = colorOption ? colorOption.values : [];
+
+  const availableColors = allColors.filter((color) => {
+    return product.variants?.some((variant) => {
+      const isThisColor = variant.selectedOptions?.find(o => o.name === 'Color' || o.name === 'Farbe')?.value === color;
+      return isThisColor && variant.availableForSale;
+    });
+  });
 
   // Parse price number
   const priceValue = parseFloat(product.price.replace(/[^\d.-]/g, ''));
@@ -135,10 +142,10 @@ export function ProductCard({
         </div>
 
         {/* Swatches */}
-        {colors.length > 0 && (
+        {availableColors.length > 0 && (
           <div className="card__color-swatcher--container center mt-4 min-h-[24px] md:opacity-0 group-hover:opacity-100 transition-opacity duration-300" tabIndex={-1} data-options-as-color-swatches="Color">
             <div className="color-swatcher--wrapper rounded flex justify-center gap-2">
-              {colors.map((color, i) => (
+              {availableColors.map((color, i) => (
                 <div 
                   key={i}
                   className="color-swatcher w-[16px] h-[16px] rounded-full border border-gray-200 cursor-pointer hover:scale-110 transition-transform" 

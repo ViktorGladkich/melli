@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useCartStore } from "@/store/cart-store";
 import { Product } from "@/lib/mock-products";
 import { SizeGuideModal } from "./size-guide-modal";
+import { WishlistButton } from "./wishlist-button";
 
 interface ProductInfoProps {
   product: Product;
@@ -165,31 +166,39 @@ export function ProductInfo({ product }: ProductInfoProps) {
           </div>
         )}
 
-        {/* Add to Cart Button */}
-        <button
-          onClick={handleAddToCart}
-          disabled={!isCurrentVariantAvailable}
-          className={`w-full py-4 text-[14px] font-medium tracking-widest uppercase transition-colors mb-12 flex justify-center items-center group ${
-            isCurrentVariantAvailable 
-              ? "bg-[#222] text-white hover:bg-black cursor-pointer" 
-              : "bg-gray-200 text-gray-500 cursor-not-allowed"
-          }`}
-        >
-          {isCurrentVariantAvailable ? (
-            <div className="relative overflow-hidden h-5 w-full flex justify-center">
-              <span className="absolute transition-transform duration-500 group-hover:-translate-y-full flex items-center gap-2">
-                In den Warenkorb
-              </span>
-              <span className="absolute translate-y-full transition-transform duration-500 group-hover:translate-y-0 flex items-center gap-2">
-                In den Warenkorb
-              </span>
-            </div>
-          ) : (
-            <div className="h-5 flex items-center justify-center">
-              AUSVERKAUFT
-            </div>
-          )}
-        </button>
+        {/* Add to Cart & Wishlist */}
+        <div className="flex gap-3 mb-12 items-stretch">
+          <button
+            onClick={handleAddToCart}
+            disabled={!isCurrentVariantAvailable}
+            className={`flex-1 py-4 text-[14px] font-medium tracking-widest uppercase transition-colors flex justify-center items-center group ${
+              isCurrentVariantAvailable 
+                ? "bg-[#222] text-white hover:bg-black cursor-pointer" 
+                : "bg-gray-200 text-gray-500 cursor-not-allowed"
+            }`}
+          >
+            {isCurrentVariantAvailable ? (
+              <div className="relative overflow-hidden h-5 w-full flex justify-center">
+                <span className="absolute transition-transform duration-500 group-hover:-translate-y-full flex items-center gap-2">
+                  In den Warenkorb
+                </span>
+                <span className="absolute translate-y-full transition-transform duration-500 group-hover:translate-y-0 flex items-center gap-2">
+                  In den Warenkorb
+                </span>
+              </div>
+            ) : (
+              <div className="h-5 flex items-center justify-center">
+                AUSVERKAUFT
+              </div>
+            )}
+          </button>
+          
+          <WishlistButton 
+            product={product} 
+            className="w-[54px] h-auto rounded-none bg-white border border-gray-200 hover:border-black shadow-none backdrop-blur-none hover:bg-gray-50 flex-shrink-0 hover:scale-100"
+            iconClassName="w-5 h-5 scale-100 group-hover:scale-100 group-hover:opacity-60 transition-opacity"
+          />
+        </div>
 
         {/* Accordions */}
         <div className="border-t border-gray-200">

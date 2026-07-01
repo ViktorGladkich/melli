@@ -91,8 +91,14 @@ export function Navbar({ countries = [] }: { countries?: Country[] }) {
         <div className="flex items-center justify-between h-14 md:h-16">
           
           {/* Left: Burger & Links */}
-          <div className="flex items-center gap-6 flex-1 justify-start">
+          <div className="flex items-center gap-4 flex-1 justify-start">
             <MobileMenu />
+            <button 
+              onClick={() => setIsSearchOpen(true)}
+              className="p-1 md:hidden hover:opacity-70 transition-opacity cursor-pointer"
+            >
+              <svg className="w-[20px] h-[20px]" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M17.17 16.48L12 11.36a5.5 5.5 0 10-4.22 2 5.41 5.41 0 003.51-1.27l5.14 5.13a.51.51 0 00.7 0 .5.5 0 00.04-.74zm-9.35-4.15a4.5 4.5 0 110-9 4.5 4.5 0 010 9z" fill="currentColor"></path></svg>
+            </button>
             <div className="hidden md:block">
               <NavLinks />
             </div>
@@ -143,7 +149,7 @@ export function Navbar({ countries = [] }: { countries?: Country[] }) {
           </div>
 
           {/* Right: Actions */}
-          <div className="flex items-center justify-end gap-5 md:gap-6 flex-1">
+          <div className="flex items-center justify-end gap-3 md:gap-6 flex-1">
             <button 
               onClick={() => setIsLocOpen(true)}
               className="hidden lg:flex items-center text-sm hover:opacity-70 transition-opacity uppercase cursor-pointer group"
@@ -157,9 +163,9 @@ export function Navbar({ countries = [] }: { countries?: Country[] }) {
             >
               <svg className="w-[20px] h-[20px]" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M17.17 16.48L12 11.36a5.5 5.5 0 10-4.22 2 5.41 5.41 0 003.51-1.27l5.14 5.13a.51.51 0 00.7 0 .5.5 0 00.04-.74zm-9.35-4.15a4.5 4.5 0 110-9 4.5 4.5 0 010 9z" fill="currentColor"></path></svg>
             </button>
-            <button className="p-1 hidden sm:block hover:opacity-70 transition-opacity cursor-pointer">
+            <a href="https://shopify.com/100255105398/account" className="p-1 hover:opacity-70 transition-opacity cursor-pointer">
               <svg className="w-[20px] h-[20px]" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 10a4 4 0 100-8 4 4 0 000 8zm0-7a3 3 0 110 6 3 3 0 010-6zM10 11c-5 0-7 2-7 7h14c0-5-2-7-7-7zm0 1c4.08 0 5.73 1.33 6 5H4c.27-3.67 1.92-5 6-5z" fill="currentColor"></path></svg>
-            </button>
+            </a>
             <div className="cursor-pointer">
               <CartButton />
             </div>

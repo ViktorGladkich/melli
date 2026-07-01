@@ -37,7 +37,7 @@ export function MobileMenu() {
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "tween", duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
-              className="fixed inset-y-0 left-0 z-60 w-[90%] max-w-[450px] bg-white text-black overflow-y-auto drawer-container"
+              className="fixed inset-y-0 left-0 z-60 w-full md:w-[90%] md:max-w-[450px] bg-white text-black overflow-y-auto drawer-container"
             >
               <style dangerouslySetInnerHTML={{ __html: `
                 .drawer-container {
@@ -276,9 +276,11 @@ export function MobileMenu() {
                       <li className="wt-page-nav-mega__aside-list__item">
                         <Link href="/kontakt" onClick={() => setIsOpen(false)} className="wt-page-nav-mega__aside-list__link">Kontakt</Link>
                       </li>
-                      <li className="wt-page-nav-mega__aside-list__item flex items-center gap-2 mt-4 text-sm cursor-pointer">
-                        <svg className="w-5 h-5" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none"><path d="M10 10a4 4 0 100-8 4 4 0 000 8zm0-7a3 3 0 110 6 3 3 0 010-6zM10 11c-5 0-7 2-7 7h14c0-5-2-7-7-7zm0 1c4.08 0 5.73 1.33 6 5H4c.27-3.67 1.92-5 6-5z" fill="currentColor"></path></svg>
-                        Anmelden
+                      <li className="wt-page-nav-mega__aside-list__item mt-4">
+                        <a href="https://shopify.com/100255105398/account" className="flex items-center gap-2 text-sm cursor-pointer text-[#555] hover:text-[#000] transition-colors">
+                          <svg className="w-5 h-5" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none"><path d="M10 10a4 4 0 100-8 4 4 0 000 8zm0-7a3 3 0 110 6 3 3 0 010-6zM10 11c-5 0-7 2-7 7h14c0-5-2-7-7-7zm0 1c4.08 0 5.73 1.33 6 5H4c.27-3.67 1.92-5 6-5z" fill="currentColor"></path></svg>
+                          Anmelden
+                        </a>
                       </li>
                     </ul>
                   </aside>

@@ -95,8 +95,8 @@ export function CollectionClient({ initialProducts, title }: CollectionClientPro
 
   const sortedProducts = useMemo(() => {
     return [...filteredProducts].sort((a, b) => {
-      if (sortOption === "alpha-asc") return a.title.localeCompare(b.title);
-      if (sortOption === "alpha-desc") return b.title.localeCompare(a.title);
+      if (sortOption === "alpha-asc") return a.title.localeCompare(b.title, "de");
+      if (sortOption === "alpha-desc") return b.title.localeCompare(a.title, "de");
       
       const priceA = parseFloat(a.price.replace(/[^0-9,.-]/g, "").replace(",", "."));
       const priceB = parseFloat(b.price.replace(/[^0-9,.-]/g, "").replace(",", "."));

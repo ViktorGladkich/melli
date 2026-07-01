@@ -1,14 +1,21 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Heart } from "lucide-react";
 import { useWishlistStore } from "@/store/wishlist-store";
 import type { Product } from "@/lib/mock-products";
 import { cn } from "@/lib/utils";
 
-export function WishlistButton({ product, className }: { product: Product, className?: string }) {
+export function WishlistButton({ product, className, iconClassName }: { product: Product, className?: string, iconClassName?: string }) {
   const { addItem, removeItem, isInWishlist } = useWishlistStore();
+  const [isMounted, setIsMounted] = useState(false);
   
-  const inWishlist = isInWishlist(product.id);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsMounted(true);
+  }, []);
+  
+  const inWishlist = isMounted ? isInWishlist(product.id) : false;
 
   const toggleWishlist = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -36,7 +43,8 @@ export function WishlistButton({ product, className }: { product: Product, class
           "w-4 h-4 transition-all duration-300", 
           inWishlist 
             ? "fill-black text-black scale-110" 
-            : "text-black group-hover:scale-110"
+            : "text-black group-hover:scale-110",
+          iconClassName
         )}
       />
     </button>
