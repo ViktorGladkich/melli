@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
-import { useQuickAddStore, QuickAddProduct } from "@/store/quick-add-store";
+import { useQuickAddStore } from "@/store/quick-add-store";
+import { Product } from "@/lib/shopify/index";
 
 // Mock data representing the video reels and their associated products
 const reels = [
@@ -16,9 +17,12 @@ const reels = [
       handle: "abaya-beige",
       brand: "MILLY",
       title: "Desert Sand Abaya",
+      category: "Reel",
       price: "€129.00",
-      image: "/products/abaya_beige_front.jpg",
+      images: [{ url: "/products/abaya_beige_front.jpg", altText: "Desert Sand Abaya" }],
       link: "/product/abaya-beige",
+      variants: [],
+      options: [],
     }
   },
   {
@@ -29,9 +33,12 @@ const reels = [
       handle: "abaya-black",
       brand: "MILLY",
       title: "Classic Black Abaya",
+      category: "Reel",
       price: "€129.00",
-      image: "/products/abaya_black_front.jpg", 
+      images: [{ url: "/products/abaya_black_front.jpg", altText: "Classic Black Abaya" }], 
       link: "/product/abaya-black",
+      variants: [],
+      options: [],
     }
   },
   {
@@ -42,9 +49,12 @@ const reels = [
       handle: "abaya-green",
       brand: "MILLY",
       title: "Smaragd Traum",
+      category: "Reel",
       price: "€139.00",
-      image: "/products/abaya_green_front.jpg",
+      images: [{ url: "/products/abaya_green_front.jpg", altText: "Smaragd Traum" }],
       link: "/product/abaya-green",
+      variants: [],
+      options: [],
     }
   },
   {
@@ -55,9 +65,12 @@ const reels = [
       handle: "tunic-modest",
       brand: "MILLY",
       title: "Tunic Modest",
+      category: "Reel",
       price: "€149.00",
-      image: "/products/tunic_beige_front.png",
+      images: [{ url: "/products/tunic_beige_front.png", altText: "Tunic Modest" }],
       link: "/product/tunic-modest",
+      variants: [],
+      options: [],
     }
   }
 ];
@@ -131,7 +144,7 @@ function ReelCard({ reel }: { reel: typeof reels[0] }) {
         <div className="flex gap-4">
           <div className="w-[60px] h-[80px] md:w-[70px] md:h-[90px] relative rounded-lg overflow-hidden shrink-0 bg-gray-50">
             <img 
-              src={reel.product.image} 
+              src={reel.product.images[0]?.url} 
               alt={reel.product.title}
               className="absolute inset-0 w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500"
             />
@@ -145,7 +158,7 @@ function ReelCard({ reel }: { reel: typeof reels[0] }) {
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  useQuickAddStore.getState().openQuickAdd(reel.product as QuickAddProduct);
+                  useQuickAddStore.getState().openQuickAdd(reel.product as Product);
                 }}
                 className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center hover:bg-gray-800 transition-colors cursor-pointer"
                 aria-label="Add to cart"

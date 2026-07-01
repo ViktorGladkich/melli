@@ -1,18 +1,10 @@
 import { create } from 'zustand';
-
-export type QuickAddProduct = {
-  id: string;
-  handle: string;
-  brand: string;
-  title: string;
-  price: string;
-  image: string;
-};
+import { Product } from '@/lib/shopify/index';
 
 interface QuickAddState {
   isOpen: boolean;
-  product: QuickAddProduct | null;
-  openQuickAdd: (product: QuickAddProduct) => void;
+  product: Product | null;
+  openQuickAdd: (product: Product) => void;
   closeQuickAdd: () => void;
 }
 

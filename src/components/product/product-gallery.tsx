@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { ChevronRight, ChevronLeft, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Product } from "@/lib/mock-products";
+import { Product } from "@/lib/shopify/index";
 import { cn } from "@/lib/utils";
 
 interface ProductGalleryProps {

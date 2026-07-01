@@ -62,12 +62,15 @@ export function ShoppableVideoSection({ variant = "shoppable" }: ShoppableVideoS
     e.preventDefault();
     e.stopPropagation();
     openQuickAdd({
-      id: product.id,
+      id: String(product.id),
       handle: product.handle,
-      brand: product.brand,
+      brand: "MILLY",
       title: product.title,
+      category: "Video",
       price: product.price,
-      image: product.image,
+      images: [{ url: product.image, altText: product.title }],
+      variants: [],
+      options: [],
     });
   };
 

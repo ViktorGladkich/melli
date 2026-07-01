@@ -22,7 +22,7 @@ export default async function Home() {
       <HeroSection />
       <BestsellersSection products={products} />
       <CollectionsGridSection />
-      <CuratedSliderSection />
+      <CuratedSliderSection products={products} />
       <ShoppableVideoSection />
       <RichTextSection />
       <PromoSliderSection />

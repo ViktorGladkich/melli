@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { Product } from '@/lib/mock-products';
+import type { Product } from '@/lib/shopify/index';
 
 interface WishlistState {
   items: Product[];

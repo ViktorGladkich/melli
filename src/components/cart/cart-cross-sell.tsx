@@ -56,8 +56,11 @@ export function CartCrossSell() {
       handle: product.handle,
       brand: product.brand,
       title: product.name,
+      category: "Cross-sell",
       price: product.price,
-      image: product.image,
+      images: [{ url: product.image, altText: product.name }],
+      variants: [],
+      options: [],
     });
   };
 

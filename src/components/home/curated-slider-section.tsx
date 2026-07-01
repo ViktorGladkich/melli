@@ -5,41 +5,19 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { AnimatedText } from "@/components/ui/animated-text";
 import { useQuickAddStore } from "@/store/quick-add-store";
-import { getProductByHandle } from "@/lib/mock-products";
+import { Product } from "@/lib/shopify/index";
 
-export function CuratedSliderSection() {
+export function CuratedSliderSection({ products = [] }: { products?: Product[] }) {
   const openQuickAdd = useQuickAddStore((state) => state.openQuickAdd);
 
-  const items = [
-    {
-      id: 1,
-      title: "Desert Sand",
-      image: "/products/abaya_beige_front.jpg",
-      link: "/product/abaya-beige",
-      handle: "abaya-beige"
-    },
-    {
-      id: 2,
-      title: "Classic Black",
-      image: "/products/abaya_black_front.jpg",
-      link: "/product/abaya-black",
-      handle: "abaya-black"
-    },
-    {
-      id: 3,
-      title: "Elegant Black",
-      image: "/products/abaya_black.png",
-      link: "/product/abaya-black",
-      handle: "abaya-black"
-    },
-    {
-      id: 4,
-      title: "Tunic Modest",
-      image: "/products/tunic_beige_front.png",
-      link: "/product/tunic-modest",
-      handle: "tunic-modest"
-    }
-  ];
+  // Take up to 4 products for the curated slider
+  const items = products.slice(0, 4).map((p, i) => ({
+    id: p.id || i,
+    title: p.title,
+    image: (p.images && p.images[0]?.url) || "",
+    link: `/product/${p.handle}`,
+    handle: p.handle
+  }));
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -105,7 +83,7 @@ export function CuratedSliderSection() {
                       />
                     </picture>
                   </div>
-                  <span className="text-black uppercase tracking-widest text-[13px] border-b border-black pb-1">
+                  <span className="text-black uppercase tracking-widest text-[13px] border-b border-black pb-1 text-center">
                     {item.title}
                   </span>
                 </Link>
@@ -123,10 +101,10 @@ export function CuratedSliderSection() {
                 </picture>
                 <div className="absolute inset-0 bg-linear-to-t from-black/40 via-black/0 to-black/0 opacity-0 transition-opacity duration-1000 group-hover:opacity-100" />
                 <div className="absolute inset-0 flex flex-col items-center justify-end p-6 md:p-8">
-                  <span className="relative inline-flex overflow-hidden border border-white px-6 py-3 text-sm font-medium uppercase tracking-wider text-white">
+                  <span className="relative flex w-[90%] min-h-[56px] overflow-hidden border border-white px-2 py-2 text-[11px] lg:text-xs font-medium uppercase tracking-wider text-white items-center justify-center text-center">
                     <span className="absolute inset-0 bg-white translate-y-full transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:translate-y-0" />
-                    <span className="relative z-10 transition-colors duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:text-black">
-                      <AnimatedText text={item.title} />
+                    <span className="relative z-10 transition-colors duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:text-black w-full flex items-center justify-center">
+                      <AnimatedText text={item.title} className="w-full whitespace-normal leading-snug" />
                     </span>
                   </span>
                 </div>

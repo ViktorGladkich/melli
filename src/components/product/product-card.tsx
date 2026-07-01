@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import type { Product } from "@/lib/mock-products";
+import type { Product } from "@/lib/shopify/index";
 import { WishlistButton } from "./wishlist-button";
 
 const getColorStyle = (color: string) => {

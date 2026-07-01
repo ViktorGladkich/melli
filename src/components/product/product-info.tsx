@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCartStore } from "@/store/cart-store";
-import { Product } from "@/lib/mock-products";
+import { Product } from "@/lib/shopify/index";
 import { SizeGuideModal } from "./size-guide-modal";
 import { WishlistButton } from "./wishlist-button";
 

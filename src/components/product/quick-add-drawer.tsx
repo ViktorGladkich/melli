@@ -7,7 +7,6 @@ import { useState } from "react";
 import { useQuickAddStore } from "@/store/quick-add-store";
 import { useCartStore } from "@/store/cart-store";
 import { AnimatedText } from "@/components/ui/animated-text";
-import { getProductByHandle } from "@/lib/mock-products";
 import { SizeGuideModal } from "./size-guide-modal";
 
 export function QuickAddDrawer() {
@@ -16,15 +15,8 @@ export function QuickAddDrawer() {
   const [selectedSize, setSelectedSize] = useState<string>("36");
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
   
-  // SIZES array removed because it's unused (product.sizes is used instead in the real component if it exists)
-
-  // Note: We don't reset the selectedSize in a useEffect to avoid cascading renders
-  // and because it's fine for the size to persist between openings.
-
-  const fullProduct = product ? getProductByHandle(product.handle) : undefined;
-  
-  const productColors = fullProduct?.options.find((o) => o.name === "Color")?.values || ["Black"];
-  const productSizes = fullProduct?.options.find((o) => o.name === "Size")?.values || [];
+  const productColors = product?.options.find((o) => o.name === "Color" || o.name === "Farbe")?.values || ["Black"];
+  const productSizes = product?.options.find((o) => o.name === "Size" || o.name === "Größe")?.values || [];
   
   const selectedColor = productColors[0];
   const currentSize = productSizes.includes(selectedSize) ? selectedSize : (productSizes[0] || "");
@@ -78,7 +70,7 @@ export function QuickAddDrawer() {
               {/* Product Image */}
               <div className="w-full bg-gray-50 aspect-3/4">
                 <img 
-                  src={product.image || (fullProduct?.images && fullProduct.images[0]?.url) || ""} 
+                  src={(product.images && product.images[0]?.url) || ""} 
                   alt={product.title} 
                   className="w-full h-full object-cover"
                 />

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Heart } from "lucide-react";
 import { useWishlistStore } from "@/store/wishlist-store";
-import type { Product } from "@/lib/mock-products";
+import type { Product } from "@/lib/shopify/index";
 import { cn } from "@/lib/utils";
 
 export function WishlistButton({ product, className, iconClassName }: { product: Product, className?: string, iconClassName?: string }) {
