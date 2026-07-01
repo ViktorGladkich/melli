@@ -29,6 +29,7 @@ export function HeroSection() {
           loop 
           muted 
           playsInline 
+          poster="/video_hero/hero_poster.jpg"
           src="/video_hero/hero.mp4" 
           className="w-full h-full object-cover object-center"
         />

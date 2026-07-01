@@ -13,11 +13,14 @@ interface ProductInfoProps {
 }
 
 export function ProductInfo({ product }: ProductInfoProps) {
+  const colorOptionName = product?.options.find(o => o.name.toLowerCase() === 'color' || o.name.toLowerCase() === 'farbe')?.name;
+  const sizeOptionName = product?.options.find(o => o.name.toLowerCase() === 'size' || o.name.toLowerCase() === 'größe')?.name;
+
   const [selectedColor, setSelectedColor] = useState<string | null>(
-    product?.options.find((o) => o.name === "Color")?.values[0] || null,
+    colorOptionName ? product?.options.find((o) => o.name === colorOptionName)?.values[0] || null : null,
   );
   const [selectedSize, setSelectedSize] = useState<string | null>(
-    product?.options.find((o) => o.name === "Size")?.values[0] || null,
+    sizeOptionName ? product?.options.find((o) => o.name === sizeOptionName)?.values[0] || null : null,
   );
   const [openAccordion, setOpenAccordion] = useState<string | null>("description");
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
@@ -30,10 +33,10 @@ export function ProductInfo({ product }: ProductInfoProps) {
   if (product.variants.length > 1) {
     selectedVariant = product.variants.find((variant) => {
       const matchesColor = selectedColor 
-        ? variant.selectedOptions?.find(o => o.name === 'Color' || o.name === 'Farbe')?.value === selectedColor 
+        ? variant.selectedOptions?.find(o => o.name.toLowerCase() === 'color' || o.name.toLowerCase() === 'farbe')?.value === selectedColor 
         : true;
       const matchesSize = selectedSize 
-        ? variant.selectedOptions?.find(o => o.name === 'Size' || o.name === 'Größe')?.value === selectedSize 
+        ? variant.selectedOptions?.find(o => o.name.toLowerCase() === 'size' || o.name.toLowerCase() === 'größe')?.value === selectedSize 
         : true;
       return matchesColor && matchesSize;
     }) || product.variants[0];
@@ -49,7 +52,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
 
   const isColorAvailable = (color: string) => {
     return product.variants.some((variant) => {
-      const isThisColor = variant.selectedOptions?.find(o => o.name === 'Color' || o.name === 'Farbe')?.value === color;
+      const isThisColor = variant.selectedOptions?.find(o => o.name.toLowerCase() === 'color' || o.name.toLowerCase() === 'farbe')?.value === color;
       return isThisColor && variant.availableForSale;
     });
   };
@@ -57,9 +60,9 @@ export function ProductInfo({ product }: ProductInfoProps) {
   const isSizeAvailable = (size: string) => {
     return product.variants.some((variant) => {
       const isThisColor = selectedColor 
-        ? variant.selectedOptions?.find(o => o.name === 'Color' || o.name === 'Farbe')?.value === selectedColor 
+        ? variant.selectedOptions?.find(o => o.name.toLowerCase() === 'color' || o.name.toLowerCase() === 'farbe')?.value === selectedColor 
         : true;
-      const isThisSize = variant.selectedOptions?.find(o => o.name === 'Size' || o.name === 'Größe')?.value === size;
+      const isThisSize = variant.selectedOptions?.find(o => o.name.toLowerCase() === 'size' || o.name.toLowerCase() === 'größe')?.value === size;
       return isThisColor && isThisSize && variant.availableForSale;
     });
   };
@@ -68,10 +71,10 @@ export function ProductInfo({ product }: ProductInfoProps) {
     setOpenAccordion(openAccordion === id ? null : id);
   };
 
-  const hasColors = product.options.some((o) => o.name === "Color");
-  const hasSizes = product.options.some((o) => o.name === "Size");
-  const colors = product.options.find((o) => o.name === "Color")?.values || [];
-  const sizes = product.options.find((o) => o.name === "Size")?.values || [];
+  const hasColors = !!colorOptionName;
+  const hasSizes = !!sizeOptionName;
+  const colors = colorOptionName ? product.options.find((o) => o.name === colorOptionName)?.values || [] : [];
+  const sizes = sizeOptionName ? product.options.find((o) => o.name === sizeOptionName)?.values || [] : [];
 
   return (
     <div className="w-full md:w-1/2 lg:w-[40%] relative">
@@ -98,13 +101,13 @@ export function ProductInfo({ product }: ProductInfoProps) {
                     key={color}
                     onClick={() => available && setSelectedColor(color)}
                     disabled={!available}
-                    className={`relative w-10 h-10 rounded-full border-2 transition-all cursor-pointer ${
+                    className={`relative w-8 h-8 rounded-full border-2 transition-all cursor-pointer ${
                       selectedColor === color ? "border-black p-0.5" : "border-transparent hover:border-gray-200"
-                    } ${!available ? "opacity-40 cursor-not-allowed" : ""}`}
+                    } ${!available ? "cursor-not-allowed" : ""}`}
                     aria-label={`Farbe ${color} ${!available ? "(Nicht verfügbar)" : ""}`}
                   >
                     <div
-                      className="w-full h-full rounded-full border border-gray-100"
+                      className={`w-full h-full rounded-full border border-gray-100 ${!available ? "opacity-50" : ""}`}
                       style={{
                         backgroundColor:
                           color.toLowerCase() === "beige"
@@ -118,7 +121,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
                     />
                     {!available && (
                       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                        <div className="w-[120%] h-[1.5px] bg-black/60 rotate-45 transform origin-center" />
+                        <div className="w-[120%] h-[1.5px] bg-black rotate-45 transform origin-center" />
                       </div>
                     )}
                   </button>

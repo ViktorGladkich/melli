@@ -172,25 +172,13 @@ export function Footer() {
             <div className="w-[42px] h-[26px] bg-white border border-gray-200 rounded flex items-center justify-center">
               <svg className="w-8 h-5" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg"><rect width="38" height="24" rx="3" fill="#252525"/><circle cx="15" cy="12" r="7" fill="#EB001B"/><circle cx="23" cy="12" r="7" fill="#F79E1B"/><path d="M19 6.5a7 7 0 00-2.5 5.5 7 7 0 002.5 5.5 7 7 0 002.5-5.5A7 7 0 0019 6.5z" fill="#FF5F00"/></svg>
             </div>
-            {/* Amex */}
-            <div className="w-[42px] h-[26px] bg-[#016FD0] border border-gray-200 rounded flex items-center justify-center">
-              <span className="text-white text-[7px] font-bold tracking-tight leading-none">AMEX</span>
-            </div>
             {/* PayPal */}
             <div className="w-[42px] h-[26px] bg-white border border-gray-200 rounded flex items-center justify-center">
-              <svg className="w-8 h-5" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg"><path fill="#003087" d="M23.9 8.3c.2-1 0-1.7-.6-2.3-.6-.7-1.7-1-3.1-1h-4.1c-.3 0-.5.2-.6.5L14 15.6c0 .2.1.4.3.4H17l.4-3.4 1.8-2.2 4.7-2.1z"/><path fill="#3086C8" d="M23.9 8.3l-.2.2c-.5 2.8-2.2 3.8-4.6 3.8H18c-.3 0-.5.2-.6.5l-.6 3.9-.2 1c0 .2.1.4.3.4H19c.3 0 .5-.2.5-.4v-.1l.4-2.4v-.1c0-.2.3-.4.5-.4h.3c2.1 0 3.7-.8 4.1-3.2.2-1 .1-1.8-.4-2.4-.1-.5-.3-.7-.5-.8z"/><path fill="#012169" d="M23.3 8.1c-.1-.1-.2-.1-.3-.1-.1 0-.2 0-.3-.1-.3-.1-.7-.1-1.1-.1h-3c-.1 0-.2 0-.2.1-.2.1-.3.2-.3.4l-.7 4.4v.1c0-.3.3-.5.6-.5h1.3c2.5 0 4.1-1 4.6-3.8v-.2c-.1-.1-.3-.2-.5-.2h-.1z"/></svg>
+              <svg className="w-8 h-5" viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg"><path fill="#003087" d="M23.9 8.3c.2-1 0-1.7-.6-2.3-.6-.7-1.7-1-3.1-1h-4.1c-.3 0-.5.2-.6.5L14 15.6c0 .2.1.4.3.4H17l.4-3.4 1.8-2.2 4.7-2.1z"/><path fill="#3086C8" d="M23.9 8.3l-.2.2c-.5 2.8-2.2 3.8-4.6 3.8H18c-.3 0-.5.2-.6.5l-.6 3.9-.2 1c0 .2.1.4.3.4H19c.3 0 .5-.2.5-.4v-.1l.4-2.4v-.1c0-.2.3-.4.5-.4h.3c2.1 0 3.7-.8 4.1-3.2.2-1 .1-1.8-.4-2.4-.1-.5-.3-.7-.5-.8z"/><path fill="#012169" d="M23.3 8.1c-.1-.1-.2-.1-.3-.1-.1 0-.2 0-.3-.1-.3-.1-.7-.1-1.1-.1h-3c-.1 0-.2 0-.2.1-.3-.1-.7-.1-1.1-.1h-3c-.1 0-.2 0-.2.1-.2.1-.3.2-.3.4l-.7 4.4v.1c0-.3.3-.5.6-.5h1.3c2.5 0 4.1-1 4.6-3.8v-.2c-.1-.1-.3-.2-.5-.2h-.1z"/></svg>
             </div>
-            {/* Diners Club */}
-            <div className="w-[42px] h-[26px] bg-white border border-gray-200 rounded flex items-center justify-center">
-              <svg className="w-6 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="#0079BE"/>
-                <path d="M12 3.5c-4.69 0-8.5 3.81-8.5 8.5s3.81 8.5 8.5 8.5 8.5-3.81 8.5-8.5-3.81-8.5-8.5-8.5z" fill="white"/>
-                <path d="M9.5 6.5v11a5.5 5.5 0 000-11zM14.5 6.5v11a5.5 5.5 0 000-11z" fill="#0079BE"/>
-              </svg>
-            </div>
-            {/* Discover */}
-            <div className="w-[42px] h-[26px] bg-white border border-gray-200 rounded flex items-center justify-center">
-              <span className="text-[#FF6000] text-[6px] font-bold tracking-tight leading-none">DISCOVER</span>
+            {/* Klarna */}
+            <div className="w-[42px] h-[26px] bg-[#FFB3C7] border border-gray-200 rounded flex items-center justify-center">
+              <span className="text-black text-[7.5px] font-bold tracking-tight leading-none" style={{ fontFamily: "Arial, sans-serif" }}>Klarna.</span>
             </div>
           </div>
         </div>
