@@ -144,14 +144,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <div className="w-full bg-white text-black flex-1">
-      <article className="max-w-[1200px] mx-auto px-4 md:px-8 py-0 md:py-12">
+      <article className="max-w-[1200px] mx-auto px-4 md:px-8 pt-24 pb-8 md:py-12">
         {/* Featured Image */}
         <div className="mb-8 md:mb-16 w-full flex justify-center">
-          <div className="relative w-full max-w-[1100px] aspect-square md:aspect-video overflow-hidden rounded-xl">
+          <div className="relative w-full max-w-[1100px] md:aspect-video overflow-hidden rounded-xl">
             <img 
               src={post.image} 
               alt={post.title} 
-              className="w-full h-full object-cover object-[center_20%]"
+              className="w-full h-auto md:h-full object-cover object-[center_20%]"
             />
           </div>
         </div>
