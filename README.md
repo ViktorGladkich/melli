@@ -1,6 +1,6 @@
 # MILLY | Premium Modest Fashion 🕊️
 
-![MILLY Banner](public/video_hero/hero_poster.jpg)
+![MILLY Banner](public/about/heroabout-mobile.jpg)
 
 > **MILLY** is a high-end, headless e-commerce storefront dedicated to premium Modest Fashion. Designed with modern aesthetics and built for performance, it delivers a seamless, immersive, and lightning-fast shopping experience.
 
